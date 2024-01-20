@@ -1,0 +1,48 @@
+﻿@using CustomPomodoro.Models
+
+@if(CurSet.Name != null)
+{
+    <h3>@CurSet.Name</h3>
+}
+else
+{
+    <h3>Create a set</h3>
+}
+
+<form>
+    <h3 class="mt-5">Min Session</h3>
+    <div class="mb-3 row">
+        <label for="" class="col-sm-2 col-form-label">Work time</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="" class="col-sm-2 col-form-label">Break time</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="" class="col-sm-2 col-form-label">Reps</label>
+        <div class="col-sm-6">
+            <input type="number" min="2" max="6" class="form-control">
+        </div>
+    </div>
+
+
+
+    <h3 class="mt-5">Max Session</h3>
+    <div class="mb-3 row">
+        <label for="" class="col-sm-2 col-form-label">Work time</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+    <div class="mb-3 row">
+        <label for="" class="col-sm-2 col-form-label">Break time</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control">
+        </div>
+    </div>
+</form>
