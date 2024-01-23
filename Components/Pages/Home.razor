@@ -1,12 +1,23 @@
 ﻿@page "/"
 
+<section>
+    <div class="container mb-5 text-white">
+        <div class="row">
+            <div class="col-6">Session 1 of 4</div>
+            <div class="col-6">Session times: 25:00</div>
+            <div class="col-6">Current session: Long break</div>
+            <div class="col-6">Break times: 5:00 - 15:00</div>
+        </div>
+    </div>
+</section>
 
-
-<section class="text-center">
+<section class="text-white text-center mb-3">
     <h4>Time left</h4>
-    <div class="fs-3 text-danger">04:37</div>
+    <div class="fs-3">04:37</div>
 </section>
 
 
-<button class="btn btn-success">Start</button>
-<button class="btn btn-danger">Stop</button>
+<div class="btn-group gap-5" role="group" aria-label="Basic example">
+    <button class="btn btn-secondary">Pause</button>
+    <button class="btn btn-warning">Cancel</button>
+</div>

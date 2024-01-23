@@ -1,0 +1,10 @@
+﻿body {
+    /*Off the clock*/
+    /*   background-color: #44403c;*/ /*Dark gray*/
+    /*Work time*/
+    background-color: #991b1b; /*Red*/
+    /*Short break*/
+    background-color: #2e1065;  /**Dark purple/
+    /*Long break*/
+     background-color: #0369a1; /*Mid Sky blue*/
+}
