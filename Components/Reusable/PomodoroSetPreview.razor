@@ -1,0 +1,11 @@
+﻿@using CustomPomodoro.Models;
+
+<div id="@SetToPreview.Id">
+    <h5 class="fw">@SetToPreview.Name</h5>
+</div>
+
+
+@code {
+    [Parameter]
+    public PomoderoSet SetToPreview { get; set; }
+}

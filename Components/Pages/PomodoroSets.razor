@@ -3,4 +3,16 @@
 
 @page "/Pomodorosets"
 
-<PomodoroSetEdit CurSet="TestSet" />
+<div class="container">
+    <div class="row">
+        <div class="col-9">
+            <PomodoroSetEdit CurSetEdit="TestSet" />
+        </div>
+        <section id="other-sets" class="col-3">
+            <h4 class="mb-4">My sets</h4>
+            <div class="bg-secondary">
+                <PomodoroSetPreview SetToPreview="TestSet" />
+            </div>
+        </section>
+    </div>
+</div>
