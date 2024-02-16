@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-6">Session @SessionCount of @CurPomodoroSet.RepsBeforeLongBreak</div>
             <div class="col-6">Work time: @CurPomodoroSet.WorkTime</div>
-            <div class="col-6">Current session: Work</div>
+            <div class="col-6">Current session: @PomodoroWorkState</div>
             <div class="col-6">Break times: @CurPomodoroSet.ShortBreak - @CurPomodoroSet.LongBreak</div>
         </div>
     </div>
@@ -21,7 +21,7 @@
                 {
                     <p id="pomodoro-time">@CurPomodoroSet.WorkTime</p>
                 }
-                else if(VisibleTimerDisplay != null)
+                else if(VisibleTimerDisplay != null && MainTimerState != TimerMode.NotStarted)
                 {
                     <p>@VisibleTimerDisplay</p>
                 }
@@ -42,7 +42,7 @@
     @{
         if(MainTimerState == TimerMode.NotStarted)
         {
-            <button class="btn btn-custom-start" onclick="@StartTimer(CurPomodoroSet)">Start</button>
+            <button class="btn btn-custom-start" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
         }
         if(MainTimerState == TimerMode.Paused)
         {

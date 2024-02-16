@@ -9,9 +9,17 @@ namespace CustomPomodoro.Components.Pages
 {
     public partial class Timer
     {
+        public enum TimerMode
+        {
+            NotStarted = -1,
+            Paused = 0,
+            Started = 1
+        }
+
         //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
         public PomoderoSet CurPomodoroSet { get; set; } = new();
         public TimerMode MainTimerState { get; set; } = TimerMode.NotStarted;
+        public string PomodoroWorkState { get; set; } = "Work";  //"Work", "Short Break", or "Long Break".
         public TimeSpan VisibleTimerDisplay { get; set; }
         public int SessionCount { get; set; } = 0;
 
@@ -24,23 +32,20 @@ namespace CustomPomodoro.Components.Pages
             return TimeSpan.FromSeconds(WorkTimeInTotalSeconds);
         }
 
-        public enum TimerMode 
-        {
-            NotStarted = -1,
-            Paused = 0,
-            Started = 1
-        }
-
-        public TimerMode StartTimer(PomoderoSet PomoSet)
+        public async Task StartTimer(PomoderoSet PomoSet)
         {
             //Start timer countdown after obtaining it.
-            TimeSpan Timer =  GetEndTimeInSecondsFormat(PomoSet.WorkTime);
+            VisibleTimerDisplay =  GetEndTimeInSecondsFormat(PomoSet.WorkTime);
 
             //To do: Create logic for starting a timer.
-
-
             SessionCount++;
-            return TimerMode.Started;
+            MainTimerState = TimerMode.Started;
+
+            //while (VisibleTimerDisplay > TimeSpan.Zero)
+            //{
+            //    VisibleTimerDisplay.Subtract(TimeSpan.FromSeconds(1));
+            //}
+
         }
     }
 }
