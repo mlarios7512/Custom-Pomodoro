@@ -42,7 +42,7 @@
     @{
         if(MainTimerState == TimerMode.NotStarted)
         {
-            <button class="btn btn-custom-start" onclick="@StartTimer">Start</button>
+            <button class="btn btn-custom-start" onclick="@StartTimer(CurPomodoroSet)">Start</button>
         }
         if(MainTimerState == TimerMode.Paused)
         {
