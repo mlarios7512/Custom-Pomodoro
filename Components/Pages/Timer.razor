@@ -15,41 +15,29 @@
     <h4>Time left</h4>
     <div class="fs-3">
         @{
-            if(CurPomodoroSet.WorkTime != string.Empty)
-            {
-                if(MainTimerState == TimerMode.NotStarted)
-                {
-                    <p id="pomodoro-time">@CurPomodoroSet.WorkTime</p>
-                }
-                else if(VisibleTimerDisplay != null && MainTimerState != TimerMode.NotStarted)
-                {
-                    <p>@VisibleTimerDisplay</p>
-                }
-                else
-                {
-                    <p>(Error displaying timer)</p>
-                }
-            }
-            else
-            {
-                <p>(Error loading timer)</p>
-            }
+            <p>@PrintCountdownTimer()</p>
         }
      </div>
 </section>
 
 <div class="btn-group gap-5" role="group" aria-label="Basic example">
     @{
-        if(MainTimerState == TimerMode.NotStarted)
+        //Timer not started.
+        if (ActualCountdownTimer.Enabled == false
+                && TimerInSeconds == -1)
         {
             <button class="btn btn-custom-start" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
         }
-        if(MainTimerState == TimerMode.Paused)
+        // //Paused timer, but already started.
+        if(ActualCountdownTimer.Enabled == false 
+            && TimerInSeconds > 0
+        && TimerInSeconds != GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime))
         {
             <button class="btn btn-secondary">Pause</button>
             <button class="btn custom-cancel-btn">Cancel</button>
         }
-        if(MainTimerState == TimerMode.Started)
+        // //Timer is currently active.
+        if(ActualCountdownTimer.Enabled == true)
         {
             <button class="btn custom-cancel-btn">Cancel</button>
             <button class="btn btn-custom-stop">End session</button>
