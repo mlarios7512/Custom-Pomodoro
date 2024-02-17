@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-6">Session @SessionCount of @CurPomodoroSet.RepsBeforeLongBreak</div>
             <div class="col-6">Work time: @CurPomodoroSet.WorkTime</div>
-            <div class="col-6">Current session: @PomodoroWorkState</div>
+            <div class="col-6">@CurWorkStateDisplay</div>
             <div class="col-6">Break times: @CurPomodoroSet.ShortBreak - @CurPomodoroSet.LongBreak</div>
         </div>
     </div>
@@ -30,13 +30,13 @@
         // //Paused timer, but already started.
         if(MainTimerState == TimerState.Paused)
         {
-            <button class="btn btn-secondary">Continue</button>
+            <button class="btn btn-secondary" @onclick="() => ContinueTimer(CurPomodoroSet)">Continue</button>
             <button class="btn btn-custom-stop">End session</button>
         }
         // //Timer is currently active.
         if(MainTimerState == TimerState.Started)
         {
-            <button class="btn custom-cancel-btn">Pause</button>
+            <button class="btn custom-cancel-btn" @onclick="() => PauseTimer(CurPomodoroSet)">Pause</button>
             <button class="btn btn-custom-stop">End session</button>
         }
     }
