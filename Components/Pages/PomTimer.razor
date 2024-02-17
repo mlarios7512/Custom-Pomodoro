@@ -23,31 +23,24 @@
 <div class="btn-group gap-5" role="group" aria-label="Basic example">
     @{
         //Timer not started.
-        if (ActualCountdownTimer.Enabled == false
-                && TimerInSeconds == -1)
+        if (MainTimerState == TimerState.NotStarted)
         {
             <button class="btn btn-custom-start" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
         }
         // //Paused timer, but already started.
-        if(ActualCountdownTimer.Enabled == false 
-            && TimerInSeconds > 0
-        && TimerInSeconds != GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime))
+        if(MainTimerState == TimerState.Paused)
         {
-            <button class="btn btn-secondary">Pause</button>
-            <button class="btn custom-cancel-btn">Cancel</button>
+            <button class="btn btn-secondary">Continue</button>
+            <button class="btn btn-custom-stop">End session</button>
         }
         // //Timer is currently active.
-        if(ActualCountdownTimer.Enabled == true)
+        if(MainTimerState == TimerState.Started)
         {
-            <button class="btn custom-cancel-btn">Cancel</button>
+            <button class="btn custom-cancel-btn">Pause</button>
             <button class="btn btn-custom-stop">End session</button>
         }
     }
 </div>
-
-@* <div class="btn-group gap-5" role="group" aria-label="Basic example">
-    <button class="btn btn-secondary">Pause</button>
-</div> *@
 
 @code{
     // string j = Path.Combine(AppContext.BaseDirectory, "preferredDir.json");
