@@ -41,17 +41,85 @@ namespace CustomPomodoro.Components.Pages
         public System.Timers.Timer ActualCountdownTimer { get; set; } = new();
         public int SessionCount { get; set; } = 0;
 
-        public async Task PauseTimer(PomoderoSet PomoSet) 
+        public void SetUpForTimerPropertiesForWork(PomoderoSet pomoSet) 
+        {
+            CurWorkStateDisplay = "Current session: Work";
+            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(pomoSet.WorkTime);
+            MainTimerState = TimerState.Started;
+            SessionCount++;
+
+            if (SessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
+                NextWorkState = WorkState.LongBreak;
+            else
+                NextWorkState = WorkState.ShortBreak;
+        }
+
+        public void SetUpTimerPropertiesForCorrectBreak(PomoderoSet pomoSet) 
+        {
+            NextWorkState = WorkState.Work;
+            if (SessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
+            {
+                CurWorkStateDisplay = "Current session: Long break";
+                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
+                SessionCount = 0;
+            }
+            else
+            {
+                CurWorkStateDisplay = "Current session: Short break";
+                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
+            }
+            MainTimerState = TimerState.Started;
+        }
+
+        public async Task PauseTimer() 
         {
             MainTimerState = TimerState.Paused;
             ActualCountdownTimer.Enabled = false;
             //ActualCountdownTimer.Elapsed += null;
         }
-        public async Task ContinueTimer(PomoderoSet PomoSet) 
+        public async Task ContinueTimer() 
         {
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Enabled = true;
             //ActualCountdownTimer.Elapsed += CountDownTimer;
+        }
+        //NOT TESTED (below).
+        public async Task EndSessionAndTimer(PomoderoSet pomoSet) 
+        {
+            MainTimerState = TimerState.NotStarted;
+            ActualCountdownTimer.Enabled = false;
+
+            if(NextWorkState == WorkState.Work)
+            {
+                if (SessionCount == 0)
+                {
+                    Debug.WriteLine("Long break started.");
+                    NextWorkState = WorkState.LongBreak;
+
+                    CurWorkStateDisplay = "Next session: Long break";
+                    TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
+                    SessionCount = CurPomodoroSet.RepsBeforeLongBreak;
+                }
+                else 
+                {
+                    Debug.WriteLine("Short break started");
+                    NextWorkState = WorkState.ShortBreak;
+
+                    CurWorkStateDisplay = "Next session: Short break";
+                    TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
+
+                }
+            }
+            else {
+                NextWorkState = WorkState.Work;
+ 
+                CurWorkStateDisplay = "Next session: Work";
+                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
+                
+                SessionCount--;
+            }
+            MainTimerState = TimerState.NotStarted;
+
         }
 
         public async Task StartTimer(PomoderoSet pomoSet)
@@ -74,17 +142,8 @@ namespace CustomPomodoro.Components.Pages
             }
             else 
             {
-                CurWorkStateDisplay = "Current session: Work";
-                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(pomoSet.WorkTime);
-                MainTimerState = TimerState.Started;
-                SessionCount++;
-
-                if (SessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
-                    NextWorkState = WorkState.LongBreak;
-                else
-                    NextWorkState = WorkState.ShortBreak;
-
-           
+                //Tested, works correctly.
+                SetUpForTimerPropertiesForWork(pomoSet);
             }
             
             ActualCountdownTimer = new System.Timers.Timer(1000);
