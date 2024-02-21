@@ -2,16 +2,16 @@
 
 <section>
     <div class="container mb-5">
-        <div class="row">
-            <div class="col-6">Work sessions: @SessionCount of @CurPomodoroSet.RepsBeforeLongBreak</div>
-            <div class="col-6">Work time: @CurPomodoroSet.WorkTime</div>
-            <div class="col-6">@CurWorkStateDisplay</div>
-            <div class="col-6">Break times: @CurPomodoroSet.ShortBreak - @CurPomodoroSet.LongBreak</div>
+        <div class="row gap-xs-4">
+            <div class="col-6 col-xs-12">Work sessions: @SessionCount of @CurPomodoroSet.RepsBeforeLongBreak</div>
+            <div class="col-6 col-xs-12">Work time: @CurPomodoroSet.WorkTime</div>
+            <div class="col-6 col-xs-12">@CurWorkStateDisplay</div>
+            <div class="col-6 col-xs-12">Break times: @CurPomodoroSet.ShortBreak - @CurPomodoroSet.LongBreak</div>
         </div>
     </div>
 </section>
 
-<section class="text-center mb-3">
+<section class="text-center mt-5 mb-3">
     <h4>Time left</h4>
     <div class="fs-3">
         @{
@@ -20,7 +20,7 @@
      </div>
 </section>
 
-<div class="btn-group gap-5" role="group" aria-label="Basic example">
+<div class="btn-group gap-5 w-100 mt-5" role="group" aria-label="Basic example">
     @{
         if (MainTimerState == TimerState.NotStarted)
         {
