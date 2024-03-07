@@ -3,10 +3,10 @@
 <section>
     <div class="container mb-5">
         <div class="row gap-xs-4">
-            <div class="col-6 col-xs-12">Work sessions: @SessionCount of @CurPomodoroSet.RepsBeforeLongBreak</div>
-            <div class="col-6 col-xs-12">Work time: @CurPomodoroSet.WorkTime</div>
-            <div class="col-6 col-xs-12">@CurWorkStateDisplay</div>
-            <div class="col-6 col-xs-12">Break times: @CurPomodoroSet.ShortBreak - @CurPomodoroSet.LongBreak</div>
+            <div class="col-lg-3 col-sm-6">Work sessions: @SessionCount of @CurPomodoroSet.RepsBeforeLongBreak</div>
+            <div class="col-lg-3 col-sm-6">Work time: @CurPomodoroSet.WorkTime</div>
+            <div class="col-lg-3 col-sm-6">@CurWorkStateDisplay</div>
+            <div class="col-lg-3 col-sm-6">Break times: @CurPomodoroSet.ShortBreak - @CurPomodoroSet.LongBreak</div>
         </div>
     </div>
 </section>
@@ -20,23 +20,26 @@
      </div>
 </section>
 
-<div class="btn-group gap-5 w-100 mt-5" role="group" aria-label="Basic example">
+<div class="text-center fixed-bottom mb-5">
+    <div class="btn-group gap-5 mb-5" role="group" aria-label="Basic example">
+   
     @{
         if (MainTimerState == TimerState.NotStarted)
         {
-            <button class="btn btn-custom-start" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
+            <button class="btn btn-custom-start" style="width:85vw" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
         }
         if(MainTimerState == TimerState.Paused)
         {
-            <button class="btn btn-secondary" @onclick="() => ContinueTimer()">Continue</button>
-            <button class="btn btn-custom-stop" @onclick="() => EndSessionAndTimer(CurPomodoroSet)">End session</button>
+                <button class="btn btn-secondary" style="width:40vw" @onclick="() => ContinueTimer()">Continue</button>
+                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => EndSessionAndTimer(CurPomodoroSet)">End session</button>
         }
         if(MainTimerState == TimerState.Started)
         {
-            <button class="btn custom-cancel-btn" @onclick="() => PauseTimer()">Pause</button>
-            <button class="btn btn-custom-stop" @onclick="() => EndSessionAndTimer(CurPomodoroSet)">End session</button>
+                <button class="btn custom-cancel-btn" style="width:40vw"  @onclick="() => PauseTimer()">Pause</button>
+                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => EndSessionAndTimer(CurPomodoroSet)">End session</button>
         }
     }
+    </div>
 </div>
 
 @code{
