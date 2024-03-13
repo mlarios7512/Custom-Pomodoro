@@ -27,8 +27,8 @@ namespace CustomPomodoro.Components.Pages
         }
 
         private const string NoActivityBgColor = "#44403c";
-        private const string WorkBgColor = "#991b1b";
-        private const string ShortBreakBgColor = "#2e1065";
+        private const string WorkBgColor = "#a12a4e"; //de0043 //#991b1b
+        private const string ShortBreakBgColor = "#2e1065";  
         private const string LongBreakBgColor = "#0369a1";
 
 
