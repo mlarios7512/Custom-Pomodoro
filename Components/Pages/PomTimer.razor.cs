@@ -26,8 +26,15 @@ namespace CustomPomodoro.Components.Pages
             Work = 2
         }
 
+        private const string NoActivityBgColor = "#44403c";
+        private const string WorkBgColor = "#991b1b";
+        private const string ShortBreakBgColor = "#2e1065";
+        private const string LongBreakBgColor = "#0369a1";
+
+
         //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
         public PomoderoSet CurPomodoroSet { get; set; } = new();
+        private string BgColor = NoActivityBgColor;
         public string CurWorkStateDisplay { get; set; } = "Next session: Work";  //"Work", "Short Break", or "Long Break".
         public string CountdownTimerDisplay { get; set; } = "00:00";
         public int TimerInSeconds { get; set; } = 0;
@@ -45,7 +52,7 @@ namespace CustomPomodoro.Components.Pages
         {
             CurWorkStateDisplay = "Current session: Work";
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(pomoSet.WorkTime);
-            CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.WorkTime);  //UNTESTED LINE OF CODE.
+            CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.WorkTime);
             MainTimerState = TimerState.Started;
             SessionCount++;
 
@@ -62,14 +69,14 @@ namespace CustomPomodoro.Components.Pages
             {
                 CurWorkStateDisplay = "Current session: Long break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
-                CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.LongBreak);    //UNTESTED LINE OF CODE.
+                CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.LongBreak);
                 SessionCount = 0;
             }
             else
             {
                 CurWorkStateDisplay = "Current session: Short break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
-                CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.ShortBreak);   //UNTESTED LINE OF CODE.
+                CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.ShortBreak);
             }
             MainTimerState = TimerState.Started;
         }
@@ -89,7 +96,7 @@ namespace CustomPomodoro.Components.Pages
         {
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
-            BgColor = "#44403c";
+            BgColor = PomTimerHelpers.TransitionToColor(NoActivityBgColor);
 
             if (NextWorkState == WorkState.Work)
             {
@@ -100,7 +107,7 @@ namespace CustomPomodoro.Components.Pages
 
                     CurWorkStateDisplay = "Next session: Long break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
-                    CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.LongBreak);     //UNTESTED LINE OF CODE.
+                    CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.LongBreak);
 
                     SessionCount = CurPomodoroSet.RepsBeforeLongBreak;
                 }
@@ -111,7 +118,7 @@ namespace CustomPomodoro.Components.Pages
 
                     CurWorkStateDisplay = "Next session: Short break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
-                    CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.ShortBreak);   //UNTESTED LINE OF CODE.
+                    CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.ShortBreak);
 
                 }
             }
@@ -120,7 +127,7 @@ namespace CustomPomodoro.Components.Pages
  
                 CurWorkStateDisplay = "Next session: Work";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
-                CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.WorkTime);     //UNTESTED LINE OF CODE.
+                CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.WorkTime);
 
                 SessionCount--;
             }
@@ -138,32 +145,27 @@ namespace CustomPomodoro.Components.Pages
                     CurWorkStateDisplay = "Current session: Long break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
                     SessionCount = 0;
-                    BgColor = "#0369a1";
+                    
+                    BgColor = PomTimerHelpers.TransitionToColor(LongBreakBgColor);
                 }
                 else
                 {
                     CurWorkStateDisplay = "Current session: Short break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
-                    BgColor = " #2e1065";
+                    BgColor = PomTimerHelpers.TransitionToColor(ShortBreakBgColor);
                 }
                 MainTimerState = TimerState.Started;
             }
             else 
             {
-                //Tested, works correctly.
                 SetUpForTimerPropertiesForWork(pomoSet);
-                BgColor = "#991b1b";
+                BgColor = PomTimerHelpers.TransitionToColor(WorkBgColor);
             }
             
             ActualCountdownTimer = new System.Timers.Timer(1000);
             ActualCountdownTimer.Enabled = true;
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Elapsed += CountDownTimer;
-        }
-
-        public string PrintCountdownTimer()
-        {
-            return $"{TimeSpan.FromSeconds(TimerInSeconds):hh\\:mm\\:ss}";
         }
 
         public string SetCountdownTimer(string workTime) 
@@ -179,34 +181,27 @@ namespace CustomPomodoro.Components.Pages
                 if (TimerInSeconds > 0)
                 {
                     TimerInSeconds--;
-
-                    //UNTESTED LINE (below):
-                    CountdownTimerDisplay = PrintCountdownTimer();
+                    CountdownTimerDisplay = PomTimerHelpers.PrintCountdownTimer(TimerInSeconds);
                 }
                 else
                 {
                     ActualCountdownTimer.Enabled = false;
-                    BgColor = "#44403c";
+                    BgColor = PomTimerHelpers.TransitionToColor(NoActivityBgColor);
                     if (NextWorkState == WorkState.Work) 
                     {
                         CurWorkStateDisplay = "Next session: Work";
-                        //UNTESTED LINE (below):
                         CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.WorkTime);
                     }
                        
                     else if (NextWorkState == WorkState.ShortBreak) 
                     {
                         CurWorkStateDisplay = "Next session: Short break";
-
-                        //UNTESTED LINE (below):
                         CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.ShortBreak);
                     }
 
                     else if(NextWorkState == WorkState.LongBreak) 
                     {
                         CurWorkStateDisplay = "Next session: Long break";
-
-                        //UNTESTED LINE (below):
                         CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.LongBreak);
                     }
 
