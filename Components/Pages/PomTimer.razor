@@ -1,5 +1,90 @@
 ﻿@page "/"
 
+<style>
+    body{
+        background-color:@BgColor;
+        transition: background-color 2s ease-out;
+    }
+</style>
+
+
+
+<Field>
+    <Select TValue="string" SelectedValueChanged="@OnSelectedAnimationChanged">
+        @foreach (var availableAnimation in Animations.GetNames())
+        {
+            <SelectItem Value="@availableAnimation">@availableAnimation</SelectItem>
+        }
+    </Select>
+</Field>
+
+@if (showAnimate)
+{
+@*     <Animate Auto Animation="bgTransitionAnimation" DurationMilliseconds="3000">
+        <style>
+            body{
+                background-color:@BgColor;
+            }
+        </style>
+    </Animate> *@
+
+    <Div ElementId="#b-animate">
+        <Animate Anchor="#b-animate" Auto Animation="selectedAnimation" DelayMilliseconds="500">
+             <Card Margin="Margin.Is4.OnY">
+                 <CardBody>
+                     <CardTitle Size="5">Animation Example</CardTitle>
+                     <CardText Class="text-bl">
+                         Some content.
+                     </CardText>
+                 </CardBody>
+             </Card>
+         </Animate>
+     </Div>
+}
+<Button Color="Color.Primary" Clicked="@Animate">
+    @buttonText
+</Button>
+@code {
+    private string BgColor = "#44403c"; //DARK GRAY (again)
+
+    private IAnimation selectedAnimation = Animations.FadeIn;
+    private bool showAnimate = false;
+    private string buttonText = "Animate!";
+
+    private IAnimation bgTransitionAnimation = Animations.Fade;
+
+
+    private Task OnSelectedAnimationChanged(string selectedAnimationName)
+    {
+        showAnimate = false;
+
+        if (Animations.TryParse(selectedAnimationName, out var animation))
+            selectedAnimation = animation;
+        else
+            selectedAnimation = null;
+
+        return Task.CompletedTask;
+    }
+
+    private async Task Animate()
+    {
+        if (!showAnimate)
+        {
+            showAnimate = true;
+            await InvokeAsync(StateHasChanged);
+            buttonText = "Restart!";
+        }
+        else
+        {
+            showAnimate = false;
+            buttonText = "Animate!";
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+}
+
+
 <section>
     <div class="container mb-5">
         <div class="row gap-xs-4">
@@ -26,7 +111,7 @@
     @{
         if (MainTimerState == TimerState.NotStarted)
         {
-            <button class="btn btn-custom-start" style="width:85vw" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
+            <button class="btn btn-custom-start" style="width:85vw" @onclick="@(() => { StartTimer(CurPomodoroSet); Animate(); })">Start</button>
         }
         if(MainTimerState == TimerState.Paused)
         {

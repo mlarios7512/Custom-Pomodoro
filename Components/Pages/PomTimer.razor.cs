@@ -89,8 +89,9 @@ namespace CustomPomodoro.Components.Pages
         {
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
+            BgColor = "#44403c";
 
-            if(NextWorkState == WorkState.Work)
+            if (NextWorkState == WorkState.Work)
             {
                 if (SessionCount == 0)
                 {
@@ -137,11 +138,13 @@ namespace CustomPomodoro.Components.Pages
                     CurWorkStateDisplay = "Current session: Long break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
                     SessionCount = 0;
+                    BgColor = "#0369a1";
                 }
                 else
                 {
                     CurWorkStateDisplay = "Current session: Short break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
+                    BgColor = " #2e1065";
                 }
                 MainTimerState = TimerState.Started;
             }
@@ -149,6 +152,7 @@ namespace CustomPomodoro.Components.Pages
             {
                 //Tested, works correctly.
                 SetUpForTimerPropertiesForWork(pomoSet);
+                BgColor = "#991b1b";
             }
             
             ActualCountdownTimer = new System.Timers.Timer(1000);
@@ -182,7 +186,7 @@ namespace CustomPomodoro.Components.Pages
                 else
                 {
                     ActualCountdownTimer.Enabled = false;
-
+                    BgColor = "#44403c";
                     if (NextWorkState == WorkState.Work) 
                     {
                         CurWorkStateDisplay = "Next session: Work";

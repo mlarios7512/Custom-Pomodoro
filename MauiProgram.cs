@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
+using Blazorise;
+using Blazorise.Bootstrap;
 
 namespace CustomPomodoro
 {
@@ -15,9 +17,15 @@ namespace CustomPomodoro
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.Services
+    .AddBlazorise(options =>
+    {
+        options.Immediate = true;
+    })
+    .AddBootstrapProviders();
 
 #if DEBUG
-    		builder.Services.AddBlazorWebViewDeveloperTools();
+            builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
 #endif
 
