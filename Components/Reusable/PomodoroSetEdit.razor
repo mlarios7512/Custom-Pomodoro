@@ -1,8 +1,8 @@
 ﻿@using CustomPomodoro.Models
 
-@if (CurSetEdit.Name != null)
+@if (NewPomodoroSet.Name != null)
 {
-    <h3 class="mb-4">@CurSetEdit.Name</h3>
+    <h3 class="mb-4">@NewPomodoroSet.Name</h3>
 }
 else
 {
@@ -10,41 +10,41 @@ else
 }
 
 
-<EditForm Model="CurSetEdit" OnValidSubmit="@SaveSetInfo" FormName="SaveSetInfoForm">
-    <input type="hidden" @bind-value="CurSetEdit.Id" />
+<EditForm Model="NewPomodoroSet" OnValidSubmit="@SaveSetInfo" FormName="SaveSetInfoForm">
+    <input type="hidden" @bind-value="NewPomodoroSet.Id" />
 
     <div class="mb-3 row">
         <label for="set-name-inupt" class="col-sm-3 col-form-label">Set name</label>
-        <div class="col-sm-2">
-            <InputText id="set-name-input" @bind-Value="CurSetEdit.Name" class="form-control"></InputText>
+        <div class="col-sm-6">
+            <InputText id="set-name-input" @bind-Value="NewPomodoroSet.Name" class="form-control"></InputText>
         </div>
     </div>
 
     <div class="mb-3 row">
         <label for="worktime-input" class="col-sm-3 col-form-label">Work time</label>
         <div class="col-sm-2">
-            <InputText id="worktime-input" @bind-Value="CurSetEdit.WorkTime" class="form-control"></InputText>
+            <InputText id="worktime-input" @bind-Value="NewPomodoroSet.WorkTime" class="form-control"></InputText>
         </div>
     </div>
 
     <div class="mb-3 row">
         <label for="short-break-input" class="col-sm-3 col-form-label">Short break time</label>
         <div class="col-sm-2">
-            <InputText id="short-break-input" @bind-Value="CurSetEdit.ShortBreak" class="form-control"></InputText>
+            <InputText id="short-break-input" @bind-Value="NewPomodoroSet.ShortBreak" class="form-control"></InputText>
         </div>
     </div>
 
     <div class="mb-3 row">
         <label for="work-reps-input" class="col-sm-3 col-form-label">Work reps (before long break)</label>
         <div class="col-sm-2">
-            <InputNumber id="work-reps-input" @bind-Value="CurSetEdit.RepsBeforeLongBreak" class="form-control"></InputNumber>
+            <InputNumber id="work-reps-input" @bind-Value="NewPomodoroSet.RepsBeforeLongBreak" class="form-control"></InputNumber>
         </div>
     </div>
 
     <div class="mb-3 row">
         <label for="long-break-input" class="col-sm-3 col-form-label">Long break time</label>
         <div class="col-sm-2">
-            <InputText id="long-break-input" @bind-Value="CurSetEdit.LongBreak" class="form-control"></InputText>
+            <InputText id="long-break-input" @bind-Value="NewPomodoroSet.LongBreak" class="form-control"></InputText>
         </div>
     </div>
    

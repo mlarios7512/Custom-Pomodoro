@@ -12,14 +12,12 @@ namespace CustomPomodoro.Components.Reusable
 {
     public partial class PomodoroSetEdit
     {
+        PomoderoSet NewPomodoroSet = new PomoderoSet();
+
         private async Task SaveSetInfo()
         {
             Debug.WriteLine($"Set info updated.");
             Console.WriteLine($"Set info updated");
         }
-
-        [Parameter]
-        public PomoderoSet CurSetEdit { get; set; }
-
     }
 }

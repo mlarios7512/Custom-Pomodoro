@@ -1,11 +1,15 @@
 ﻿@using CustomPomodoro.Models;
 
-<div id="@SetToPreview.Id">
-    <h5 class="fw">@SetToPreview.Name</h5>
-</div>
+@foreach(PomoderoSet set in SetsToPreview)
+{
+    <div id="@set.Id">
+        <h5 class="fw">@set.Name</h5>
+    </div>
+}
+
 
 
 @code {
     [Parameter]
-    public PomoderoSet SetToPreview { get; set; }
+    public List<PomoderoSet> SetsToPreview { get; set; }
 }

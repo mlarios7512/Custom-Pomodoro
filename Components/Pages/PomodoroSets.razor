@@ -5,18 +5,19 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-9">
-            <PomodoroSetEdit CurSetEdit="TestSet" />
+        <div class="col-xl-9 col-sm-12 mb-5">
+            <PomodoroSetEdit />
         </div>
-        <section id="other-sets" class="col-3">
+        <section id="other-sets" class="col-xl-3 col-sm-12 my-5">
             <h4 class="mb-4">My sets</h4>
             <div class="bg-secondary">
-                <PomodoroSetPreview SetToPreview="TestSet" />
+                <PomodoroSetPreview SetsToPreview="TestSet" />
             </div>
         </section>
     </div>
 </div>
 
 @code{
-    public PomoderoSet TestSet { get; set; } = new();
+    //Not sure how save files will be loaded in yet. Assuming something like this:
+    public List<PomoderoSet> TestSet { get; set; } = new();
 }
