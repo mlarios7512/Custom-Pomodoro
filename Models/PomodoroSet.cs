@@ -8,7 +8,7 @@ namespace CustomPomodoro.Models
 {
     public class PomoderoSet
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; } = null;
         public string WorkTime { get; set; } = "25:00";
         public string ShortBreak { get; set; } = "5:00";
