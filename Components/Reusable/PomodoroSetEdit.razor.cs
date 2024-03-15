@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Text.Json;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using CustomPomodoro.Models.Helpers;
 
 namespace CustomPomodoro.Components.Reusable
 {
@@ -20,8 +21,8 @@ namespace CustomPomodoro.Components.Reusable
 
         private async Task SaveSetInfo()
         {
-            string IdToStore = Guid.NewGuid().ToString();
-
+            string NewPomodoroId = Guid.NewGuid().ToString();
+            NewPomodoroSet.Id = NewPomodoroId;
 
             Debug.WriteLine($"Set info updated.");
 
@@ -32,39 +33,34 @@ namespace CustomPomodoro.Components.Reusable
             Debug.WriteLine($"Long break: {NewPomodoroSet.LongBreak}");
             Debug.WriteLine($"Reps before long break: {NewPomodoroSet.RepsBeforeLongBreak}");
 
-            if (NewPomodoroSet != null) 
+            if (NewPomodoroSet != null)
             {
-                //var options = new JsonSerializerOptions { WriteIndented = true };
-                //string SetAsJson = System.Text.Json.JsonSerializer.Serialize(NewPomodoroSet, options);  //1st attempt specific.
-
-                //Load file (check if it exists 1st)
                 string JsonSavePath = Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json");
+                if (File.Exists(JsonSavePath))
+                {
+                    Debug.WriteLine("File exists. Adding set to file...");
+                    string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
+                    var ExistingPomLists = JsonConvert.DeserializeObject<List<PomoderoSet>>(PomListsFromJsonFile);
 
-                string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
+                    if(ExistingPomLists == null) 
+                    {
+                        PomSetFileOps.CreateNewSaveFile(NewPomodoroSet);
+                    }
+                    else 
+                    {
+                        ExistingPomLists.Add(NewPomodoroSet);
+                        var convertedJson = JsonConvert.SerializeObject(ExistingPomLists, Formatting.Indented);
 
-
-
-
-                var ExistingPomLists = JsonConvert.DeserializeObject<List<PomoderoSet>>(PomListsFromJsonFile);
-
-                List<PomoderoSet> PomoderoSets = new List<PomoderoSet>();
-
-
-                NewPomodoroSet.Id = Guid.NewGuid().ToString();
-
-                ExistingPomLists.Add(NewPomodoroSet);
-                var convertedJson = JsonConvert.SerializeObject(ExistingPomLists, Formatting.Indented);
-                File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json"), convertedJson);
-
-                /*  File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json"), SetAsJson); *///1st attempt specific.
+                        //Need to see where data is saved on Android (try it on emulator).
+                        File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json"), convertedJson);
+                    }
+                }
+                else
+                {
+                    PomSetFileOps.CreateNewSaveFile(NewPomodoroSet);
+                }
             }
             
-
-            //Need to review how to save to local file. (Also, run this on Android emulator to see how it works on there.
-
-
-            //Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json");
-
         }
     }
 }
