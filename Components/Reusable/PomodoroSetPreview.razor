@@ -1,10 +1,21 @@
 ﻿@using CustomPomodoro.Models;
 
-@foreach(PomodoroSet set in SetsToPreview)
-{
-    <div id="@set.Id">
-        <h5 class="fw">@set.Name</h5>
-    </div>
+@{
+    if (SetsToPreview.Count > 0)
+    {
+
+        foreach (PomodoroSet set in SetsToPreview)
+        {
+            <div id="@set.Id">
+                <h5 class="fw">@set.Name</h5>
+            </div>
+        }
+
+    }
+    else
+    {
+        <p class="fst-italic">(You don't have any sets.)</p>
+    }
 }
 
 

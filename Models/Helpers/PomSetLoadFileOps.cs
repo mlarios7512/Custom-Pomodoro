@@ -12,8 +12,17 @@ namespace CustomPomodoro.Models.Helpers
         public static List<PomodoroSet> GetExistingPomodoroSets()
         {
             string JsonSavePath = Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json");
-            string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
-            List<PomodoroSet>? ExistingPomLists = JsonConvert.DeserializeObject<List<PomodoroSet>>(PomListsFromJsonFile);
+            List<PomodoroSet> ExistingPomLists = new List<PomodoroSet>();
+            try 
+            {
+                string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
+                ExistingPomLists = JsonConvert.DeserializeObject<List<PomodoroSet>>(PomListsFromJsonFile);
+            }
+            catch (System.IO.FileNotFoundException) 
+            {
+                return new List<PomodoroSet>();
+            }
+
             if (ExistingPomLists == null)
                 return new List<PomodoroSet>();
 

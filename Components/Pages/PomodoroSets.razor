@@ -11,16 +11,9 @@
         </div>
         <section id="other-sets" class="col-xl-3 col-sm-12 my-5">
             <h4 class="mb-4">My sets</h4>
-            <div class="bg-secondary">
+            <div>
                 <PomodoroSetPreview SetsToPreview="UserPomodoroSets" />
             </div>
         </section>
     </div>
 </div>
-
-@code{
-    //Not sure how save files will be loaded in yet. Assuming something like this:
-
-    public List<PomodoroSet> UserPomodoroSets { get; set; } = PomSetLoadFileOps.GetExistingPomodoroSets();
-
-}
