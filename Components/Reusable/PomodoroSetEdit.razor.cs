@@ -17,7 +17,7 @@ namespace CustomPomodoro.Components.Reusable
 {
     public partial class PomodoroSetEdit
     {
-        PomoderoSet NewPomodoroSet = new PomoderoSet();
+        PomodoroSet NewPomodoroSet = new PomodoroSet();
 
         private async Task SaveSetInfo()
         {
@@ -40,11 +40,11 @@ namespace CustomPomodoro.Components.Reusable
                 {
                     Debug.WriteLine("File exists. Adding set to file...");
                     string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
-                    var ExistingPomLists = JsonConvert.DeserializeObject<List<PomoderoSet>>(PomListsFromJsonFile);
+                    var ExistingPomLists = JsonConvert.DeserializeObject<List<PomodoroSet>>(PomListsFromJsonFile);
 
                     if(ExistingPomLists == null) 
                     {
-                        PomSetFileOps.CreateNewSaveFile(NewPomodoroSet);
+                        PomSetSaveFileOps.CreateNewSaveFile(NewPomodoroSet);
                     }
                     else 
                     {
@@ -57,7 +57,7 @@ namespace CustomPomodoro.Components.Reusable
                 }
                 else
                 {
-                    PomSetFileOps.CreateNewSaveFile(NewPomodoroSet);
+                    PomSetSaveFileOps.CreateNewSaveFile(NewPomodoroSet);
                 }
             }
             

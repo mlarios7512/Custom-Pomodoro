@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CustomPomodoro.Models
 {
-    public class PomoderoSet
+    public class PomodoroSet
     {
         public string Id { get; set; }
         public string Name { get; set; } = null;

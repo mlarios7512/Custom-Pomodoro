@@ -33,7 +33,7 @@ namespace CustomPomodoro.Components.Pages
 
 
         //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
-        public PomoderoSet CurPomodoroSet { get; set; } = new();
+        public PomodoroSet CurPomodoroSet { get; set; } = new();
         private string BgColor = NoActivityBgColor;
         public string CurWorkStateDisplay { get; set; } = "Next session: Work";  //"Work", "Short Break", or "Long Break".
         public string CountdownTimerDisplay { get; set; } = "00:00";
@@ -48,7 +48,7 @@ namespace CustomPomodoro.Components.Pages
             CountdownTimerDisplay = CurPomodoroSet.WorkTime;
         }
 
-        public void SetUpForTimerPropertiesForWork(PomoderoSet pomoSet) 
+        public void SetUpForTimerPropertiesForWork(PomodoroSet pomoSet) 
         {
             CurWorkStateDisplay = "Current session: Work";
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(pomoSet.WorkTime);
@@ -62,7 +62,7 @@ namespace CustomPomodoro.Components.Pages
                 NextWorkState = WorkState.ShortBreak;
         }
 
-        public void SetUpTimerPropertiesForCorrectBreak(PomoderoSet pomoSet) 
+        public void SetUpTimerPropertiesForCorrectBreak(PomodoroSet pomoSet) 
         {
             NextWorkState = WorkState.Work;
             if (SessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
@@ -92,7 +92,7 @@ namespace CustomPomodoro.Components.Pages
             ActualCountdownTimer.Enabled = true;
         }
 
-        public async Task EndSessionAndTimer(PomoderoSet pomoSet) 
+        public async Task EndSessionAndTimer(PomodoroSet pomoSet) 
         {
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
@@ -135,7 +135,7 @@ namespace CustomPomodoro.Components.Pages
 
         }
 
-        public async Task StartTimer(PomoderoSet pomoSet)
+        public async Task StartTimer(PomodoroSet pomoSet)
         {
             if (NextWorkState != WorkState.Work)
             {

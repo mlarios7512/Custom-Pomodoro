@@ -11,7 +11,7 @@
         <section id="other-sets" class="col-xl-3 col-sm-12 my-5">
             <h4 class="mb-4">My sets</h4>
             <div class="bg-secondary">
-                <PomodoroSetPreview SetsToPreview="TestSet" />
+                <PomodoroSetPreview SetsToPreview="UserPomodoroSets" />
             </div>
         </section>
     </div>
@@ -19,5 +19,11 @@
 
 @code{
     //Not sure how save files will be loaded in yet. Assuming something like this:
-    public List<PomoderoSet> TestSet { get; set; } = new();
+    // public List<PomoderoSet> TestSet { get; set; } = new List<PomoderoSet>();
+    // public List<PomodoroSet> UserPomodoroSets { get; set; } = new ();
+    // UserPomodoroSets = GetExistingPomodoroSets();
+    // string JsonSavePath = Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json");
+    // string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
+
+
 }
