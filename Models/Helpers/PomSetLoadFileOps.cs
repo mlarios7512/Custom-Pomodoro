@@ -18,7 +18,6 @@ namespace CustomPomodoro.Models.Helpers
                 return new List<PomodoroSet>();
 
             return ExistingPomLists;
-            //throw new NotImplementedException();
         }
     }
 }

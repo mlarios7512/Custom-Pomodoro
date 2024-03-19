@@ -1,5 +1,6 @@
 ﻿@using CustomPomodoro.Components.Reusable;
 @using CustomPomodoro.Models;
+@using CustomPomodoro.Models.Helpers;
 
 @page "/Pomodorosets"
 
@@ -19,11 +20,7 @@
 
 @code{
     //Not sure how save files will be loaded in yet. Assuming something like this:
-    // public List<PomoderoSet> TestSet { get; set; } = new List<PomoderoSet>();
-    // public List<PomodoroSet> UserPomodoroSets { get; set; } = new ();
-    // UserPomodoroSets = GetExistingPomodoroSets();
-    // string JsonSavePath = Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json");
-    // string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
 
+    public List<PomodoroSet> UserPomodoroSets { get; set; } = PomSetLoadFileOps.GetExistingPomodoroSets();
 
 }
