@@ -1,20 +1,28 @@
 ﻿@using CustomPomodoro.Models;
 
+<head>
+    <link rel="stylesheet" href="css/pomosetpreview.css" />
+</head>
+
 @{
     if (SetsToPreview.Count > 0)
     {
 
         foreach (PomodoroSet set in SetsToPreview)
         {
-            <div id="@set.Id">
+            <div id="@set.Id" class="my-5 p-3 border-success rounded preview-container">
                 <h5 class="fw">@set.Name</h5>
+                <p>Work time: @set.WorkTime</p>
+                <p>Short time: @set.ShortBreak</p>
+                <p>Long time: @set.LongBreak</p>
+                
             </div>
         }
 
     }
     else
     {
-        <p class="fst-italic">(You don't have any sets.)</p>
+        <p class="fst-italic">(No sets found.)</p>
     }
 }
 
