@@ -113,7 +113,7 @@ namespace CustomPomodoro.Components.Pages
             {
                 CurWorkStateDisplay = "Current session: ";
 
-                //This "if-else" statement needs testing.
+                //This "if-else" statement needs testing
                 if (SessionCount + 1 >= CurPomodoroSet.RepsBeforeLongBreak)
                     NeedSetUpShortSession = false;
                 else
