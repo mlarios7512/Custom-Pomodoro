@@ -47,6 +47,23 @@ namespace CustomPomodoro.Components.Pages
         {
             CountdownTimerDisplay = CurPomodoroSet.WorkTime;
         }
+        public void NextSession()
+        {
+            if (NextWorkState == WorkState.Work || SessionCount <= 0)
+            {
+                ++SessionCount;
+            }
+            //else if (NextWorkState == WorkState.ShortBreak)
+            //{
+            //    //++SessionCount;
+            //}
+            if(NextWorkState == WorkState.LongBreak)
+            {
+                SessionCount = 0;
+            }
+
+            EndSessionAndTimer(CurPomodoroSet);
+        }
 
         public void SetUpForTimerPropertiesForWork(PomodoroSet pomoSet) 
         {
@@ -91,6 +108,24 @@ namespace CustomPomodoro.Components.Pages
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Enabled = true;
         }
+        public async Task EndSessionAndMakeItRepeatable() 
+        {
+            if(NextWorkState != WorkState.Work) 
+            {
+                NextWorkState = WorkState.Work;
+            }
+            else if (NextWorkState == WorkState.Work && SessionCount == 0)
+            {
+                Debug.WriteLine("Reached it");
+                NextWorkState = WorkState.LongBreak;
+            }
+            else if(NextWorkState == WorkState.Work && SessionCount > 0) 
+            {
+                NextWorkState = WorkState.ShortBreak;
+            }
+           
+            EndSessionAndTimer(CurPomodoroSet);
+        }
 
         public async Task EndSessionAndTimer(PomodoroSet pomoSet) 
         {
@@ -98,9 +133,10 @@ namespace CustomPomodoro.Components.Pages
             ActualCountdownTimer.Enabled = false;
             BgColor = PomTimerHelpers.TransitionToColor(NoActivityBgColor);
 
-            if (NextWorkState == WorkState.Work)
+            //The original (and working version was: if (NextWorkState == WorkState.Work)
+            if (NextWorkState != WorkState.Work)
             {
-                if (SessionCount == 0)
+                if (NextWorkState == WorkState.LongBreak)
                 {
                     Debug.WriteLine("Long break started.");
                     NextWorkState = WorkState.LongBreak;
@@ -111,7 +147,7 @@ namespace CustomPomodoro.Components.Pages
 
                     SessionCount = CurPomodoroSet.RepsBeforeLongBreak;
                 }
-                else 
+                else if(NextWorkState == WorkState.ShortBreak)
                 {
                     Debug.WriteLine("Short break started");
                     NextWorkState = WorkState.ShortBreak;

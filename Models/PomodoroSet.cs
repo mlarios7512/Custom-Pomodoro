@@ -10,9 +10,9 @@ namespace CustomPomodoro.Models
     {
         public string Id { get; set; }
         public string Name { get; set; } = null;
-        public string WorkTime { get; set; } = "25:00";
-        public string ShortBreak { get; set; } = "5:00";
-        public int RepsBeforeLongBreak { get; set; } = 3;
-        public string LongBreak { get; set; } = "15:00";
+        public string WorkTime { get; set; } = "0:05";
+        public string ShortBreak { get; set; } = "0:02";
+        public int RepsBeforeLongBreak { get; set; } = 2;
+        public string LongBreak { get; set; } = "0:07";
     }
 }
