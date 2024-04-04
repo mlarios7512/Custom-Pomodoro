@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static CustomPomodoro.Components.Pages.PomTimer;
+using static Microsoft.Maui.ApplicationModel.Permissions;
 
 namespace CustomPomodoro.Models.Helpers
 {

@@ -47,22 +47,40 @@ namespace CustomPomodoro.Components.Pages
         {
             CountdownTimerDisplay = CurPomodoroSet.WorkTime;
         }
+
+
+
+
+        //INCOMPLETE: Works fine for cases where the timer is running. Does NOT work in cases where the timer is "TimerState.NotStarted".
         public void NextSession()
         {
-            if (NextWorkState == WorkState.Work || SessionCount <= 0)
+            if(MainTimerState == TimerState.NotStarted) 
             {
-                ++SessionCount;
-            }
-            //else if (NextWorkState == WorkState.ShortBreak)
-            //{
-            //    //++SessionCount;
-            //}
-            if(NextWorkState == WorkState.LongBreak)
-            {
-                SessionCount = 0;
-            }
+                if(NextWorkState == WorkState.Work) 
+                {
+                    SetUpTimerPropertiesForCorrectBreak(CurPomodoroSet, false);
+                    SessionCount++;
+                }
+                else 
+                {
+                    //Skip to work timer.
+                }
 
-            EndSessionAndTimer(CurPomodoroSet);
+
+            }
+            else 
+            {
+                if (NextWorkState == WorkState.Work || SessionCount <= 0)
+                {
+                    ++SessionCount;
+                }
+                if (NextWorkState == WorkState.LongBreak)
+                {
+                    SessionCount = 0;
+                }
+
+                EndSessionAndTimer(CurPomodoroSet);
+            }
         }
 
         public void SetUpForTimerPropertiesForWork(PomodoroSet pomoSet) 
@@ -79,23 +97,55 @@ namespace CustomPomodoro.Components.Pages
                 NextWorkState = WorkState.ShortBreak;
         }
 
-        public void SetUpTimerPropertiesForCorrectBreak(PomodoroSet pomoSet) 
+        public void SetUpTimerPropertiesForCorrectBreak(PomodoroSet pomoSet, bool setAsCurSession)
         {
-            NextWorkState = WorkState.Work;
-            if (SessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
+            bool? NeedSetUpShortSession = null;
+            if (setAsCurSession == false) 
             {
-                CurWorkStateDisplay = "Current session: Long break";
+                CurWorkStateDisplay = "Next session: ";
+                if (SessionCount + 1 >= CurPomodoroSet.RepsBeforeLongBreak)
+                    NeedSetUpShortSession = false;
+                else
+                    NeedSetUpShortSession = true;
+
+            }
+            else 
+            {
+                CurWorkStateDisplay = "Current session: ";
+
+                //This "if-else" statement needs testing.
+                if (SessionCount + 1 >= CurPomodoroSet.RepsBeforeLongBreak)
+                    NeedSetUpShortSession = false;
+                else
+                    NeedSetUpShortSession = true;
+            }
+                
+
+
+            if (NeedSetUpShortSession == false)
+            {
+                if (setAsCurSession == false)
+                    NextWorkState = WorkState.LongBreak;
+                
+                CurWorkStateDisplay += "Long break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
                 CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.LongBreak);
                 SessionCount = 0;
             }
             else
             {
-                CurWorkStateDisplay = "Current session: Short break";
+                if (setAsCurSession == false)
+                    NextWorkState = WorkState.ShortBreak;
+
+                CurWorkStateDisplay += "Short break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
                 CountdownTimerDisplay = SetCountdownTimer(CurPomodoroSet.ShortBreak);
             }
-            MainTimerState = TimerState.Started;
+
+            if (setAsCurSession == false)
+                MainTimerState = TimerState.NotStarted;
+            else
+                MainTimerState = TimerState.Started;
         }
 
         public async Task PauseTimer() 
@@ -175,8 +225,8 @@ namespace CustomPomodoro.Components.Pages
         {
             if (NextWorkState != WorkState.Work)
             {
-                NextWorkState = WorkState.Work;
-                if (SessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
+               
+                if (NextWorkState == WorkState.LongBreak)
                 {
                     CurWorkStateDisplay = "Current session: Long break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
@@ -184,13 +234,14 @@ namespace CustomPomodoro.Components.Pages
                     
                     BgColor = PomTimerHelpers.TransitionToColor(LongBreakBgColor);
                 }
-                else
+                else if(NextWorkState == WorkState.ShortBreak)
                 {
                     CurWorkStateDisplay = "Current session: Short break";
                     TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
                     BgColor = PomTimerHelpers.TransitionToColor(ShortBreakBgColor);
                 }
                 MainTimerState = TimerState.Started;
+                NextWorkState = WorkState.Work;
             }
             else 
             {
