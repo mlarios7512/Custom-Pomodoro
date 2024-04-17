@@ -36,8 +36,7 @@ namespace CustomPomodoro.Components.Pages
         //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
         public PomodoroSet CurPomodoroSet { get; set; } = new();
         private string BgColor = NoActivityBgColor;
-        public string CurWorkStateDisplay { get; set; } = "Next session: Work";  //"Work", "Short Break", or "Long Break".
-        public string[] AltWorkStateDisplay { get; set; } = { "Next session", "Work" };
+        public string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
         public string CountdownTimerDisplay { get; set; } = "00:00";
         public int TimerInSeconds { get; set; } = 0;
         public TimerState MainTimerState { get; set; } = TimerState.NotStarted;
@@ -48,7 +47,7 @@ namespace CustomPomodoro.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            CountdownTimerDisplay = CurPomodoroSet.WorkTime;
+            CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.WorkTime);
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
         }
 
@@ -73,12 +72,11 @@ namespace CustomPomodoro.Components.Pages
             AltWorkStateDisplay[1] = "Work";
             if (setAsCurSession == true)
             {
-                CurWorkStateDisplay = "Current session: Work";
+
                 AltWorkStateDisplay[0] = "Current session: ";
             }
             else
             {
-                CurWorkStateDisplay = "Next session: Work";
                 AltWorkStateDisplay[0] = "Next session: ";
             }
             //Somehow the "TimeInSeconds" variable came up as "-1" on first timer tick.
@@ -108,7 +106,6 @@ namespace CustomPomodoro.Components.Pages
             if (setAsCurSession == false)
             {
                 AltWorkStateDisplay[0] = "Next session: ";
-                CurWorkStateDisplay = "Next session: ";
                 if (CompletedWorkSessionCount + 1 >= CurPomodoroSet.RepsBeforeLongBreak)
                     NeedSetUpShortSession = false;
                 else
@@ -117,7 +114,6 @@ namespace CustomPomodoro.Components.Pages
             }
             else
             {
-                CurWorkStateDisplay = "Current session: ";
                 AltWorkStateDisplay[0] = "Current session: ";
 
                 //This "if-else" statement needs testing. Also, need to make use of this in test cases.
@@ -135,7 +131,6 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.LongBreak;
 
                 AltWorkStateDisplay[1] = "Long break";
-                CurWorkStateDisplay += "Long break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
                 CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.LongBreak);
                 //CompletedWorkSessionCount = CurPomodoroSet.RepsBeforeLongBreak;
@@ -146,7 +141,6 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.ShortBreak;
 
                 AltWorkStateDisplay[1] = "Short break";
-                CurWorkStateDisplay += "Short break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
                 CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.ShortBreak);
             }
@@ -217,6 +211,7 @@ namespace CustomPomodoro.Components.Pages
         {
             //Might be better off using a "switch .. case" statement instead.
             //Error here. Does not correctly prepare work states in moments where the "&& ..." part of the clause fails.
+
             if (NextWorkState == WorkState.Work &&
                 (LastWorkState == WorkState.None || LastWorkState == WorkState.LongBreak || LastWorkState == WorkState.ShortBreak) )
             {
