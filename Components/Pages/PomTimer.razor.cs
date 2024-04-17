@@ -178,9 +178,30 @@ namespace CustomPomodoro.Components.Pages
             //}
 
             //EndSessionAndTimer(CurPomodoroSet);
+            EndSessionAndTimer();
         }
 
-        public async Task EndSessionAndTimer(PomodoroSet pomoSet)
+        public async Task SetUpShortBreak() 
+        {
+            AltWorkStateDisplay[0] = "Next session: ";
+            AltWorkStateDisplay[1] = "Short break";
+            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
+            CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.ShortBreak);
+
+            MainTimerState = TimerState.NotStarted;
+        }
+
+        public async Task SetUpLongBreak() 
+        {
+            AltWorkStateDisplay[0] = "Next session: ";
+            AltWorkStateDisplay[1] = "Long break";
+            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
+            CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.LongBreak);
+
+            MainTimerState = TimerState.NotStarted;
+        }
+
+        public async Task EndSessionAndTimer(/*PomodoroSet pomoSet*/)
         {
             //MainTimerState = TimerState.NotStarted;
             //ActualCountdownTimer.Enabled = false;
@@ -204,6 +225,41 @@ namespace CustomPomodoro.Components.Pages
             //    SessionCount--;
             //}
             //MainTimerState = TimerState.NotStarted;
+
+            //NEW ATTEMPT (below)----------------------
+            MainTimerState = TimerState.NotStarted;
+            ActualCountdownTimer.Enabled = false;
+
+            //NEED TO X2 CHECK THIS TO MAKE SURE NOTHING IS MISSING.
+            switch (LastWorkState) 
+            {
+                case WorkState.Work:
+
+                    SetUpForTimerPropertiesForWork(false);
+                    NextWorkState = WorkState.Work;
+
+                    //Keep in mind the CompletedSessionCount should've been incremented when the previous timer ended.
+                    if (CompletedWorkSessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
+                        LastWorkState = WorkState.LongBreak;
+                    else
+                        LastWorkState = WorkState.ShortBreak;
+
+                    break;
+
+                case WorkState.ShortBreak:
+                    SetUpShortBreak();
+                    NextWorkState = WorkState.ShortBreak;
+                    LastWorkState = WorkState.Work;
+                    break;
+
+                case WorkState.LongBreak:
+                    SetUpLongBreak();
+                    NextWorkState = WorkState.LongBreak;
+                    LastWorkState = WorkState.Work;
+                    break;
+                
+
+            }
 
         }
 
@@ -258,10 +314,8 @@ namespace CustomPomodoro.Components.Pages
                 else
                 {
                     ActualCountdownTimer.Enabled = false;
-                    BgColor = PomTimerHelpers.TransitionToColor(NoActivityBgColor);
+                    //BgColor = PomTimerHelpers.TransitionToColor(NoActivityBgColor);
 
-
-                    //Switch attempt (below)-----------------------------
                     if (CompletedWorkSessionCount + 1 > CurPomodoroSet.RepsBeforeLongBreak)
                         CompletedWorkSessionCount = 0;
 
@@ -283,45 +337,14 @@ namespace CustomPomodoro.Components.Pages
                             //Next work state is still a short break. (We set it from the start of the timer in case the user skips that session).
                             break;
 
-                        case WorkState.LongBreak:
-                            SetUpTimerPropertiesForCorrectBreak(false);
-                            LastWorkState = WorkState.Work;
-                            CompletedWorkSessionCount++;
-                            //Next work state is still a long break. (We set it from the start of the timer in case the user skips that session).
-                            break;
+                        //TURNS OUT THIS WAS NOT BEING RUN WHEN TIMER IS IN FULL CYCLE! -- (but it works correctly w/o it)
+                        //case WorkState.LongBreak:
+                        //    SetUpTimerPropertiesForCorrectBreak(false);
+                        //    LastWorkState = WorkState.Work;
+                        //    CompletedWorkSessionCount++;
+                        //    //Next work state is still a long break. (We set it from the start of the timer in case the user skips that session).
+                        //    break;
                     }
-
-                    //Switch attempt (above)----------------------------
-
-                    //Non-Switch version (below)----------------------
-
-                    //if (NextWorkState == WorkState.Work)
-                    //{
-                    //    SetUpForTimerPropertiesForWork(false);
-
-                    //    if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
-                    //        LastWorkState = WorkState.ShortBreak;
-                    //    else
-                    //        LastWorkState = WorkState.LongBreak;
-                    //}
-
-                    //else if (NextWorkState == WorkState.ShortBreak)
-                    //{
-                    //    SetUpTimerPropertiesForCorrectBreak(false);
-                    //    LastWorkState = WorkState.ShortBreak;
-                    //    CompletedWorkSessionCount++;
-                    //    //Next work state is still a short break. (We set it from the start of the timer in case the user skips that session).
-                    //}
-
-                    //else if (NextWorkState == WorkState.LongBreak)
-                    //{
-                    //    SetUpTimerPropertiesForCorrectBreak(false);
-                    //    LastWorkState = WorkState.Work;
-                    //    CompletedWorkSessionCount++;
-                    //    //Next work state is still a long break. (We set it from the start of the timer in case the user skips that session).
-                    //}
-
-                    //Non-Switch version (above)----------------------
 
                     MainTimerState = TimerState.NotStarted;
                 }
