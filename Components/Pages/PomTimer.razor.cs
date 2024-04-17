@@ -57,14 +57,42 @@ namespace CustomPomodoro.Components.Pages
         //INCOMPLETE: Works fine for cases where the timer is running. Does NOT work in cases where the timer is "TimerState.NotStarted".
         public void NextSession()
         {
-            if (NextWorkState == WorkState.Work)
+            if(MainTimerState == TimerState.NotStarted) 
             {
 
             }
-            else
+            else 
             {
+                switch (NextWorkState)
+                {
+                    case WorkState.Work:
+                        if (LastWorkState == WorkState.LongBreak)
+                            CompletedWorkSessionCount = 0;
 
+                        SetUpForTimerPropertiesForWork(false);
+
+                        if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
+                            LastWorkState = WorkState.ShortBreak;
+                        else
+                            LastWorkState = WorkState.LongBreak;
+                        break;
+
+                    case WorkState.ShortBreak:
+                        SetUpTimerPropertiesForCorrectBreak(false);
+                        LastWorkState = WorkState.ShortBreak;
+                        CompletedWorkSessionCount++;
+
+                        break;
+
+                    case WorkState.LongBreak:
+                        NextWorkState = WorkState.Work;
+                        LastWorkState = WorkState.LongBreak;
+                        SetUpForTimerPropertiesForWork(false);
+
+                        break;
+                }
             }
+
         }
 
         public void SetUpForTimerPropertiesForWork(bool setAsCurSession)
