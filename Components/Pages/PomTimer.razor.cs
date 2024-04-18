@@ -51,15 +51,37 @@ namespace CustomPomodoro.Components.Pages
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
         }
 
-
-
-
-        //INCOMPLETE: Works fine for cases where the timer is running. Does NOT work in cases where the timer is "TimerState.NotStarted".
         public void NextSession()
         {
             if(MainTimerState == TimerState.NotStarted) 
             {
+                switch (NextWorkState) 
+                {
+                    case WorkState.Work:
+                        SetUpTimerPropertiesForCorrectBreak(false);
+                        CompletedWorkSessionCount++;
 
+                        //NEED TO VERIFY THAT THIS CONDITIONAL LINE WORKS:
+                        if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
+                            NextWorkState = WorkState.ShortBreak;
+                        else
+                            NextWorkState = WorkState.LongBreak;
+
+                        break;
+
+                    case WorkState.ShortBreak:
+                        NextWorkState = WorkState.Work;
+                        LastWorkState = WorkState.ShortBreak;
+                        SetUpForTimerPropertiesForWork(false);
+                        break;
+
+                    case WorkState.LongBreak:
+                        NextWorkState = WorkState.Work;
+                        LastWorkState = WorkState.LongBreak;
+                        SetUpForTimerPropertiesForWork(false);
+                        CompletedWorkSessionCount = 0;
+                        break;
+                }
             }
             else 
             {
@@ -107,7 +129,7 @@ namespace CustomPomodoro.Components.Pages
             {
                 AltWorkStateDisplay[0] = "Next session: ";
             }
-            //Somehow the "TimeInSeconds" variable came up as "-1" on first timer tick.
+
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
             CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.WorkTime);
 
@@ -119,13 +141,6 @@ namespace CustomPomodoro.Components.Pages
             {
                 MainTimerState = TimerState.NotStarted;
             }
-            //MainTimerState = TimerState.Started;
-
-            ////May require testing.
-            //if (SessionCount > CurPomodoroSet.RepsBeforeLongBreak)
-            //    NextWorkState = WorkState.LongBreak;
-            //else
-            //    NextWorkState = WorkState.ShortBreak;
         }
 
         public void SetUpTimerPropertiesForCorrectBreak(bool setAsCurSession)
@@ -161,7 +176,6 @@ namespace CustomPomodoro.Components.Pages
                 AltWorkStateDisplay[1] = "Long break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
                 CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.LongBreak);
-                //CompletedWorkSessionCount = CurPomodoroSet.RepsBeforeLongBreak;
             }
             else
             {
@@ -189,25 +203,6 @@ namespace CustomPomodoro.Components.Pages
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Enabled = true;
         }
-        public async Task EndSessionAndMakeItRepeatable()
-        {
-            //if(NextWorkState != WorkState.Work) 
-            //{
-            //    NextWorkState = WorkState.Work;
-            //}
-            //else if (NextWorkState == WorkState.Work && SessionCount == 0)
-            //{
-            //    Debug.WriteLine("Reached it");
-            //    NextWorkState = WorkState.LongBreak;
-            //}
-            //else if(NextWorkState == WorkState.Work && SessionCount > CurPomodoroSet.RepsBeforeLongBreak)
-            //{
-            //    NextWorkState = WorkState.ShortBreak;
-            //}
-
-            //EndSessionAndTimer(CurPomodoroSet);
-            EndSessionAndTimer();
-        }
 
         public async Task SetUpShortBreak() 
         {
@@ -229,36 +224,11 @@ namespace CustomPomodoro.Components.Pages
             MainTimerState = TimerState.NotStarted;
         }
 
-        public async Task EndSessionAndTimer(/*PomodoroSet pomoSet*/)
+        public async Task CancelSessionAndMakeItRepeatable()
         {
-            //MainTimerState = TimerState.NotStarted;
-            //ActualCountdownTimer.Enabled = false;
-            //BgColor = PomTimerHelpers.TransitionToColor(NoActivityBgColor);
-
-            ////The original (and working version was: if (NextWorkState == WorkState.Work)
-            //if (NextWorkState != WorkState.Work)
-            //{
-
-            //   SetUpTimerPropertiesForCorrectBreak(CurPomodoroSet, false);
-
-
-            //}
-            //else {
-            //    NextWorkState = WorkState.Work;
-
-            //    CurWorkStateDisplay = "Next session: Work";
-            //    TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
-            //    CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.WorkTime);
-
-            //    SessionCount--;
-            //}
-            //MainTimerState = TimerState.NotStarted;
-
-            //NEW ATTEMPT (below)----------------------
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
 
-            //NEED TO X2 CHECK THIS TO MAKE SURE NOTHING IS MISSING.
             switch (LastWorkState) 
             {
                 case WorkState.Work:
