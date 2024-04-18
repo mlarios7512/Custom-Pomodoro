@@ -29,7 +29,6 @@
 
 <div class="text-center fixed-bottom mb-5">
     <div class="btn-group gap-5 mb-5" role="group" aria-label="Basic example">
-
         @{
             if (MainTimerState == TimerState.NotStarted)
             {
@@ -38,18 +37,18 @@
             if (MainTimerState == TimerState.Paused)
             {
                 <button class="btn btn-secondary" style="width:40vw" @onclick="() => ContinueTimer()">Continue</button>
-                // <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => EndSessionAndTimer(CurPomodoroSet)">End session</button>
-                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => EndSessionAndMakeItRepeatable()">End session</button>
+                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
             }
             if (MainTimerState == TimerState.Started)
             {
                 <button class="btn custom-cancel-btn" style="width:40vw" @onclick="() => PauseTimer()">Pause</button>
-                // <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => EndSessionAndTimer(CurPomodoroSet)">End session</button>
-                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => EndSessionAndMakeItRepeatable()">End session</button>
+                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
             }
-
-            <button @onclick="() => NextSession()">Next session</button>
         }
+
+        <button @onclick="() => NextSession()">Next session</button>
+        
+
     </div>
 </div>
 
