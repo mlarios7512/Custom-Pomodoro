@@ -50,6 +50,26 @@ namespace CustomPomodoro.Components.Pages
             CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.WorkTime);
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
         }
+        public void PrevSession() 
+        {
+            if(MainTimerState == TimerState.NotStarted) 
+            {
+                switch (LastWorkState)
+                {
+                    //Do NOT let the user go back if they try to use this to take a long break 1st (that does NOT make much sense).
+                    //(Plus, they could just use the "skip" feature to do that.)...
+
+
+                    case WorkState.LongBreak:
+                        NextWorkState = WorkState.LongBreak;
+                        LastWorkState = WorkState.Work;
+                        CompletedWorkSessionCount = CurPomodoroSet.RepsBeforeLongBreak;
+                        SetUpLongBreak();
+                        break;
+                }
+            }
+            //Make sure to hide this button if the timer has already started.
+        }
 
         public void RestartFullPomSession() 
         {
