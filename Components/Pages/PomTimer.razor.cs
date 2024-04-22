@@ -50,6 +50,8 @@ namespace CustomPomodoro.Components.Pages
             CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.WorkTime);
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
         }
+
+        //Noteable event: suffers from a glitch where: Sometimes gives you a "short break" when it should give you a "Long break".
         public void PrevSession() 
         {
             if(MainTimerState == TimerState.NotStarted) 
@@ -59,10 +61,6 @@ namespace CustomPomodoro.Components.Pages
                     case WorkState.Work:
                         NextWorkState = WorkState.Work;
 
-                        //if (CompletedWorkSessionCount <= 0)
-                        //{
-                        //    LastWorkState = WorkState.Work;
-                        //}
                         if(CompletedWorkSessionCount -1 <= 0) 
                         {
                             LastWorkState = WorkState.LongBreak;
@@ -75,7 +73,7 @@ namespace CustomPomodoro.Components.Pages
                             LastWorkState = WorkState.ShortBreak;
                             CompletedWorkSessionCount--;
                         }
-                        SetUpWork(false);
+                        SetUpWork();
                         break;
 
                     case WorkState.ShortBreak:
@@ -104,7 +102,7 @@ namespace CustomPomodoro.Components.Pages
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
             CompletedWorkSessionCount = 0;
-            SetUpWork(false);
+            SetUpWork();
 
             NextWorkState = WorkState.Work;
 
@@ -122,7 +120,7 @@ namespace CustomPomodoro.Components.Pages
                 switch (NextWorkState) 
                 {
                     case WorkState.Work: //May inccorectly set "LastWorkState" to "ShortBreak? (need to verify)
-                        SetUpTimerPropertiesForCorrectBreak(false);
+                        SetUpTimerPropertiesForCorrectBreak();
                         CompletedWorkSessionCount++;
 
                         //NEED TO VERIFY THAT THIS CONDITIONAL LINE WORKS (New note: I'm not even sure this gets used):
@@ -138,13 +136,13 @@ namespace CustomPomodoro.Components.Pages
                     case WorkState.ShortBreak:
                         NextWorkState = WorkState.Work;
                         LastWorkState = WorkState.ShortBreak;
-                        SetUpWork(false);
+                        SetUpWork();
                         break;
 
                     case WorkState.LongBreak:
                         NextWorkState = WorkState.Work;
                         LastWorkState = WorkState.LongBreak;
-                        SetUpWork(false);
+                        SetUpWork();
                         CompletedWorkSessionCount = 0;
                         break;
                 }
@@ -157,7 +155,7 @@ namespace CustomPomodoro.Components.Pages
                         if (LastWorkState == WorkState.LongBreak)
                             CompletedWorkSessionCount = 0;
 
-                        SetUpWork(false);
+                        SetUpWork();
 
                         if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
                             LastWorkState = WorkState.ShortBreak;
@@ -166,7 +164,7 @@ namespace CustomPomodoro.Components.Pages
                         break;
 
                     case WorkState.ShortBreak:
-                        SetUpTimerPropertiesForCorrectBreak(false);
+                        SetUpTimerPropertiesForCorrectBreak();
                         LastWorkState = WorkState.ShortBreak;
                         CompletedWorkSessionCount++;
 
@@ -175,7 +173,7 @@ namespace CustomPomodoro.Components.Pages
                     case WorkState.LongBreak:
                         NextWorkState = WorkState.Work;
                         LastWorkState = WorkState.LongBreak;
-                        SetUpWork(false);
+                        SetUpWork();
 
                         break;
                 }
@@ -183,61 +181,36 @@ namespace CustomPomodoro.Components.Pages
 
         }
 
-        public void SetUpWork(bool setAsCurSession)
+        public void SetUpWork()
         {
             AltWorkStateDisplay[1] = "Work";
-            if (setAsCurSession == true)
-            {
-
-                AltWorkStateDisplay[0] = "Current session: ";
-            }
-            else
-            {
-                AltWorkStateDisplay[0] = "Next session: ";
-            }
-
+            AltWorkStateDisplay[0] = "Next session: ";
+            
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
             CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.WorkTime);
 
-            if (setAsCurSession == true)
-            {
-                MainTimerState = TimerState.Started;
-            }
-            else
-            {
+
                 MainTimerState = TimerState.NotStarted;
-            }
+            
         }
 
-        public void SetUpTimerPropertiesForCorrectBreak(bool setAsCurSession)
+        /// <summary>
+        /// Sets up a "short break" or "long break" (depending on current work session count). The only helper function which controlls "NextWorkState" & "LastWorkState" (all others
+        /// are determined by a function triggered by the press of a button). 
+        /// </summary>
+        public void SetUpTimerPropertiesForCorrectBreak()
         {
             bool? NeedSetUpShortSession = null;
-            if (setAsCurSession == false)
-            {
-                AltWorkStateDisplay[0] = "Next session: ";
-                if (CompletedWorkSessionCount + 1 >= CurPomodoroSet.RepsBeforeLongBreak)
-                    NeedSetUpShortSession = false;
-                else
-                    NeedSetUpShortSession = true;
 
-            }
+            AltWorkStateDisplay[0] = "Next session: ";
+            if (CompletedWorkSessionCount + 1 >= CurPomodoroSet.RepsBeforeLongBreak)
+                NeedSetUpShortSession = false;
             else
-            {
-                AltWorkStateDisplay[0] = "Current session: ";
-
-                //This "if-else" statement needs testing. Also, need to make use of this in test cases.
-                if (CompletedWorkSessionCount + 1 >= CurPomodoroSet.RepsBeforeLongBreak)
-                    NeedSetUpShortSession = false;
-                else
-                    NeedSetUpShortSession = true;
-            }
-
-
+                NeedSetUpShortSession = true;
 
             if (NeedSetUpShortSession == false)
             {
-                if (setAsCurSession == false)
-                    NextWorkState = WorkState.LongBreak;
+                NextWorkState = WorkState.LongBreak;
 
                 AltWorkStateDisplay[1] = "Long break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.LongBreak);
@@ -245,18 +218,14 @@ namespace CustomPomodoro.Components.Pages
             }
             else
             {
-                if (setAsCurSession == false)
-                    NextWorkState = WorkState.ShortBreak;
+                 NextWorkState = WorkState.ShortBreak;
 
                 AltWorkStateDisplay[1] = "Short break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.ShortBreak);
                 CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.ShortBreak);
             }
 
-            if (setAsCurSession == false)
-                MainTimerState = TimerState.NotStarted;
-            else
-                MainTimerState = TimerState.Started;
+            MainTimerState = TimerState.NotStarted;
         }
 
         public async Task PauseTimer()
@@ -299,7 +268,7 @@ namespace CustomPomodoro.Components.Pages
             {
                 case WorkState.Work:
 
-                    SetUpWork(false);
+                    SetUpWork();
                     NextWorkState = WorkState.Work;
 
                     //Keep in mind the CompletedSessionCount should've been incremented when the previous timer ended.
@@ -383,7 +352,7 @@ namespace CustomPomodoro.Components.Pages
                     switch (NextWorkState) 
                     {
                         case WorkState.Work:
-                            SetUpWork(false);
+                            SetUpWork();
 
                             if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
                                 LastWorkState = WorkState.ShortBreak;
@@ -392,7 +361,7 @@ namespace CustomPomodoro.Components.Pages
                             break;
 
                         case WorkState.ShortBreak:
-                            SetUpTimerPropertiesForCorrectBreak(false);
+                            SetUpTimerPropertiesForCorrectBreak();
                             LastWorkState = WorkState.ShortBreak;
                             CompletedWorkSessionCount++;
                             //Next work state is still a short break. (We set it from the start of the timer in case the user skips that session).
