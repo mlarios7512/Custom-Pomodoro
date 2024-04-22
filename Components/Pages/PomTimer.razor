@@ -7,6 +7,10 @@
     }
 </style>
 
+<section class="d-flex flex-row text-center mb-5">
+    <button class="" @onclick="() => NextSession()">Skip ></button>
+</section>
+
 <section>
     <div class="container mb-5">
         <div class="row gap-xs-4">
@@ -26,31 +30,29 @@
         }
     </div>
 </section>
+<section class="fixed-bottom mb-5">
+    <div class="d-flex flex-column" id="primary-btn-flex">
 
-<div class="text-center fixed-bottom mb-5">
-    <div class="btn-group gap-5 mb-5" role="group" aria-label="Basic example">
-        @{
-            if (MainTimerState == TimerState.NotStarted)
-            {
-                <button class="btn btn-custom-start" style="width:85vw" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
+        <div class="btn-group gap-5 mb-5" role="group" aria-label="Basic example" style="width:85vw">
+            @{
+                if (MainTimerState == TimerState.NotStarted)
+                {
+                    <button class="btn btn-custom-start" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
+                }
+                if (MainTimerState == TimerState.Paused)
+                {
+                    <button class="btn btn-secondary" @onclick="() => ContinueTimer()">Continue</button>
+                    <button class="btn btn-custom-stop" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
+                }
+                if (MainTimerState == TimerState.Started)
+                {
+                    <button class="btn custom-cancel-btn" @onclick="() => PauseTimer()">Pause</button>
+                    <button class="btn btn-custom-stop" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
+                }
             }
-            if (MainTimerState == TimerState.Paused)
-            {
-                <button class="btn btn-secondary" style="width:40vw" @onclick="() => ContinueTimer()">Continue</button>
-                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
-            }
-            if (MainTimerState == TimerState.Started)
-            {
-                <button class="btn custom-cancel-btn" style="width:40vw" @onclick="() => PauseTimer()">Pause</button>
-                <button class="btn btn-custom-stop" style="width:40vw" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
-            }
-        }
-
-        <button @onclick="() => NextSession()">Next session</button>
-        
-
+        </div>
     </div>
-</div>
+</section>
 
 @code {
     // string j = Path.Combine(AppContext.BaseDirectory, "preferredDir.json");
