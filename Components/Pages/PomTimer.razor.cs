@@ -51,6 +51,22 @@ namespace CustomPomodoro.Components.Pages
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
         }
 
+        public void RestartFullPomSession() 
+        {
+            MainTimerState = TimerState.NotStarted;
+            ActualCountdownTimer.Enabled = false;
+            CompletedWorkSessionCount = 0;
+            SetUpForTimerPropertiesForWork(false);
+
+            NextWorkState = WorkState.Work;
+
+            //Keep in mind the CompletedSessionCount should've been incremented when the previous timer ended.
+            if (CompletedWorkSessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
+                LastWorkState = WorkState.LongBreak;
+            else
+                LastWorkState = WorkState.ShortBreak;
+        }
+
         public void NextSession()
         {
             if(MainTimerState == TimerState.NotStarted) 
@@ -263,9 +279,6 @@ namespace CustomPomodoro.Components.Pages
 
         public async Task StartTimer(PomodoroSet pomoSet)
         {
-            //Might be better off using a "switch .. case" statement instead.
-            //Error here. Does not correctly prepare work states in moments where the "&& ..." part of the clause fails.
-
             if (NextWorkState == WorkState.Work &&
                 (LastWorkState == WorkState.None || LastWorkState == WorkState.LongBreak || LastWorkState == WorkState.ShortBreak) )
             {
@@ -334,14 +347,6 @@ namespace CustomPomodoro.Components.Pages
                             CompletedWorkSessionCount++;
                             //Next work state is still a short break. (We set it from the start of the timer in case the user skips that session).
                             break;
-
-                        //TURNS OUT THIS WAS NOT BEING RUN WHEN TIMER IS IN FULL CYCLE! -- (but it works correctly w/o it)
-                        //case WorkState.LongBreak:
-                        //    SetUpTimerPropertiesForCorrectBreak(false);
-                        //    LastWorkState = WorkState.Work;
-                        //    CompletedWorkSessionCount++;
-                        //    //Next work state is still a long break. (We set it from the start of the timer in case the user skips that session).
-                        //    break;
                     }
 
                     MainTimerState = TimerState.NotStarted;
