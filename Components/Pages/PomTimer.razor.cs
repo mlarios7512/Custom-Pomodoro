@@ -308,6 +308,8 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.ShortBreak;
                 else
                     NextWorkState = WorkState.LongBreak;
+
+                //Optional: Trigger a bgColor.
             }
             else
             {

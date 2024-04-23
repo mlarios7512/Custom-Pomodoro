@@ -15,6 +15,42 @@
     transform: translate(-50%, -50%);
 }
 
+#set-info-UI-display{
+    position:relative;
+}
+
+#test-bar {
+    position: absolute;
+    top: 20%;
+    width: 20%;
+    background-color: #7c0a02;
+    background: linear-gradient(to right, #18181b, #7c0a02);
+    border-radius: 40% 10% 10% 40%;
+    animation: activity-in-progress infinite 4s ease-in-out alternate;
+}
+
+@keyframes activity-in-progress{
+    0%{
+
+        left:0%;
+    }
+    100%{
+        left:80%;
+    }
+}
+
+@keyframes pulse {
+    0%{
+        background-color: yellow;
+    }
+    50%{
+        background-color: orange;
+    }
+    100%{
+        background-color: red;
+    }
+}
+
 .btn-custom-start {
     background-color: #166534;
     color: white;
