@@ -6,9 +6,17 @@
         transition: background-color 2s ease-out;
     }
 
-    @{
-        
+    @@keyframes activity-in-progress {
+    0%{
+        background-color: hsl(@CurActivityBarColor 99% 27%);
     }
+    50%{
+        background-color: hsl(@CurActivityBarColor 99% 44%);
+    }
+    100%{
+        background-color: hsl(@CurActivityBarColor 99% 27%);
+    }
+}
 </style>
 
 <section class="d-flex flex-row text-center mb-5 gap-5">
@@ -20,9 +28,16 @@
     <button class="" @onclick="() => NextSession()">Skip ></button>
 </section>
 
-<div id="color-bar">
-    &nbsp
-</div>
+@{
+    if(MainTimerState != TimerState.NotStarted)
+    {
+        <div id="color-bar">
+            &nbsp
+        </div>
+    }
+
+}
+
 
 <section id="set-info-UI-display">
     <div class="container mb-5">

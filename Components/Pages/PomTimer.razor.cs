@@ -27,10 +27,16 @@ namespace CustomPomodoro.Components.Pages
             Work = 2
         }
 
+        //0 == RED
+        //266 == PURPLE
+        //191 == AQUA
+        //121 == GREEN
+        private const int WorkBarColor = 0;
+        private const int ShortBreakBarColor = 191;
+        private const int LongBreakBarColor = 121;
+
         private const string NoActivityBgColor = "#18181b";
-        private const string WorkBgColor = "#a12a4e"; //de0043 //#991b1b
-        private const string ShortBreakBgColor = "#2e1065";
-        private const string LongBreakBgColor = "#0369a1";
+
 
 
         //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
@@ -44,6 +50,7 @@ namespace CustomPomodoro.Components.Pages
         private WorkState LastWorkState { get; set; } = WorkState.None;
         public System.Timers.Timer ActualCountdownTimer { get; set; } = new();
         public int CompletedWorkSessionCount { get; set; } = 0;
+        private int CurActivityBarColor = 0;
 
         protected override async Task OnInitializedAsync()
         {
@@ -305,15 +312,25 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.LongBreak;
 
                 //Optional: Trigger a bgColor.
+                CurActivityBarColor = WorkBarColor;
             }
             else
             {
-                if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
+                if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak) 
+                {
                     LastWorkState = WorkState.ShortBreak;
+                    CurActivityBarColor = ShortBreakBarColor;
+                }
+
                 else
+                {
                     LastWorkState = WorkState.LongBreak;
+                    CurActivityBarColor = LongBreakBarColor;
+                }
+                    
 
                 NextWorkState = WorkState.Work;
+
             }
 
             ActualCountdownTimer = new System.Timers.Timer(1000);
