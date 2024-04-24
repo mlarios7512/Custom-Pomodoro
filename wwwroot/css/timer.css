@@ -19,26 +19,60 @@
     position:relative;
 }
 
-#test-bar {
+#color-bar {
     position: absolute;
     top: 20%;
-    width: 20%;
-    background-color: #7c0a02;
-    background: linear-gradient(to right, #18181b, #7c0a02);
-    border-radius: 40% 10% 10% 40%;
-    animation: activity-in-progress infinite 4s ease-in-out alternate;
+    left:38%;
+    width: 25vw;
+    /*background-color: #7c0a02;*/
+    background-color: #18181b;
+/*    border-radius: 10% 10% 10% 10%;*/
+    transform:scaleY(50%);
+    animation: activity-in-progress infinite 4s ease-in-out normal;
 }
 
-@keyframes activity-in-progress{
-    0%{
-
-        left:0%;
+@keyframes activity-in-progress {
+    /*Work*/
+    0% {
+        background-color: #7c0a02;
     }
-    100%{
-        left:80%;
+    50% {
+        background-color: #c80202;
     }
+    100% {
+        background-color: #7c0a02;
+    }
+    /*Short break*/
+/*    0% {
+        background-color: #400ca0;
+    }
+    50% {
+        background-color: #300070;
+    }
+    100% {
+        background-color: #400ca0;
+    }*/
+    /*Short break (option 2)*/
+/*    0% {
+        background-color: #6b6200;
+    }
+    50% {
+        background-color: #baaa01;
+    }
+    100% {
+        background-color: #6b6200;
+    }*/
+    /*Long break*/
+/*    0% {
+        background-color: #01537f;
+    }
+    50% {
+        background-color: #0074b2;
+    }
+    100% {
+        background-color: #01537f;
+    }*/
 }
-
 @keyframes pulse {
     0%{
         background-color: yellow;
