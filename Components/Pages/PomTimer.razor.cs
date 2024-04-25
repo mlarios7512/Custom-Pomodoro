@@ -21,7 +21,6 @@ namespace CustomPomodoro.Components.Pages
 
         public enum WorkState
         {
-            None = -1, //Used for "LastWorkState" when app first starts up.
             ShortBreak = 0,
             LongBreak = 1,
             Work = 2
@@ -47,7 +46,7 @@ namespace CustomPomodoro.Components.Pages
         public int TimerInSeconds { get; set; } = 0;
         public TimerState MainTimerState { get; set; } = TimerState.NotStarted;
         private WorkState NextWorkState { get; set; } = WorkState.Work;
-        private WorkState LastWorkState { get; set; } = WorkState.None;
+        private WorkState LastWorkState { get; set; } = WorkState.LongBreak;
         public System.Timers.Timer ActualCountdownTimer { get; set; } = new();
         public int CompletedWorkSessionCount { get; set; } = 0;
         private int CurActivityBarColor = 0;
@@ -301,7 +300,7 @@ namespace CustomPomodoro.Components.Pages
         public async Task StartTimer(PomodoroSet pomoSet)
         {
             if (NextWorkState == WorkState.Work &&
-                (LastWorkState == WorkState.None || LastWorkState == WorkState.LongBreak || LastWorkState == WorkState.ShortBreak) )
+                (LastWorkState == WorkState.LongBreak || LastWorkState == WorkState.ShortBreak) )
             {
                 //start work session (do NOT increment work session count or setup any time!)
                 LastWorkState = WorkState.Work;
