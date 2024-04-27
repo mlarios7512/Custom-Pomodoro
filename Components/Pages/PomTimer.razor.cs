@@ -65,7 +65,16 @@ namespace CustomPomodoro.Components.Pages
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
             IntilaizationTimeString = $"Initialized at {DateTime.Now}";
         }
-
+        private void ShowNavBar() 
+        {
+            CurNavBarDisplay = "block" ;
+            CurNavBarVisibility = "visible";
+        }
+        private void HideNavBar() 
+        {
+            CurNavBarDisplay = "none";
+            CurNavBarVisibility = "hidden";
+        }
         
 
         //Noteable event: suffers from a glitch where: Sometimes gives you a "short break" when it should give you a "Long break".
@@ -111,7 +120,16 @@ namespace CustomPomodoro.Components.Pages
                         break;
                 }
             }
-            //Make sure to hide this button if the timer has already started.
+
+
+            if (CompletedWorkSessionCount <= 0)
+            {
+                ShowNavBar();
+            }
+            else
+            {
+                HideNavBar();
+            }
         }
 
         public void RestartFullPomSession() 
@@ -123,6 +141,7 @@ namespace CustomPomodoro.Components.Pages
 
             NextWorkState = WorkState.Work;
             LastWorkState = WorkState.LongBreak;
+            ShowNavBar();
         }
 
         public void NextSession()
@@ -159,36 +178,45 @@ namespace CustomPomodoro.Components.Pages
                         break;
                 }
             }
-            else 
+            //else 
+            //{
+            //    switch (NextWorkState)
+            //    {
+            //        case WorkState.Work:
+            //            if (LastWorkState == WorkState.LongBreak)
+            //                CompletedWorkSessionCount = 0;
+
+            //            SetUpWork();
+
+            //            if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
+            //                LastWorkState = WorkState.ShortBreak;
+            //            else
+            //                LastWorkState = WorkState.LongBreak;
+            //            break;
+
+            //        case WorkState.ShortBreak:
+            //            SetUpTimerPropertiesForCorrectBreak();
+            //            LastWorkState = WorkState.ShortBreak;
+            //            CompletedWorkSessionCount++;
+
+            //            break;
+
+            //        case WorkState.LongBreak:
+            //            NextWorkState = WorkState.Work;
+            //            LastWorkState = WorkState.LongBreak;
+            //            SetUpWork();
+
+            //            break;
+            //    }
+            //}
+
+            if (CompletedWorkSessionCount >= 1)
             {
-                switch (NextWorkState)
-                {
-                    case WorkState.Work:
-                        if (LastWorkState == WorkState.LongBreak)
-                            CompletedWorkSessionCount = 0;
-
-                        SetUpWork();
-
-                        if (CompletedWorkSessionCount < CurPomodoroSet.RepsBeforeLongBreak)
-                            LastWorkState = WorkState.ShortBreak;
-                        else
-                            LastWorkState = WorkState.LongBreak;
-                        break;
-
-                    case WorkState.ShortBreak:
-                        SetUpTimerPropertiesForCorrectBreak();
-                        LastWorkState = WorkState.ShortBreak;
-                        CompletedWorkSessionCount++;
-
-                        break;
-
-                    case WorkState.LongBreak:
-                        NextWorkState = WorkState.Work;
-                        LastWorkState = WorkState.LongBreak;
-                        SetUpWork();
-
-                        break;
-                }
+                HideNavBar();
+            }
+            else
+            {
+                ShowNavBar();
             }
 
         }
@@ -302,8 +330,11 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.LongBreak;
                     LastWorkState = WorkState.Work;
                     break;
-                
+            }
 
+            if(CompletedWorkSessionCount <= 0) 
+            {
+                ShowNavBar();
             }
 
         }
@@ -342,8 +373,7 @@ namespace CustomPomodoro.Components.Pages
 
             }
 
-            //CurNavBarDisplay = "none";
-            //CurNavBarVisibility = "hidden";
+            HideNavBar();
             ActualCountdownTimer = new System.Timers.Timer(1000);
             ActualCountdownTimer.Enabled = true;
             MainTimerState = TimerState.Started;
@@ -391,6 +421,15 @@ namespace CustomPomodoro.Components.Pages
                             CompletedWorkSessionCount++;
                             //Next work state is still a short break. (We set it from the start of the timer in case the user skips that session).
                             break;
+                    }
+
+                    if(CompletedWorkSessionCount <= 0) 
+                    {
+                        ShowNavBar();
+                    }
+                    else
+                    {
+                        HideNavBar();
                     }
 
                     MainTimerState = TimerState.NotStarted;
