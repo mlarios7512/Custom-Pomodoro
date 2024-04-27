@@ -1,6 +1,7 @@
 ﻿//using Android.OS;
 using CustomPomodoro.Models;
 using CustomPomodoro.Models.Helpers;
+using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,8 +38,10 @@ namespace CustomPomodoro.Components.Pages
         private const string NoActivityBgColor = "#18181b";
 
 
+        public bool ShouldNavBarBeHidden { get; set; } = false;
 
         //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
+        [CascadingParameter]
         public PomodoroSet CurPomodoroSet { get; set; } = new();
         private string BgColor = NoActivityBgColor;
         public string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
@@ -51,11 +54,19 @@ namespace CustomPomodoro.Components.Pages
         public int CompletedWorkSessionCount { get; set; } = 0;
         private int CurActivityBarColor = 0;
 
+        public string IntilaizationTimeString { get; set; } = "";
+        public string CurNavBarDisplay { get; set; } = "block";
+        public string CurNavBarVisibility { get; set; } = "visible";
+
+
         protected override async Task OnInitializedAsync()
         {
             CountdownTimerDisplay = GetCountdownTimerDisplay(CurPomodoroSet.WorkTime);
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(CurPomodoroSet.WorkTime);
+            IntilaizationTimeString = $"Initialized at {DateTime.Now}";
         }
+
+        
 
         //Noteable event: suffers from a glitch where: Sometimes gives you a "short break" when it should give you a "Long break".
         public void PrevSession() 
@@ -326,12 +337,13 @@ namespace CustomPomodoro.Components.Pages
                     LastWorkState = WorkState.LongBreak;
                     CurActivityBarColor = LongBreakBarColor;
                 }
-                    
 
                 NextWorkState = WorkState.Work;
 
             }
 
+            //CurNavBarDisplay = "none";
+            //CurNavBarVisibility = "hidden";
             ActualCountdownTimer = new System.Timers.Timer(1000);
             ActualCountdownTimer.Enabled = true;
             MainTimerState = TimerState.Started;

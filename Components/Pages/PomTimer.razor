@@ -7,27 +7,34 @@
     }
 
     @@keyframes activity-in-progress {
-    0%{
-        background-color: hsl(@CurActivityBarColor 99% 27%);
+        0%{
+            background-color: hsl(@CurActivityBarColor 99% 27%);
+        }
+        50%{
+            background-color: hsl(@CurActivityBarColor 99% 44%);
+        }
+        100%{
+            background-color: hsl(@CurActivityBarColor 99% 27%);
+        }    
     }
-    50%{
-        background-color: hsl(@CurActivityBarColor 99% 44%);
+
+    
+    .blazor-side-bar-to-hide {
+        display: @CurNavBarDisplay;
+        visibility: @CurNavBarVisibility;
     }
-    100%{
-        background-color: hsl(@CurActivityBarColor 99% 27%);
-    }
-}
+
 </style>
 
 <section class="d-flex flex-row text-center mb-5 gap-5">
     @{if(MainTimerState == TimerState.NotStarted)
     {
-            <button Class="" @onclick="() => PrevSession()">&lt;  Prev </button>
+        <button Class="" @onclick="() => PrevSession()">&lt;  Prev </button>
+        <button Class="" @onclick="() => RestartFullPomSession()">Reset</button>
+        <button class="" @onclick="() => NextSession()">Skip ></button>
     }}
-    <button Class="" @onclick="() => RestartFullPomSession()">Reset</button>
-    <button class="" @onclick="() => NextSession()">Skip ></button>
 </section>
-
+<p>@IntilaizationTimeString</p>
 @{
     if(MainTimerState != TimerState.NotStarted)
     {
