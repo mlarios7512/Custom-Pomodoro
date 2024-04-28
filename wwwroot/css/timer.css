@@ -8,12 +8,12 @@
     /*Long break*/
     /*background-color: #0369a1;*/ /*Mid Sky blue*/
 }
-#primary-btn-flex {
+/*#primary-btn-flex {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
+}*/
 
 #set-info-UI-display{
     position:relative;

@@ -26,15 +26,32 @@
 
 </style>
 
-<section class="d-flex flex-row text-center mb-5 gap-5">
+@* <section class="d-flex flex-row text-center mb-5 gap-5">
     @{if(MainTimerState == TimerState.NotStarted)
     {
         <button Class="" @onclick="() => PrevSession()">&lt;  Prev </button>
         <button Class="" @onclick="() => RestartFullPomSession()">Reset</button>
         <button class="" @onclick="() => NextSession()">Skip ></button>
     }}
-</section>
-<p>@IntilaizationTimeString</p>
+</section> *@
+
+
+<div class="container text-center my-5">
+    <div class="row">
+        @{
+            if (MainTimerState == TimerState.NotStarted)
+            {
+                <div class="col-4"><button Class="" @onclick="() => PrevSession()">&lt;  Prev </button></div>
+                <div class="col-4"><button Class="" @onclick="() => RestartFullPomSession()">Reset</button></div>
+                <div class="col-4"><button class="" @onclick="() => NextSession()">Skip ></button></div>
+            }
+        }
+    </div>
+</div>
+
+
+
+@* <p>@IntilaizationTimeString</p> *@
 @{
     if(MainTimerState != TimerState.NotStarted)
     {
@@ -65,19 +82,19 @@
         }
     </div>
 </section>
-<section class="fixed-bottom mb-5">
-    <div class="d-flex flex-column" id="primary-btn-flex">
+<section class=" mb-5">
+    <div id="primary-btn-flex" class="fixed-bottom mb-5">
 
-        <div class="btn-group gap-5 mb-5" role="group" aria-label="Basic example" style="width:85vw">
+        <div style="align-items: center; display: flex; justify-content: center;">
             @{
                 if (MainTimerState == TimerState.NotStarted)
                 {
-                    <button class="btn btn-custom-start" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
+                    <button class="btn btn-custom-start" style="max-width:75%; min-width:50%" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
                 }
                 if (MainTimerState == TimerState.Paused)
                 {
-                    <button class="btn btn-secondary" @onclick="() => ContinueTimer()">Continue</button>
-                    <button class="btn btn-custom-stop" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
+                    <button class="btn btn-secondary" style="max-width:36%; min-width:35%" @onclick="() => ContinueTimer()">Continue</button>
+                    <button class="btn btn-custom-stop" style="max-width:36%; min-width:35%"  @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
                 }
                 if (MainTimerState == TimerState.Started)
                 {
