@@ -36,14 +36,14 @@
 </section> *@
 
 
-<div class="container text-center my-5">
+<div class="container text-center mt-2 mb-5">
     <div class="row">
         @{
             if (MainTimerState == TimerState.NotStarted)
             {
-                <div class="col-4"><button Class="" @onclick="() => PrevSession()">&lt;  Prev </button></div>
-                <div class="col-4"><button Class="" @onclick="() => RestartFullPomSession()">Reset</button></div>
-                <div class="col-4"><button class="" @onclick="() => NextSession()">Skip ></button></div>
+                <div class="col-4"><button class="btn btn-session-intervention" @onclick="() => PrevSession()">&lt;  Prev </button></div>
+                <div class="col-4"><button class="btn btn-session-intervention" @onclick="() => RestartFullPomSession()">Reset</button></div>
+                <div class="col-4"><button class="btn btn-session-intervention" @onclick="() => NextSession()">Skip ></button></div>
             }
         }
     </div>
