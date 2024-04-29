@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
-using Blazorise;
-using Blazorise.Bootstrap;
+//using Blazorise;
+//using Blazorise.Bootstrap;
 
 namespace CustomPomodoro
 {
@@ -17,12 +17,12 @@ namespace CustomPomodoro
                 });
 
             builder.Services.AddMauiBlazorWebView();
-            builder.Services
-    .AddBlazorise(options =>
-    {
-        options.Immediate = true;
-    })
-    .AddBootstrapProviders();
+    //        builder.Services
+    //.AddBlazorise(options =>
+    //{
+    //    options.Immediate = true;
+    //})
+    //.AddBootstrapProviders();
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
