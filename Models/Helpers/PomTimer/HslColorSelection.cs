@@ -14,47 +14,31 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
         private static readonly HSLColor DefaultActivityInProgressBgColor = new HSLColor(240, 6, 10);
         private static readonly HSLColor DefaultPausedActivityBgColor = new HSLColor(202, 96, 22);
 
-
-        public static string GetNoActivityColor(HSLColor? color = null)
+        private static string FormatHSLToCSS(HSLColor color) 
         {
-
+            return $"hsl({color.Hue}, {color.Saturation}%, {color.Lightness}%)";
+        } 
+        public static string GetNoActivityBgColor(HSLColor? color = null)
+        {
             if (color == null) 
-            {
-                return $"hsl({DefaultNoActivityBgColor.Hue}, " +
-                    $"{DefaultNoActivityBgColor.Saturation}, " +
-                    $"{DefaultNoActivityBgColor.Lightness})";
-            }
-
-            return $"hsl({color.Hue}" +
-                $"{color.Saturation}" +
-                $"{color.Lightness})";
+                return FormatHSLToCSS(DefaultNoActivityBgColor);
+            
+            return FormatHSLToCSS((HSLColor)color);
         }
-        public static string GetActivityInProgressColor(HSLColor? color = null)
+        public static string GetActivityInProgressBgColor(HSLColor? color = null)
         {
             if(color == null) 
-            {
-                return $"{DefaultActivityInProgressBgColor.Hue}" +
-                    $"{DefaultActivityInProgressBgColor.Saturation}" +
-                    $"{DefaultActivityInProgressBgColor.Lightness})";
-            }
-
-            return $"hsl({color.Hue}" +
-                $"{color.Saturation}" +
-                $"{color.Lightness})";
+                return FormatHSLToCSS((HSLColor)DefaultActivityInProgressBgColor);
+            
+            return FormatHSLToCSS((HSLColor)color);
         }
 
-        public static string GetPausedActivityColor(HSLColor? color = null) 
+        public static string GetPausedActivityBgColor(HSLColor? color = null) 
         {
             if(color == null) 
-            {
-                return $"hsl({DefaultPausedActivityBgColor.Hue}" +
-                    $"{DefaultPausedActivityBgColor.Saturation}" +
-                    $"{DefaultPausedActivityBgColor.Lightness})";
-            }
+                return FormatHSLToCSS((HSLColor)DefaultPausedActivityBgColor);
 
-            return $"hsl({color.Hue}" +
-                $"{color.Saturation}" +
-                $"{color.Lightness})";
+            return FormatHSLToCSS((HSLColor)color);
         }
     }
 

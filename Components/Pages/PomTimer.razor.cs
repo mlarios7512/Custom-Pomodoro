@@ -1,6 +1,7 @@
 ﻿//using Android.OS;
 using CustomPomodoro.Models;
 using CustomPomodoro.Models.Helpers;
+using CustomPomodoro.Models.Helpers.PomTimer;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -35,19 +36,12 @@ namespace CustomPomodoro.Components.Pages
         private const int ShortBreakBarColor = 191;
         private const int LongBreakBarColor = 121;
 
-        //NOTE: HSL values are rounded to nearest int.
-        //WorkBgColor:  "#18181b" //HSL: 240, 6, 10
-        //EXPERIMENTAL NoActivityBgColor: "#71717a" //HSL: 240, 4, 46
-        //EXPERIMENTAL PausedActivityBgColor = "#024770" //HSL: 202, 96, 22
-        private const string NoActivityBgColor = "hsl(240, 4%, 46%)";
-
-
         public bool ShouldNavBarBeHidden { get; set; } = false;
 
         //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
         [CascadingParameter]
         public PomodoroSet CurPomodoroSet { get; set; } = new();
-        private string BgColor = NoActivityBgColor;
+        private string BgColor = HslColorSelection.GetNoActivityBgColor();
         public string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
         public string CountdownTimerDisplay { get; set; } = "00:00";
         public int TimerInSeconds { get; set; } = 0;
@@ -274,11 +268,13 @@ namespace CustomPomodoro.Components.Pages
 
         public async Task PauseTimer()
         {
+            BgColor = HslColorSelection.GetPausedActivityBgColor();
             MainTimerState = TimerState.Paused;
             ActualCountdownTimer.Enabled = false;
         }
         public async Task ContinueTimer()
         {
+            BgColor = HslColorSelection.GetActivityInProgressBgColor();
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Enabled = true;
         }
@@ -305,6 +301,7 @@ namespace CustomPomodoro.Components.Pages
 
         public async Task CancelSessionAndMakeItRepeatable()
         {
+            BgColor = HslColorSelection.GetNoActivityBgColor();
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
 
@@ -377,6 +374,7 @@ namespace CustomPomodoro.Components.Pages
 
             }
 
+            BgColor = HslColorSelection.GetActivityInProgressBgColor();
             HideNavBar();
             ActualCountdownTimer = new System.Timers.Timer(1000);
             ActualCountdownTimer.Enabled = true;
