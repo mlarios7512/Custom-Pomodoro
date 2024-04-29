@@ -15,7 +15,7 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
         private static readonly HSLColor DefaultPausedActivityBgColor = new HSLColor(202, 96, 22);
 
 
-        public static string GetNoActivityHLSColor(HSLColor? color = null)
+        public static string GetNoActivityColor(HSLColor? color = null)
         {
 
             if (color == null) 
@@ -29,7 +29,7 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
                 $"{color.Saturation}" +
                 $"{color.Lightness})";
         }
-        public static string GetActivityInProgressHSLColor(HSLColor? color = null)
+        public static string GetActivityInProgressColor(HSLColor? color = null)
         {
             if(color == null) 
             {
@@ -43,7 +43,7 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
                 $"{color.Lightness})";
         }
 
-        public static string GetPausedActivity(HSLColor? color = null) 
+        public static string GetPausedActivityColor(HSLColor? color = null) 
         {
             if(color == null) 
             {
