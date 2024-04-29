@@ -84,3 +84,36 @@ h1:focus {
         padding-left: env(safe-area-inset-left);
     }
 }
+
+/*My additions (below)*/
+body {
+    background-color: hsl(240, 4%, 46%);
+}
+
+
+.btn-custom-start {
+    background-color: #166534;
+    color: white;
+}
+
+    .btn-custom-start:hover {
+        color: #d6d3d1;
+    }
+
+.btn-custom-stop {
+    background-color: #991b1b;
+    color: white;
+}
+
+    .btn-custom-stop:hover {
+        color: #d6d3d1
+    }
+
+.custom-cancel-btn {
+    background-color: #a16207;
+    color: white;
+}
+
+    .custom-cancel-btn:hover {
+        color: #d6d3d1;
+    }

@@ -35,9 +35,11 @@ namespace CustomPomodoro.Components.Pages
         private const int ShortBreakBarColor = 191;
         private const int LongBreakBarColor = 121;
 
-        //WorkBgColor:  "#18181b"
-        //EXPERIMENTAL NoActivityBgColor: "#777777"
-        private const string NoActivityBgColor = "#71717a";
+        //NOTE: HSL values are rounded to nearest int.
+        //WorkBgColor:  "#18181b" //HSL: 240, 6, 10
+        //EXPERIMENTAL NoActivityBgColor: "#71717a" //HSL: 240, 4, 46
+        //EXPERIMENTAL PausedActivityBgColor = "#024770" //HSL: 202, 96, 22
+        private const string NoActivityBgColor = "hsl(240, 4%, 46%)";
 
 
         public bool ShouldNavBarBeHidden { get; set; } = false;
