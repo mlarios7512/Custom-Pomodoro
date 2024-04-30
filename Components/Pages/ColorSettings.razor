@@ -1,0 +1,39 @@
+﻿@using CustomPomodoro.Components.Reusable;
+
+@page "/ColorSettings"
+
+<h6 class="mb-5">Color Settings</h6>
+
+
+<EditForm Model="BarSettings" OnValidSubmit="@Cha" FormName="UpdateColorSettings">
+    <div class="container text-center">
+        <div class="row align-items-start">
+            <div class="col-6">
+                <HslSliders Header="Work - stage 1" Color="BarSettings.WorkColors[0]"></HslSliders>
+            </div>
+            <div class="col-6">
+                <HslSliders Header="Work - stage 2" Color="BarSettings.WorkColors[1]"></HslSliders>
+            </div>
+
+            <div class="col-6">
+                <HslSliders Header="Short break - stage 1" Color="BarSettings.ShortBreakColors[0]"></HslSliders>
+            </div>
+            <div class="col-6">
+                <HslSliders Header="Short break - stage 2" Color="BarSettings.ShortBreakColors[1]"></HslSliders>
+            </div>
+
+        </div>
+    </div>
+
+
+ 
+</EditForm>
+
+
+
+@code{
+    void UpdateWorkColorOne()
+    {
+        
+    }
+}
