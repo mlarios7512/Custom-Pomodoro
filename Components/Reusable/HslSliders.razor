@@ -1,0 +1,44 @@
+﻿@using CustomPomodoro.Models;
+
+@{
+    if(Header != string.Empty)
+    {
+        <h3>@Header</h3>
+    }
+}
+<h3></h3>
+
+
+<div class="container">
+    <div class="row">
+        <div class="p-5" style="background-color:hsl(@Color.Hue, @Color.Saturation%, @Color.Lightness%);">
+
+        </div>
+    </div>
+    <div class="row text-start custom-slider">
+        <label class="col-3">Hue</label>
+        <input class="col-9" type="range" @bind="Color.Hue" min="0" max="360" />
+
+        <label class="col-3">Saturation</label>
+        <input class="col-9" type="range" @bind="Color.Saturation" min="0" max="100"/>
+    
+
+        <label class="col-3">Light</label>
+        <input class="col-9" type="range" @bind="Color.Lightness" min="0" max="100"/>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public HSLColor Color { get; set; }
+
+    [Parameter]
+    public string Header { get; set; } = string.Empty;
+
+
+    public void UpdateColor()
+    {
+        
+    }
+}
