@@ -400,6 +400,7 @@ namespace CustomPomodoro.Components.Pages
                 }
                 else
                 {
+                    BgColor = HslColorSelection.GetNoActivityBgColor();
                     ActualCountdownTimer.Enabled = false;
                     //BgColor = PomTimerHelpers.TransitionToColor(NoActivityBgColor);
 
