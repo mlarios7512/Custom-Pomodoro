@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomPomodoro.Models.UserSettings
+namespace CustomPomodoro.Models
 {
-    internal class HSLColor
+    public class HSLColor
     {
         private int _hue;
 
@@ -42,22 +42,15 @@ namespace CustomPomodoro.Models.UserSettings
             }
         }
 
+        public HSLColor() 
+        {
+        }
+
         public HSLColor(int hue, int saturation, int lightness)
         {
             Hue = hue;
             Saturation = saturation;
             Lightness = lightness;
         }
-        //public static bool IsHSLValid(int hue, int saturation, int lightness)
-        //{
-        //    if (hue < 0 || hue > 360)
-        //        return false;
-        //    if (saturation < 0 || saturation > 100)
-        //        return false;
-        //    if (lightness < 0 || lightness > 100)
-        //        return false;
-
-        //    return true;
-        //}
     }
 }
