@@ -52,5 +52,20 @@ namespace CustomPomodoro.Models
             Saturation = saturation;
             Lightness = lightness;
         }
+
+        private const int DefaultSaturation = 99;
+        private const int DefaultLightBright = 44;
+        private const int DefaultLightDim = 27;
+
+        public void SetDefaultSaturationAndBrightLight() 
+        {
+            Saturation = DefaultSaturation;
+            Lightness = DefaultLightBright;
+        }
+        public void SetDefaultSaturationAndDimLight()
+        {
+            Saturation = DefaultSaturation;
+            Lightness = DefaultLightDim;
+        }
     }
 }

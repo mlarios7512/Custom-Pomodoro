@@ -30,5 +30,19 @@ namespace CustomPomodoro.Models.UserSettings
         {
 
         }
+
+
+
+        public void ChooseSaturationAndLightForUser() 
+        {
+            WorkColors.First().SetDefaultSaturationAndBrightLight();
+            WorkColors.Last().SetDefaultSaturationAndDimLight();
+
+            ShortBreakColors.First().SetDefaultSaturationAndBrightLight();
+            ShortBreakColors.Last().SetDefaultSaturationAndDimLight();
+
+            LongBreakColors.First().SetDefaultSaturationAndBrightLight();
+            LongBreakColors.Last().SetDefaultSaturationAndDimLight();
+        }
     }
 }

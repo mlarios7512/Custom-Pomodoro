@@ -6,7 +6,16 @@
 
 
 <EditForm Model="BarSettings" OnValidSubmit="@Cha" FormName="UpdateColorSettings">
+
+    <br />
+        <div class="form-check form-switch">
+            <label class="form-check-label" for="advancedColorOptions">Advanced color options</label>
+        <input class="form-check-input" @onclick="ToggleAdvancedColorSettings" type="checkbox" role="switch" id="advancedColorOptions">
+        </div>
+    <br />
     <div class="container text-center">
+
+
         <div class="row align-items-start">
             <div class="col-6">
                 <HslSliders Header="Work - stage 1" Color="BarSettings.WorkColors[0]"></HslSliders>
@@ -15,23 +24,23 @@
                 <HslSliders Header="Work - stage 2" Color="BarSettings.WorkColors[1]"></HslSliders>
             </div>
 
-            <div class="col-6">
+            <div class="col-6">Ba
                 <HslSliders Header="Short break - stage 1" Color="BarSettings.ShortBreakColors[0]"></HslSliders>
             </div>
             <div class="col-6">
                 <HslSliders Header="Short break - stage 2" Color="BarSettings.ShortBreakColors[1]"></HslSliders>
             </div>
-
         </div>
     </div>
 
-
+    <button class="btn btn-custom-start" type="submit">Apply</button>
  
 </EditForm>
 
 
 
 @code{
+    
     void UpdateWorkColorOne()
     {
         

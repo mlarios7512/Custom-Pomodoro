@@ -11,6 +11,18 @@ namespace CustomPomodoro.Components.Pages
     public partial class ColorSettings
     {
         ActivityBarSettings BarSettings { get; set; } = new ActivityBarSettings();
+        public bool DisplayAdvancedColorSettings { get; set; } = false;
+
+        public void ToggleAdvancedColorSettings() 
+        {
+            DisplayAdvancedColorSettings = !DisplayAdvancedColorSettings;
+
+            if(DisplayAdvancedColorSettings == false) 
+            {
+                BarSettings.ChooseSaturationAndLightForUser();
+            }
+           
+        }
 
         public void Cha() 
         {
