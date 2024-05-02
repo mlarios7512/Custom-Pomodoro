@@ -1,4 +1,5 @@
-﻿using CustomPomodoro.Models.UserSettings;
+﻿using CustomPomodoro.Components.Reusable;
+using CustomPomodoro.Models.UserSettings;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,23 +11,54 @@ namespace CustomPomodoro.Components.Pages
 {
     public partial class ColorSettings
     {
-        ActivityBarSettings BarSettings { get; set; } = new ActivityBarSettings();
-        public bool DisplayAdvancedColorSettings { get; set; } = false;
-
-        public void ToggleAdvancedColorSettings() 
+        private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
+        private bool DisplayAdvancedColorSettings { get; set; } = false;
+        private List<HSLControl> PrimaryActivityStatusColorControls { get; set; } = new List<HSLControl>(3) 
         {
-            DisplayAdvancedColorSettings = !DisplayAdvancedColorSettings;
+            new HSLControl(),
+            new HSLControl(),
+            new HSLControl()
+        };
+        private List<HSLControl> SecondaryActivityStatusColorControls { get; set; } = new List<HSLControl>(3) 
+        {
+            new HSLControl(),
+            new HSLControl(),
+            new HSLControl()
+        };
 
-            if(DisplayAdvancedColorSettings == false) 
-            {
-                BarSettings.ChooseSaturationAndLightForUser();
-            }
-           
+        protected override async Task OnInitializedAsync()
+        {
+            ColorBarInputs.ChooseSaturationAndLightForUser();
         }
 
         public void Cha() 
         {
-            Debug.WriteLine($"{BarSettings.WorkColors.First().Hue}");
+            Debug.WriteLine($"{ColorBarInputs.WorkColors.First().Hue}");
+        }
+
+        private void ToggleAdvancedSettings()
+        {
+            DisplayAdvancedColorSettings = !DisplayAdvancedColorSettings;
+            if (DisplayAdvancedColorSettings == true)
+            {
+                foreach (var control in PrimaryActivityStatusColorControls)
+                    control.DisplayAllHslColorControls();
+                
+                foreach (var control in SecondaryActivityStatusColorControls)
+                    control.DisplayAllHslColorControls();   
+            }
+            else
+            {
+                ColorBarInputs.ChooseSaturationAndLightForUser();
+                foreach (var control in PrimaryActivityStatusColorControls) 
+                {
+                    control.DisplayHueControlsOnly();
+                }
+                foreach(var control in SecondaryActivityStatusColorControls) 
+                {
+                    control.HideAllHslControls();
+                }
+            }
         }
     }
 }
