@@ -15,9 +15,9 @@
 
         </div>
     </div>
-    <div class="row text-start custom-slider">
+    <div class="row text-start custom-slider mt-1">
         <label class="col-3 @HueVisibilityString">Hue</label>
-        <input class="col-9 @HueVisibilityString" type="range" @bind="Color.Hue" min="0" max="360" />
+        <input class="col-9 @HueVisibilityString" type="range" @onclick="HandleClick" @bind="Color.Hue" min="0" max="360" />
 
         <label class="col-3 @SatAndLightVisibilityString">Saturation</label>
         <input class="col-9 @SatAndLightVisibilityString" type="range" @bind="Color.Saturation" min="0" max="100"/>

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -52,6 +53,16 @@ namespace CustomPomodoro.Components.Reusable
         {
             HueVisibilityString = HTMLHideKeyword;
             SatAndLightVisibilityString = HTMLHideKeyword;
+        }
+
+        [Parameter]
+        public EventCallback OnClick { get; set; }
+
+        private async Task HandleClick()
+        {
+            Debug.WriteLine($" 'The 'HandleClick' event has been triggered!!! '");
+            if (OnClick.HasDelegate)
+                await OnClick.InvokeAsync();
         }
     }
 }
