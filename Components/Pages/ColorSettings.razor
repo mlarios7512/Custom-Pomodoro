@@ -23,17 +23,52 @@
 
             <!--Single working exaple (above)-->
             <div class="col-6">
-                <HSLControl @ref="PrimaryActivityStatusColorControls[0]" 
+                <HSLControl @ref="PrimaryActivityStatusColorControls[0]"
+                    OnClick="UpdateSecondaryColorIfNeeded"
                     Header="Work - 1" 
                     Color="ColorBarInputs.WorkColors[0]" 
                     IsPrimaryColorSelector="true"></HSLControl>
             </div>
 
             <div class="col-6">
-                <HSLControl @ref="SecondaryActivityStatusColorControls[0]" 
+                <HSLControl @ref="SecondaryActivityStatusColorControls[0]"
                     Header="Work - 2" 
                     Color="ColorBarInputs.WorkColors[1]" 
                     IsPrimaryColorSelector="false"></HSLControl>
+            </div>
+
+            <!---->
+
+            <div class="col-6">
+                <HSLControl @ref="PrimaryActivityStatusColorControls[1]"
+                            OnClick="UpdateSecondaryColorIfNeeded"
+                            Header="Short break - 1"
+                            Color="ColorBarInputs.ShortBreakColors[0]"
+                            IsPrimaryColorSelector="true"></HSLControl>
+            </div>
+
+            <div class="col-6">
+                <HSLControl @ref="SecondaryActivityStatusColorControls[1]"
+                            Header="Short break - 2"
+                            Color="ColorBarInputs.ShortBreakColors[1]"
+                            IsPrimaryColorSelector="false"></HSLControl>
+            </div>
+
+            <!---->
+
+            <div class="col-6">
+                <HSLControl @ref="PrimaryActivityStatusColorControls[2]"
+                            OnClick="UpdateSecondaryColorIfNeeded"
+                            Header="Long break - 1"
+                            Color="ColorBarInputs.LongBreakColors[0]"
+                            IsPrimaryColorSelector="true"></HSLControl>
+            </div>
+
+            <div class="col-6">
+                <HSLControl @ref="SecondaryActivityStatusColorControls[2]"
+                            Header="Long break - 2"
+                            Color="ColorBarInputs.LongBreakColors[1]"
+                            IsPrimaryColorSelector="false"></HSLControl>
             </div>
         </div>
     </div>

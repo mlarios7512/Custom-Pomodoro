@@ -58,7 +58,24 @@ namespace CustomPomodoro.Components.Pages
                 {
                     control.HideAllHslControls();
                 }
+                MakeSimilarStageOneAndTwoColors();
             }
+        }
+
+        private void MakeSimilarStageOneAndTwoColors() 
+        {
+            ColorBarInputs.WorkColors.Last().Hue = ColorBarInputs.WorkColors.First().Hue;
+            ColorBarInputs.ShortBreakColors.Last().Hue = ColorBarInputs.ShortBreakColors.First().Hue;
+            ColorBarInputs.LongBreakColors.Last().Hue = ColorBarInputs.LongBreakColors.First().Hue;
+        }
+
+        private void UpdateSecondaryColorIfNeeded() 
+        {
+            if(DisplayAdvancedColorSettings == false) 
+            {
+                MakeSimilarStageOneAndTwoColors();
+            }
+            
         }
     }
 }
