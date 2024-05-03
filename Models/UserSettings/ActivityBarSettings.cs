@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CustomPomodoro.Models.Helpers.Colors;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace CustomPomodoro.Models.UserSettings
 {
     public class ActivityBarSettings
     {
-        public List<HSLColor> WorkColors { get; set; } = new List<HSLColor>() { new HSLColor(0,0,0), new HSLColor(0, 0, 0) };
-        public List<HSLColor> ShortBreakColors { get; set; } = new List<HSLColor>() { new HSLColor(0,0,0), new HSLColor(0,0,0) };
-        public List<HSLColor> LongBreakColors { get; set; } = new List<HSLColor>() { new HSLColor(0,0,0), new HSLColor(0, 0, 0) };
+        public List<HSLColor> WorkColors { get; set; } =ActivityBarColorHelpers.GetDefaultWorkColors();
+        public List<HSLColor> ShortBreakColors { get; set; } = ActivityBarColorHelpers.GetDefaultShortBreakColors();
+        public List<HSLColor> LongBreakColors { get; set; } =  ActivityBarColorHelpers.GetDefaultLongBreakColors();
 
 
         public ActivityBarSettings()
@@ -35,14 +36,18 @@ namespace CustomPomodoro.Models.UserSettings
 
         public void ChooseSaturationAndLightForUser() 
         {
-            WorkColors.First().SetDefaultSaturationAndBrightLight();
-            WorkColors.Last().SetDefaultSaturationAndDimLight();
+            ActivityBarColorHelpers.SetDefaultWorkColors(WorkColors);
+            ActivityBarColorHelpers.SetDefaultShortBreakColors(ShortBreakColors);
+            ActivityBarColorHelpers.SetDefaultLongBreakColors(LongBreakColors);
 
-            ShortBreakColors.First().SetDefaultSaturationAndBrightLight();
-            ShortBreakColors.Last().SetDefaultSaturationAndDimLight();
+            //WorkColors.First().SetDefaultSaturationAndBrightLight();
+            //WorkColors.Last().SetDefaultSaturationAndDimLight();
 
-            LongBreakColors.First().SetDefaultSaturationAndBrightLight();
-            LongBreakColors.Last().SetDefaultSaturationAndDimLight();
+            //ShortBreakColors.First().SetDefaultSaturationAndBrightLight();
+            //ShortBreakColors.Last().SetDefaultSaturationAndDimLight();
+
+            //LongBreakColors.First().SetDefaultSaturationAndBrightLight();
+            //LongBreakColors.Last().SetDefaultSaturationAndDimLight();
         }
     }
 }
