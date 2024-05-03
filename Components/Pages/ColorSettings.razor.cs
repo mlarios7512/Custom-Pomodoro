@@ -11,15 +11,22 @@ namespace CustomPomodoro.Components.Pages
 {
     public partial class ColorSettings
     {
+        private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
         private bool DisplayAdvancedColorSettings { get; set; } = false;
-        private List<HSLControl> PrimaryActivityStatusColorControls { get; set; } = new List<HSLControl>(3) 
+        private List<HSLControl> PrimaryActivityStatusColorControls { get; set; } = new List<HSLControl>(3)
         {
             new HSLControl(),
             new HSLControl(),
             new HSLControl()
         };
         private List<HSLControl> SecondaryActivityStatusColorControls { get; set; } = new List<HSLControl>(3) 
+        {
+            new HSLControl(),
+            new HSLControl(),
+            new HSLControl()
+        };
+        private List<HSLControl> BgColorControls { get; set; } = new List<HSLControl>()
         {
             new HSLControl(),
             new HSLControl(),
