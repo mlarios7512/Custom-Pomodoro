@@ -34,20 +34,28 @@ namespace CustomPomodoro.Models.UserSettings
 
 
 
-        public void ChooseSaturationAndLightForUser() 
+        public void SetAllColorsToDefaultValues() 
         {
             ActivityBarColorHelpers.SetDefaultWorkColors(WorkColors);
             ActivityBarColorHelpers.SetDefaultShortBreakColors(ShortBreakColors);
             ActivityBarColorHelpers.SetDefaultLongBreakColors(LongBreakColors);
+        }
 
-            //WorkColors.First().SetDefaultSaturationAndBrightLight();
-            //WorkColors.Last().SetDefaultSaturationAndDimLight();
+        public void ResetAllColorValuesExceptPrimaryHue() 
+        {
 
-            //ShortBreakColors.First().SetDefaultSaturationAndBrightLight();
-            //ShortBreakColors.Last().SetDefaultSaturationAndDimLight();
+            ActivityBarColorHelpers.SetDefaultSaturationAndBrightLight(WorkColors.First());
+            ActivityBarColorHelpers.SetDefaultSaturationAndBrightLight(ShortBreakColors.First());
+            ActivityBarColorHelpers.SetDefaultSaturationAndBrightLight(LongBreakColors.First());
 
-            //LongBreakColors.First().SetDefaultSaturationAndBrightLight();
-            //LongBreakColors.Last().SetDefaultSaturationAndDimLight();
+
+            ActivityBarColorHelpers.SetDefaultSaturationAndDimLight(WorkColors.Last());
+            ActivityBarColorHelpers.SetDefaultSaturationAndDimLight(ShortBreakColors.Last());
+            ActivityBarColorHelpers.SetDefaultSaturationAndDimLight(LongBreakColors.Last());
+
+            WorkColors.Last().Hue = WorkColors.First().Hue;
+            ShortBreakColors.Last().Hue = ShortBreakColors.First().Hue;
+            LongBreakColors.Last().Hue = LongBreakColors.First().Hue;
         }
     }
 }
