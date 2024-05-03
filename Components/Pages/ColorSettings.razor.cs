@@ -35,7 +35,7 @@ namespace CustomPomodoro.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            ColorBarInputs.ChooseSaturationAndLightForUser();
+            ColorBarInputs.SetAllColorsToDefaultValues();
         }
 
         public void Cha() 
@@ -56,7 +56,7 @@ namespace CustomPomodoro.Components.Pages
             }
             else
             {
-                ColorBarInputs.ChooseSaturationAndLightForUser();
+                ColorBarInputs.ResetAllColorValuesExceptPrimaryHue();
                 foreach (var control in PrimaryActivityStatusColorControls) 
                 {
                     control.DisplayHueControlsOnly();
@@ -65,11 +65,10 @@ namespace CustomPomodoro.Components.Pages
                 {
                     control.HideAllHslControls();
                 }
-                MakeSimilarStageOneAndTwoColors();
             }
         }
 
-        private void MakeSimilarStageOneAndTwoColors() 
+        private void MakeSimilarStageOneAndTwoColors()
         {
             ColorBarInputs.WorkColors.Last().Hue = ColorBarInputs.WorkColors.First().Hue;
             ColorBarInputs.ShortBreakColors.Last().Hue = ColorBarInputs.ShortBreakColors.First().Hue;
