@@ -43,6 +43,24 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
             return FormatHSLToCSS((HSLColor)color);
         }
 
+        /*----------------*/
+
+        public static HSLColor GetDefaultNoActivityBgColor()
+        {
+            return new HSLColor(240, 4, 46);
+        }
+        public static HSLColor GetDefaultActivityInProgressBgColor()
+        {
+            return new HSLColor(240, 6, 10);
+        }
+
+        public static HSLColor GetDefaultPausedActivityBgColor()
+        {
+            return new HSLColor(202, 96, 22);
+        }
+
+
+
         private const int BarActivityStatusSaturation = 99;
         private const int BarActivityStatusLightnessDim = 27;
         private const int BarActivityStatusLightnessBright = 44;
