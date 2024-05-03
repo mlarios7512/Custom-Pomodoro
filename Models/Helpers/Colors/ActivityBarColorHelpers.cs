@@ -16,12 +16,12 @@ namespace CustomPomodoro.Models.Helpers.Colors
         private const int DefaultLightBright = 44;
         private const int DefaultLightDim = 27;
 
-        private static void SetDefaultSaturationAndBrightLight(HSLColor color)
+        public static void SetDefaultSaturationAndBrightLight(HSLColor color)
         {
             color.Saturation = DefaultSaturation;
             color.Lightness = DefaultLightBright;
         }
-        private static void SetDefaultSaturationAndDimLight(HSLColor color)
+        public static void SetDefaultSaturationAndDimLight(HSLColor color)
         {
             color.Saturation = DefaultSaturation;
             color.Lightness = DefaultLightDim;
