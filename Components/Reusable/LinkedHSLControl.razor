@@ -17,14 +17,14 @@
             <input class="col-9 @HueVisibilityString" type="range" @onclick="HandleClick" @bind="Color.Hue" min="0" max="360" />
         </div>
 
-        <div class="d-flex flex-row gap-2 flex-wrap flex-lg-nowrap">
-            <label class="col-3 @SatAndLightVisibilityString">Saturation</label>
-            <input class="col-9 @SatAndLightVisibilityString" type="range" @bind="Color.Saturation" min="0" max="100" />
+        <div class="d-flex flex-row gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
+            <label class="col-3">Saturation</label>
+            <input class="col-9" type="range" @bind="Color.Saturation" min="0" max="100" />
         </div>
 
-        <div class="d-flex flex-row gap-2 flex-wrap flex-lg-nowrap">
-            <label class="col-3 @SatAndLightVisibilityString">Light</label>
-            <input class="col-9 @SatAndLightVisibilityString" type="range" @bind="Color.Lightness" min="0" max="100" />
+        <div class="d-flex flex-row gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
+            <label class="col-3">Light</label>
+            <input class="col-9" type="range" @bind="Color.Lightness" min="0" max="100" />
         </div>
     </div>
 </div>
