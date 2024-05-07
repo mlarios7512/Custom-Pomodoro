@@ -1,3 +1,15 @@
 ﻿input[type='range'] {
     accent-color: #0ea5e9;
 }
+
+@media (max-width: 767.98px) {
+    .prime-content {
+        max-width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1920.98px){
+    .prime-content{
+        max-width: 75%;
+    }
+}

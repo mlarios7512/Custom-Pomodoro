@@ -2,11 +2,35 @@
 
 @page "/ColorSettings"
 
-<h6 class="mb-5">Color Settings</h6>
+
 
 
 <EditForm Model="ColorBarInputs" OnValidSubmit="@Cha" FormName="UpdateColorSettings">
 
+    <h6 class="mb-5">Background Colors</h6>
+
+    <div class="d-flex flex-column mb-3">
+                <SoloHSLControl
+                    @ref="BgColorControls[0]"
+                    Header="Timer not running"
+                    Color="BgColorInputs.NoActivityBgColor"></SoloHSLControl>
+            
+  
+                <SoloHSLControl 
+                        @ref="BgColorControls[1]"
+                        Header="Timer running"
+                        Color="BgColorInputs.ActivityInProgressColor"></SoloHSLControl>
+  
+                <SoloHSLControl 
+                        @ref="BgColorControls[2]"
+                        Header="Timer paused"
+                        Color="BgColorInputs.PausedActivityColor"></SoloHSLControl>
+           
+        
+    </div>
+
+
+    <h6 class="mb-5">Activity Bar Colors</h6>
     <br />
         <div class="form-check form-switch">
             <label class="form-check-label" for="advancedColorOptions">Advanced color options</label>
@@ -25,8 +49,8 @@
             <div class="col-6">
                 <HSLControl @ref="PrimaryActivityStatusColorControls[0]"
                     OnClick="UpdateSecondaryColorIfNeeded"
-                    Header="Work - 1" 
-                    Color="ColorBarInputs.WorkColors[0]" 
+                    Header="Work - 1"
+                    Color="ColorBarInputs.WorkColors[0]"
                     IsPrimaryColorSelector="true"></HSLControl>
             </div>
 
