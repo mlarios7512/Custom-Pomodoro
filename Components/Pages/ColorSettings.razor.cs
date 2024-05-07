@@ -14,25 +14,26 @@ namespace CustomPomodoro.Components.Pages
         private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
         private bool DisplayAdvancedColorSettings { get; set; } = false;
-        private List<HSLControl> PrimaryActivityStatusColorControls { get; set; } = new List<HSLControl>(3)
+        private List<LinkedHSLControl> PrimaryActivityStatusColorControls { get; set; } = new List<LinkedHSLControl>(3)
         {
-            new HSLControl(),
-            new HSLControl(),
-            new HSLControl()
+            new LinkedHSLControl(),
+            new LinkedHSLControl(),
+            new LinkedHSLControl()
         };
-        private List<HSLControl> SecondaryActivityStatusColorControls { get; set; } = new List<HSLControl>(3) 
+        private List<LinkedHSLControl> SecondaryActivityStatusColorControls { get; set; } = new List<LinkedHSLControl>(3) 
         {
-            new HSLControl(),
-            new HSLControl(),
-            new HSLControl()
+            new LinkedHSLControl(),
+            new LinkedHSLControl(),
+            new LinkedHSLControl()
         };
-        private List<HSLControl> BgColorControls { get; set; } = new List<HSLControl>()
+        private List<SoloHSLControl> BgColorControls { get; set; } = new List<SoloHSLControl>()
         {
-            new HSLControl(),
-            new HSLControl(),
-            new HSLControl()
+            new SoloHSLControl(),
+            new SoloHSLControl(),
+            new SoloHSLControl()
         };
 
+        //Question: Can you call a method on a child component from "OnInitializedAsync"?
         protected override async Task OnInitializedAsync()
         {
             ColorBarInputs.SetAllColorsToDefaultValues();
@@ -40,7 +41,16 @@ namespace CustomPomodoro.Components.Pages
 
         public void Cha() 
         {
-            Debug.WriteLine($"{ColorBarInputs.WorkColors.First().Hue}");
+            Debug.WriteLine($"No Activity BgColor\n" +
+                $"Hue: {BgColorInputs.NoActivityBgColor.Hue}\n" +
+                $"Saturation: {BgColorInputs.NoActivityBgColor.Saturation}\n" +
+                $"Lightness: {BgColorInputs.NoActivityBgColor.Lightness}\n");
+
+            //See the "Preferences API for saving user data (NOT SURE THIS IS THE BEST WAY for cross-platform saving. NEED TO VERIFY):
+            //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
+
+            
+
         }
 
         private void ToggleAdvancedSettings()

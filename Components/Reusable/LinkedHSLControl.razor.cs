@@ -1,5 +1,7 @@
 ﻿using CustomPomodoro.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Maui.Controls.PlatformConfiguration;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CustomPomodoro.Components.Reusable
 {
-    public partial class HSLControl
+    public partial class LinkedHSLControl
     {
         [Parameter]
         public HSLColor Color { get; set; }
@@ -55,6 +57,9 @@ namespace CustomPomodoro.Components.Reusable
             SatAndLightVisibilityString = HTMLHideKeyword;
         }
 
+        /*"OnClick" event not working properly on android devices is a WebView issue.
+        It's not possilbe for me to fix.*/
+               
         [Parameter]
         public EventCallback OnClick { get; set; }
 
