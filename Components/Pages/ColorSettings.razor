@@ -37,24 +37,22 @@
         <input class="form-check-input" @onclick="ToggleAdvancedSettings" type="checkbox" role="switch" id="advancedColorOptions">
         </div>
     <br />
-    <div class="container text-center">
 
 
-        <div class="row align-items-start">
+
+        <div class="d-flex flex-column align-items-start">
 @*             <div class="col-6">
                 <HSLControl @ref="HslSlider" Header="Work - stage 1" Color="ColorBarInputs.WorkColors[0]"></HSLControl>
             </div> *@
 
             <!--Single working exaple (above)-->
-            <div class="col-6">
+            <div class="d-flex flex-row w-100 gap-3">
                 <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[0]"
                     OnClick="UpdateSecondaryColorIfNeeded"
                     Header="Work - 1"
                     Color="ColorBarInputs.WorkColors[0]"
                     IsPrimaryColorSelector="true"></LinkedHSLControl>
-            </div>
 
-            <div class="col-6">
                 <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[0]"
                     Header="Work - 2" 
                     Color="ColorBarInputs.WorkColors[1]" 
@@ -63,15 +61,13 @@
 
             <!---->
 
-            <div class="col-6">
+            <div class="d-flex flex-row w-100 gap-3">
                 <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[1]"
                             OnClick="UpdateSecondaryColorIfNeeded"
                             Header="Short break - 1"
                             Color="ColorBarInputs.ShortBreakColors[0]"
                             IsPrimaryColorSelector="true"></LinkedHSLControl>
-            </div>
 
-            <div class="col-6">
                 <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[1]"
                             Header="Short break - 2"
                             Color="ColorBarInputs.ShortBreakColors[1]"
@@ -80,22 +76,20 @@
 
             <!---->
 
-            <div class="col-6">
+             <div class="d-flex flex-row w-100 gap-3">
                 <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[2]"
                             OnClick="UpdateSecondaryColorIfNeeded"
                             Header="Long break - 1"
                             Color="ColorBarInputs.LongBreakColors[0]"
                             IsPrimaryColorSelector="true"></LinkedHSLControl>
-            </div>
 
-            <div class="col-6">
                 <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[2]"
                             Header="Long break - 2"
                             Color="ColorBarInputs.LongBreakColors[1]"
                             IsPrimaryColorSelector="false"></LinkedHSLControl>
             </div>
         </div>
-    </div>
+    
 
     <button class="btn btn-custom-start" type="submit">Apply</button>
  
