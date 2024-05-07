@@ -2,10 +2,15 @@
     accent-color: #0ea5e9;
 }
 
+.color-preview {
+    padding: 4rem 5rem;
+}
+
 @media (max-width: 767.98px) {
     .prime-content {
         max-width: 100%;
     }
+
 }
 
 @media (min-width: 767.98px) and (max-width: 992px){
