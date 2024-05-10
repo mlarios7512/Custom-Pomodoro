@@ -1,14 +1,14 @@
 ﻿@using CustomPomodoro.Models;
 
-<div class="linked-input col-6 my-5">
+<div class="individual-content col-6 my-5">
  
     @{
         if (Header != string.Empty)
         {
-            <h3>@Header</h3>
+            <h5>@Header</h5>
         }
     }
-    <div class="p-5" style="background-color:hsl(@Color.Hue, @Color.Saturation%, @Color.Lightness%);">
+    <div class="linked-color-preview" style="background-color:hsl(@Color.Hue, @Color.Saturation%, @Color.Lightness%);">
 
     </div>
     <div class="d-flex flex-column text-start custom-slider mt-1">
