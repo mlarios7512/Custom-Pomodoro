@@ -21,13 +21,13 @@
 
 @media (min-width: 991.98px) and (max-width: 1199.98px){
     .prime-content{
-        max-width: 65%;
+        max-width: 55%;
     }
 }
 
 @media (min-width: 1200px) and (max-width: 1920.98px){
     .prime-content{
-        max-width: 50%;
+        max-width: 40%;
     }
     
 }
