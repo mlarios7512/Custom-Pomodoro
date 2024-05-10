@@ -7,15 +7,14 @@
 
 <EditForm Model="ColorBarInputs" OnValidSubmit="@Cha" FormName="UpdateColorSettings">
 
-    <h6 class="mb-5">Background Colors</h6>
+    <h4 class="mb-5">Background Colors</h4>
 
-    <div class="d-flex flex-column mb-3">
+    <section class="d-flex flex-column mb-3">
                 <SoloHSLControl
                     @ref="BgColorControls[0]"
                     Header="Timer not running"
                     Color="BgColorInputs.NoActivityBgColor"></SoloHSLControl>
             
-  
                 <SoloHSLControl 
                         @ref="BgColorControls[1]"
                         Header="Timer running"
@@ -25,12 +24,10 @@
                         @ref="BgColorControls[2]"
                         Header="Timer paused"
                         Color="BgColorInputs.PausedActivityColor"></SoloHSLControl>
-           
-        
-    </div>
+    </section>
 
 
-    <h6 class="mb-5">Activity Bar Colors</h6>
+    <h4 class="mb-5 mt-5">Activity Bar Colors</h4>
     <br />
         <div class="form-check form-switch">
             <label class="form-check-label" for="advancedColorOptions">Advanced color options</label>
@@ -38,57 +35,47 @@
         </div>
     <br />
 
+    <section class="d-flex flex-column align-items-start">
 
+        <div class="d-flex flex-row w-100 gap-3">
+            <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[0]"
+                OnClick="UpdateSecondaryColorIfNeeded"
+                Header="Work - 1"
+                Color="ColorBarInputs.WorkColors[0]"
+                IsPrimaryColorSelector="true"></LinkedHSLControl>
 
-        <div class="d-flex flex-column align-items-start">
-@*             <div class="col-6">
-                <HSLControl @ref="HslSlider" Header="Work - stage 1" Color="ColorBarInputs.WorkColors[0]"></HSLControl>
-            </div> *@
-
-            <!--Single working exaple (above)-->
-            <div class="d-flex flex-row w-100 gap-3">
-                <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[0]"
-                    OnClick="UpdateSecondaryColorIfNeeded"
-                    Header="Work - 1"
-                    Color="ColorBarInputs.WorkColors[0]"
-                    IsPrimaryColorSelector="true"></LinkedHSLControl>
-
-                <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[0]"
-                    Header="Work - 2" 
-                    Color="ColorBarInputs.WorkColors[1]" 
-                    IsPrimaryColorSelector="false"></LinkedHSLControl>
-            </div>
-
-            <!---->
-
-            <div class="d-flex flex-row w-100 gap-3">
-                <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[1]"
-                            OnClick="UpdateSecondaryColorIfNeeded"
-                            Header="Short break - 1"
-                            Color="ColorBarInputs.ShortBreakColors[0]"
-                            IsPrimaryColorSelector="true"></LinkedHSLControl>
-
-                <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[1]"
-                            Header="Short break - 2"
-                            Color="ColorBarInputs.ShortBreakColors[1]"
-                            IsPrimaryColorSelector="false"></LinkedHSLControl>
-            </div>
-
-            <!---->
-
-             <div class="d-flex flex-row w-100 gap-3">
-                <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[2]"
-                            OnClick="UpdateSecondaryColorIfNeeded"
-                            Header="Long break - 1"
-                            Color="ColorBarInputs.LongBreakColors[0]"
-                            IsPrimaryColorSelector="true"></LinkedHSLControl>
-
-                <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[2]"
-                            Header="Long break - 2"
-                            Color="ColorBarInputs.LongBreakColors[1]"
-                            IsPrimaryColorSelector="false"></LinkedHSLControl>
-            </div>
+            <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[0]"
+                Header="Work - 2" 
+                Color="ColorBarInputs.WorkColors[1]" 
+                IsPrimaryColorSelector="false"></LinkedHSLControl>
         </div>
+
+        <div class="d-flex flex-row w-100 gap-3">
+            <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[1]"
+                        OnClick="UpdateSecondaryColorIfNeeded"
+                        Header="Short break - 1"
+                        Color="ColorBarInputs.ShortBreakColors[0]"
+                        IsPrimaryColorSelector="true"></LinkedHSLControl>
+
+            <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[1]"
+                        Header="Short break - 2"
+                        Color="ColorBarInputs.ShortBreakColors[1]"
+                        IsPrimaryColorSelector="false"></LinkedHSLControl>
+        </div>
+
+         <div class="d-flex flex-row w-100 gap-3">
+            <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[2]"
+                        OnClick="UpdateSecondaryColorIfNeeded"
+                        Header="Long break - 1"
+                        Color="ColorBarInputs.LongBreakColors[0]"
+                        IsPrimaryColorSelector="true"></LinkedHSLControl>
+
+            <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[2]"
+                        Header="Long break - 2"
+                        Color="ColorBarInputs.LongBreakColors[1]"
+                        IsPrimaryColorSelector="false"></LinkedHSLControl>
+        </div>
+    </section>
     
 
     <button class="btn btn-custom-start" type="submit">Apply</button>
