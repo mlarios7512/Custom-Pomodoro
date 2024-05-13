@@ -1,0 +1,11 @@
+﻿@media (max-width: 1199.98px){
+    .group-gap{
+        gap: 1rem;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1920.98px) {
+    .group-gap {
+        gap: 8rem;
+    }
+}

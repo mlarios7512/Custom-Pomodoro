@@ -37,7 +37,7 @@
 
     <section class="d-flex flex-column align-items-start">
 
-        <div class="d-flex flex-row w-100 gap-3">
+        <div class="d-flex flex-row w-100 group-gap">
             <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[0]"
                 OnClick="UpdateSecondaryColorIfNeeded"
                 Header="Work - 1"
@@ -50,7 +50,7 @@
                 IsPrimaryColorSelector="false"></LinkedHSLControl>
         </div>
 
-        <div class="d-flex flex-row w-100 gap-3">
+        <div class="d-flex flex-row w-100 group-gap">
             <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[1]"
                         OnClick="UpdateSecondaryColorIfNeeded"
                         Header="Short break - 1"
@@ -63,7 +63,7 @@
                         IsPrimaryColorSelector="false"></LinkedHSLControl>
         </div>
 
-         <div class="d-flex flex-row w-100 gap-3">
+         <div class="d-flex flex-row w-100 group-gap">
             <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[2]"
                         OnClick="UpdateSecondaryColorIfNeeded"
                         Header="Long break - 1"
