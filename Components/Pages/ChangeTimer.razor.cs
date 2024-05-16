@@ -32,9 +32,7 @@ namespace CustomPomodoro.Components.Pages
             Debug.WriteLine($"Long break: {PomoSetWithTimerInfoOnly.LongBreak}");
             Debug.WriteLine($"Reps before long break: {PomoSetWithTimerInfoOnly.RepsBeforeLongBreak}");
 
-            IsSaveNotificationVisible = true;
-            await Task.Delay(4000);
-            IsSaveNotificationVisible = false;
+            await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "Cancel");
         }
     }
 }
