@@ -313,8 +313,10 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.Work;
 
                     //Keep in mind the CompletedSessionCount should've been incremented when the previous timer ended.
-                    if (CompletedWorkSessionCount >= CurPomodoroSet.RepsBeforeLongBreak)
+                    if (CompletedWorkSessionCount >= CurPomodoroSet.RepsBeforeLongBreak || 
+                        (CompletedWorkSessionCount == 0 && NextWorkState == WorkState.Work))
                         LastWorkState = WorkState.LongBreak;
+       
                     else
                         LastWorkState = WorkState.ShortBreak;
 
