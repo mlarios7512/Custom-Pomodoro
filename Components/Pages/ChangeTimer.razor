@@ -5,28 +5,28 @@
     <div class="mb-4 row">
         <label for="worktime-input" class="col-sm-4 col-form-label">Work time</label>
         <div class="col-sm-4">
-            <InputText id="worktime-input" @bind-Value="PomoSetWithTimerInfoOnly.WorkTime" class="form-control"></InputText>
+            <InputText placeholder="0 to 59 min (ex:25:00)" id="worktime-input" @bind-Value="PomoSetWithTimerInfoOnly.WorkTime" class="form-control" pattern="^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$"></InputText>
         </div>
     </div>
 
     <div class="mb-4 row">
         <label for="short-break-input" class="col-sm-4 col-form-label">Short break time</label>
         <div class="col-sm-4">
-            <InputText id="short-break-input" @bind-Value="PomoSetWithTimerInfoOnly.ShortBreak" class="form-control"></InputText>
+            <InputText placeholder="0 to 59 min (ex:25:00)" id="short-break-input" @bind-Value="PomoSetWithTimerInfoOnly.ShortBreak" class="form-control" pattern="^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$"></InputText>
         </div>
     </div>
 
     <div class="mb-4 row">
         <label for="work-reps-input" class="col-sm-4 col-form-label">Work reps (before long break)</label>
         <div class="col-sm-4">
-            <InputNumber id="work-reps-input" @bind-Value="PomoSetWithTimerInfoOnly.RepsBeforeLongBreak" class="form-control"></InputNumber>
+            <InputNumber placeholder="any num 2 to 9" id="work-reps-input" @bind-Value="PomoSetWithTimerInfoOnly.RepsBeforeLongBreak" class="form-control" min="2" max="9" pattern="^[2-9]{1}$" required></InputNumber>
         </div>
     </div>
 
     <div class="mb-4 row">
         <label for="long-break-input" class="col-sm-4 col-form-label">Long break time</label>
         <div class="col-sm-4">
-            <InputText id="long-break-input" @bind-Value="PomoSetWithTimerInfoOnly.LongBreak" class="form-control"></InputText>
+            <InputText placeholder="0 to 59 min (ex:25:00)" id="long-break-input" @bind-Value="PomoSetWithTimerInfoOnly.LongBreak" class="form-control" pattern="^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$"></InputText>
         </div>
     </div>
 
