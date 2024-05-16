@@ -13,10 +13,12 @@ namespace CustomPomodoro.Components.Pages
     {
         [CascadingParameter]
         PomodoroSet PomoSetWithTimerInfoOnly { get; set; } = new PomodoroSet();
-        public void ChangeTimerProps() 
+        private bool IsSaveNotificationVisible { get; set; } = false;
+        private async Task ChangeTimerProps() 
         {
-            string NewPomodoroId = Guid.NewGuid().ToString();
-            PomoSetWithTimerInfoOnly.Id = NewPomodoroId;
+            //This is for future use (when implementing sets of pomodoro timers).
+            //string NewPomodoroId = Guid.NewGuid().ToString();
+            //PomoSetWithTimerInfoOnly.Id = NewPomodoroId;
 
             Debug.WriteLine($"Set info updated.");
 
@@ -29,6 +31,10 @@ namespace CustomPomodoro.Components.Pages
             Debug.WriteLine($"Short break: {PomoSetWithTimerInfoOnly.ShortBreak}");
             Debug.WriteLine($"Long break: {PomoSetWithTimerInfoOnly.LongBreak}");
             Debug.WriteLine($"Reps before long break: {PomoSetWithTimerInfoOnly.RepsBeforeLongBreak}");
+
+            IsSaveNotificationVisible = true;
+            await Task.Delay(4000);
+            IsSaveNotificationVisible = false;
         }
     }
 }

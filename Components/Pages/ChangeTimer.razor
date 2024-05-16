@@ -32,6 +32,11 @@
 
     <button class="btn btn-custom-start mt-4" type="submit">Save</button>
 </EditForm>
-@code {
 
+
+@if (IsSaveNotificationVisible)
+{
+    <div class="alert alert-info fixed-bottom" role="alert">
+        Changes saved successfully.
+    </div>
 }
