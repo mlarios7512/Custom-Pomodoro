@@ -1,9 +1,13 @@
 ﻿using CustomPomodoro.Components.Reusable;
-using CustomPomodoro.Models.UserSettings;
+using CustomPomodoro.Models.UserSettings.Concrete;
+using Microsoft.Maui.ApplicationModel.DataTransfer;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +18,7 @@ namespace CustomPomodoro.Components.Pages
         private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
         private bool DisplayAdvancedColorSettings { get; set; } = false;
+        private const string _saveFileName = "ColorSettings.json";
         private List<LinkedHSLControl> PrimaryActivityStatusColorControls { get; set; } = new List<LinkedHSLControl>(3)
         {
             new LinkedHSLControl(),
@@ -39,17 +44,94 @@ namespace CustomPomodoro.Components.Pages
             ColorBarInputs.SetAllColorsToDefaultValues();
         }
 
-        public void Cha() 
+        //No async (uses a shared file).
+        public static BackgroundColorSettings LoadBackgroundColorsSettings() 
         {
-            Debug.WriteLine($"No Activity BgColor\n" +
-                $"Hue: {BgColorInputs.NoActivityBgColor.Hue}\n" +
-                $"Saturation: {BgColorInputs.NoActivityBgColor.Saturation}\n" +
-                $"Lightness: {BgColorInputs.NoActivityBgColor.Lightness}\n");
+            string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
+            if (File.Exists(saveFile)) 
+            {
+                string fileContents = File.ReadAllText(saveFile);
+                JObject fileContentsAsJObj = JObject.Parse(fileContents);
+
+                return fileContentsAsJObj.ToObject<BackgroundColorSettings>();
+            }
+
+            return new BackgroundColorSettings();
+        }
+
+        //No async (uses a shared file).
+        public static ActivityBarSettings LoadActivityBarSettings() 
+        {
+            string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
+            if (File.Exists(saveFile)) 
+            {
+                string fileContents = File.ReadAllText(saveFile);
+                JObject fileContentsAsJObj = JObject.Parse(fileContents);
+
+                return fileContentsAsJObj.ToObject<ActivityBarSettings>();
+            }
+
+            return new ActivityBarSettings();
+        }
+
+
+        //Just make 1 giant save method in this page. (& STOP ADDING NEW FEATURES! FIX WHAT YOU HAVE!)
+        public async Task SaveColorChanges() 
+        {
+            PermissionStatus status = PermissionStatus.Unknown;
+            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+            if (status != PermissionStatus.Granted)
+            {
+                await Application.Current.MainPage.DisplayAlert("Need storage permission", "Storage permission is required to create a save file.", "OK");
+            }
+
+            status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+            if(status == PermissionStatus.Granted) 
+            {
+                string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
+
+                if (!File.Exists(saveFile)) 
+                {
+                    File.Create(saveFile);
+                }
+                    
+
+
+
+                string bgSettingsAsJson = JsonConvert.SerializeObject(BgColorInputs);
+                JObject bgSettingsWithTitle = new JObject();
+                bgSettingsWithTitle["BackgroundColorSettings"] = bgSettingsAsJson;
+
+                string barSettingsAsJson = JsonConvert.SerializeObject(ColorBarInputs);
+                JObject barSettingsWithTitle = new JObject();
+                barSettingsWithTitle["ActivityColorSettings"] = barSettingsAsJson;
+
+
+                //Merging solution taken from "David Rettenbacher": https://stackoverflow.com/questions/21160337/how-can-i-merge-two-jobject
+                var mergeSettings = new JsonMergeSettings
+                {
+                    MergeArrayHandling = MergeArrayHandling.Union
+                };
+
+                bgSettingsWithTitle.Merge(barSettingsWithTitle, mergeSettings);
+                string finalJson = bgSettingsWithTitle.ToString();
+
+
+
+                File.WriteAllText(saveFile, finalJson);
+            }
+
+
+           
 
             //See the "Preferences API for saving user data (NOT SURE THIS IS THE BEST WAY for cross-platform saving. NEED TO VERIFY):
             //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
 
-            
+
+            //See YouTube video for what you were doing: https://www.youtube.com/watch?v=3xqIXS1SBaU
+            //Before you continue, it might be best to create a class(es)/interface(s) for saving data as different formats. (In case of future use. It's also good practice for SOLID).
+            //string saveDataLocation = FileSystem.Current.AppDataDirectory;
+            //string saveFileLocationOfColorSettings = Path.Combine(saveDataLocation, "ColorSettings.json");
 
         }
 
