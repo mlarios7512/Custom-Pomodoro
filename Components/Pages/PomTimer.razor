@@ -39,9 +39,6 @@
     </div>
 </section>
 
-
-
-@* <p>@IntilaizationTimeString</p> *@
 @{
     if(MainTimerState != TimerState.NotStarted)
     {
@@ -56,9 +53,9 @@
 <section id="set-info-UI-display">
     <div class="container mb-5">
         <div class="row gap-xs-4">
-            <div class="col-lg-4 col-sm-6">Finished work sessions: @CompletedWorkSessionCount of @CurPomodoroSet.RepsBeforeLongBreak</div>
-            <div class="col-lg-4 col-sm-6">Work time: @CurPomodoroSet.WorkTime</div>
-            <div class="col-lg-4 col-sm-6">Break times: @CurPomodoroSet.ShortBreak - @CurPomodoroSet.LongBreak</div>
+            <div class="col-lg-4 col-sm-6">Finished work sessions: @CompletedWorkSessionCount of @UserSettings._curPomodoroSet.RepsBeforeLongBreak</div>
+            <div class="col-lg-4 col-sm-6">Work time: @UserSettings._curPomodoroSet.WorkTime</div>
+            <div class="col-lg-4 col-sm-6">Break times: @UserSettings._curPomodoroSet.ShortBreak - @UserSettings._curPomodoroSet.LongBreak</div>
         </div>
     </div>
 </section>
@@ -79,7 +76,7 @@
             @{
                 if (MainTimerState == TimerState.NotStarted)
                 {
-                    <button class="btn btn-custom-start" style="max-width:75%; min-width:50%" @onclick="() => StartTimer(CurPomodoroSet)">Start</button>
+                    <button class="btn btn-custom-start" style="max-width:75%; min-width:50%" @onclick="() => StartTimer(UserSettings._curPomodoroSet)">Start</button>
                 }
                 if (MainTimerState == TimerState.Paused)
                 {
