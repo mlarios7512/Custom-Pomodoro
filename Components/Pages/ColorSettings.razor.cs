@@ -53,7 +53,7 @@ namespace CustomPomodoro.Components.Pages
                 string fileContents = File.ReadAllText(saveFile);
                 JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
-                return fileContentsAsJObj.ToObject<BackgroundColorSettings>();
+                return JsonConvert.DeserializeObject<BackgroundColorSettings>(fileContentsAsJObj["BackgroundColorSettings"].ToString());
             }
 
             return new BackgroundColorSettings();
@@ -68,7 +68,7 @@ namespace CustomPomodoro.Components.Pages
                 string fileContents = File.ReadAllText(saveFile);
                 JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
-                return fileContentsAsJObj.ToObject<ActivityBarSettings>();
+                return JsonConvert.DeserializeObject<ActivityBarSettings>(fileContentsAsJObj["ActivityColorSettings"].ToString());
             }
 
             return new ActivityBarSettings();
