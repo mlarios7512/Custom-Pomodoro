@@ -57,6 +57,8 @@ namespace CustomPomodoro.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await UserSettings.LoadAllSettings();
+
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings._backgroundColorSettings.NoActivityBgColor);
             //NEW user setting stuff (above)---------
 
