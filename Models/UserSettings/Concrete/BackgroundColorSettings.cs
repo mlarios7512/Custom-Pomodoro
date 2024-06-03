@@ -16,5 +16,12 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         public HSLColor PausedActivityColor { get; set; } = HslColorSelection.GetDefaultPausedActivityBgColor();
         public BackgroundColorSettings() { }
 
+        public void SetDefaultColorsValues() 
+        {
+            NoActivityBgColor = HslColorSelection.GetDefaultNoActivityBgColor();
+            ActivityInProgressColor = HslColorSelection.GetDefaultActivityInProgressBgColor();
+            PausedActivityColor = HslColorSelection.GetDefaultPausedActivityBgColor();
+        }
+
     }
 }

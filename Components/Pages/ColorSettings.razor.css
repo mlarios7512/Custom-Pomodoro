@@ -9,3 +9,12 @@
         gap: 8rem;
     }
 }
+
+.default-values-btn {
+    background-color: #003b8e;
+    color: white;
+}
+
+.default-values-btn:hover {
+    color: lightgray;
+}

@@ -1,5 +1,6 @@
 ﻿using CustomPomodoro.Components.Reusable;
 using CustomPomodoro.Models.UserSettings.Concrete;
+using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,6 +16,8 @@ namespace CustomPomodoro.Components.Pages
 {
     public partial class ColorSettings
     {
+        [CascadingParameter]
+        MasterUserSettings UserSettings { get; set; }
         private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
         private bool DisplayAdvancedColorSettings { get; set; } = false;
@@ -40,6 +43,23 @@ namespace CustomPomodoro.Components.Pages
 
         //Question: Can you call a method on a child component from "OnInitializedAsync"?
         protected override async Task OnInitializedAsync()
+        {
+            //Load all settings. If no save file exists, just skip to setting all inputs to default color values.
+            await UserSettings.LoadAllSettings();
+
+
+            //Best to transfer global "UserSettings" bgColors & activityBarColors into local colors.
+            // (This is because even if you don't click "save", any color changes made during the current session will be visible in the "timer" page.)
+            BgColorInputs = UserSettings._backgroundColorSettings;
+            ColorBarInputs = UserSettings._activityBarSettings;
+        }
+
+        private async Task GetDefaultBgColorValues() 
+        {
+            BgColorInputs.SetDefaultColorsValues();
+        }
+
+        private async Task GetDefaultActivityBarColorValues() 
         {
             ColorBarInputs.SetAllColorsToDefaultValues();
         }
