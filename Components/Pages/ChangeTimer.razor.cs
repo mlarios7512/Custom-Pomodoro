@@ -1,4 +1,5 @@
 ﻿using CustomPomodoro.Models;
+using CustomPomodoro.Models.UserSettings.Concrete;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -7,32 +8,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace CustomPomodoro.Components.Pages
 {
     public partial class ChangeTimer
     {
         [CascadingParameter]
-        PomodoroSet PomoSetWithTimerInfoOnly { get; set; } = new PomodoroSet();
-        private bool IsSaveNotificationVisible { get; set; } = false;
+        MasterUserSettings UserSettings { get; set; }
         private async Task ChangeTimerProps() 
         {
-            //This is for future use (when implementing sets of pomodoro timers).
+            //This is for future use (if implementing sets of pomodoro timers).
             //string NewPomodoroId = Guid.NewGuid().ToString();
             //PomoSetWithTimerInfoOnly.Id = NewPomodoroId;
 
-            Debug.WriteLine($"Set info updated.");
+            //MasterUserSettings.MasterInstance.LoadAllSettings();
 
-            //Debug.WriteLine($"ID: {PomoSetWithTimerInfoOnly.Id}");
-            //Debug.WriteLine($"Name: {PomoSetWithTimerInfoOnly.Name}");
+            Debug.WriteLine($"Work: {UserSettings._curPomodoroSet.WorkTime}");
+            Debug.WriteLine($"Short break: {UserSettings._curPomodoroSet.ShortBreak}");
+            Debug.WriteLine($"Long break: {UserSettings._curPomodoroSet.LongBreak}");
+            Debug.WriteLine($"Reps before long break: {UserSettings._curPomodoroSet.RepsBeforeLongBreak}");
 
-            //These should ALL have new user values:
+            await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
 
-            Debug.WriteLine($"Work: {PomoSetWithTimerInfoOnly.WorkTime}");
-            Debug.WriteLine($"Short break: {PomoSetWithTimerInfoOnly.ShortBreak}");
-            Debug.WriteLine($"Long break: {PomoSetWithTimerInfoOnly.LongBreak}");
-            Debug.WriteLine($"Reps before long break: {PomoSetWithTimerInfoOnly.RepsBeforeLongBreak}");
 
-            await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "Cancel");
         }
     }
 }

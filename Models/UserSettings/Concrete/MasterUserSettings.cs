@@ -9,28 +9,31 @@ using System.Threading.Tasks;
 
 namespace CustomPomodoro.Models.UserSettings.Concrete
 {
-    internal class MasterUserSettings
+    public class MasterUserSettings
     {
-        private static MasterUserSettings _masterSettings = null;
-        private ActivityBarSettings _activityBarSettings = null;
-        private BackgroundColorSettings _backgroundColorSettings = null;
-
-        public static MasterUserSettings MasterInstance 
+        public static MasterUserSettings MasterSettings 
         {
             get
             {
-                if (_masterSettings == null) 
-                {
+                if (_masterSettings == null)
                     _masterSettings = new MasterUserSettings();
-                }
+
                 return _masterSettings;
             }
         }
+        private static MasterUserSettings _masterSettings = new MasterUserSettings();
+        public PomodoroSet _curPomodoroSet = new PomodoroSet();
+        public ActivityBarSettings _activityBarSettings = new ActivityBarSettings();
+        public BackgroundColorSettings _backgroundColorSettings = new BackgroundColorSettings();
         private MasterUserSettings() 
         {
         }
 
-        
+        public static MasterUserSettings GetSingletonInstance()
+        {
+            return _masterSettings;
+
+        }
 
 
 
@@ -58,5 +61,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
                 _backgroundColorSettings = new BackgroundColorSettings();
             }
         }
+
+
     }
 }
