@@ -1,4 +1,5 @@
 ﻿using CustomPomodoro.Components.Reusable;
+using CustomPomodoro.Models;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.ApplicationModel.DataTransfer;
@@ -88,7 +89,19 @@ namespace CustomPomodoro.Components.Pages
                 string fileContents = File.ReadAllText(saveFile);
                 JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
-                return JsonConvert.DeserializeObject<ActivityBarSettings>(fileContentsAsJObj["ActivityColorSettings"].ToString());
+                //Note: A good fix for clean deserialization does NOT seem to be possible (with the current JSON serialzation method).
+                // The lists within "ActivityBarSettings" are not being read as JSON Array/JObjects.
+                // (see "fileContents" in a debugger. It detects "ActivityColorsSettings" as a JObject, but does not allow for expanding/collapsing
+                // of "WorkColors" or related lists).
+
+                var activityBarColorsFromFile = JsonConvert.DeserializeObject<ActivityBarSettings>(fileContentsAsJObj["ActivityColorSettings"].ToString());
+
+                //Note: There was once a strange error that resulted in 8 of the same colors within a list (such as 8 "WorkColors).
+                // It was fixed via hand manipulation of the JSON file but I never found what caused that error (or when it occured). 
+
+                return activityBarColorsFromFile;
+
+            
             }
 
             return new ActivityBarSettings();
