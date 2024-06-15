@@ -12,19 +12,19 @@
 
     </div>
     <div class="d-flex flex-column text-start custom-slider mt-1">
-        <div class="d-flex flex-row gap-2 flex-wrap flex-lg-nowrap">
-            <label class="col-3 @HueVisibilityString">Hue</label>
-            <input class="col-9 @HueVisibilityString" type="range" @onclick="HandleClick" @bind="Color.Hue" min="0" max="360" />
+        <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
+            <label class="@HueVisibilityString">Hue</label>
+            <input class="@HueVisibilityString" type="range" @onclick="HandleClick" @bind="Color.Hue" min="0" max="360"/>
         </div>
 
-        <div class="d-flex flex-row gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
-            <label class="col-3">Saturation</label>
-            <input class="col-9" type="range" @bind="Color.Saturation" min="0" max="100" />
+        <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
+            <label>Saturation</label>
+            <input type="range" @bind="Color.Saturation" min="0" max="100" />
         </div>
 
-        <div class="d-flex flex-row gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
-            <label class="col-3">Light</label>
-            <input class="col-9" type="range" @bind="Color.Lightness" min="0" max="100" />
+        <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
+            <label>Light</label>
+            <input type="range" @bind="Color.Lightness" min="0" max="100" />
         </div>
     </div>
 </div>

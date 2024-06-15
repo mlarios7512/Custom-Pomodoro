@@ -11,13 +11,17 @@ input[type='range'] {
     accent-color: #0ea5e9;
 }
 
-.linked-color-preview{
-    padding: 4em 1em;
+.linked-color-preview {
+    /*    padding: 4em 1em;*/
+    border-radius: 15px;
 }
 
 @media (max-width: 767.98px) {
     .individual-content {
         max-width: 100%;
+    }
+    .linked-color-preview {
+        padding: 10% 10%;
     }
 }
 
@@ -25,16 +29,25 @@ input[type='range'] {
     .individual-content {
         max-width: 75%;
     }
+    .linked-color-preview{
+        padding: 7% 7%;
+    }
 }
 
 @media (min-width: 991.98px) and (max-width: 1199.98px) {
     .individual-content {
         max-width: 60%;
     }
+    .linked-color-preview {
+        padding: 5% 5%;
+    }
 }
 
 @media (min-width: 1200px) and (max-width: 1920.98px) {
     .individual-content {
         max-width: 40%;
+    }
+    .linked-color-preview {
+        padding: 5% 5%;
     }
 }
