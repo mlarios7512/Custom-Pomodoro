@@ -80,28 +80,36 @@ namespace CustomPomodoro.Components.Pages
             return new BackgroundColorSettings();
         }
 
-        //No async (uses a shared file).
+        //Don't use async (this uses a shared file).
         public static ActivityBarSettings LoadActivityBarSettings() 
         {
             string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
             if (File.Exists(saveFile)) 
             {
                 string fileContents = File.ReadAllText(saveFile);
-                JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
-                //Note: A good fix for clean deserialization does NOT seem to be possible (with the current JSON serialzation method).
-                // The lists within "ActivityBarSettings" are not being read as JSON Array/JObjects.
-                // (see "fileContents" in a debugger. It detects "ActivityColorsSettings" as a JObject, but does not allow for expanding/collapsing
-                // of "WorkColors" or related lists).
+                if(fileContents != null) 
+                {
+                    JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
-                var activityBarColorsFromFile = JsonConvert.DeserializeObject<ActivityBarSettings>(fileContentsAsJObj["ActivityColorSettings"].ToString());
+                    var activityColorSettings = JObject.Parse(fileContentsAsJObj["ActivityColorSettings"].ToString());
 
-                //Note: There was once a strange error that resulted in 8 of the same colors within a list (such as 8 "WorkColors).
-                // It was fixed via hand manipulation of the JSON file but I never found what caused that error (or when it occured). 
+                    var workAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("WorkColors").ToString());
+                    var shortBreakAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("ShortBreakColors").ToString());
+                    var longBreakAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("LongBreakColors").ToString());
 
-                return activityBarColorsFromFile;
+                    ActivityBarSettings settingsToLoad = new ActivityBarSettings()
+                    {
+                        WorkColors = workAsObj,
+                        ShortBreakColors = shortBreakAsObj,
+                        LongBreakColors = longBreakAsObj
+                    };
 
-            
+                    return settingsToLoad;
+                }
+
+                return new ActivityBarSettings();
+
             }
 
             return new ActivityBarSettings();
