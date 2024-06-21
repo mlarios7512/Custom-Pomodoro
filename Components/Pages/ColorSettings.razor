@@ -9,7 +9,7 @@
 
     <h4 class="mb-5">Background Colors</h4>
 
-    <section class="d-flex flex-column mb-3">
+    <section class="d-flex flex-column mb-5">
                 <SoloHSLControl
                     @ref="BgColorControls[0]"
                     Header="Timer not running"
@@ -24,11 +24,11 @@
                         @ref="BgColorControls[2]"
                         Header="Timer paused"
                         Color="BgColorInputs.PausedActivityColor"></SoloHSLControl>
-        <button type="button" class="btn default-values-btn" @onclick="GetDefaultBgColorValues">default colors</button>
+        <button type="button" class="btn default-values-btn" @onclick="GetDefaultBgColorValues">Default colors</button>
     </section>
 
 
-    <h4 class="mb-5 mt-5">Activity Bar Colors</h4>
+    <h4 class="preceding-section-header">Activity Bar Colors</h4>
     <br />
         <div class="form-check form-switch">
             <label class="form-check-label" for="advancedColorOptions">Advanced color options</label>
@@ -76,7 +76,7 @@
                         Color="ColorBarInputs.LongBreakColors[1]"
                         IsPrimaryColorSelector="false"></LinkedHSLControl>
         </div>
-        <button type="button" class="btn default-values-btn" @onclick="GetDefaultActivityBarColorValues">default colors</button>
+        <button type="button" class="btn default-values-btn" @onclick="GetDefaultActivityBarColorValues">Default colors</button>
     </section>
     
 
