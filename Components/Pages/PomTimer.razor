@@ -9,13 +9,16 @@
 
     @@keyframes activity-in-progress {
         0%{
-            background-color: hsl(@CurActivityBarColor 99% 27%);
+/*             background-color: hsl(@CurActivityBarColor 99% 27%); */
+            background-color: @ActivityBarColors.First();
         }
         50%{
-            background-color: hsl(@CurActivityBarColor 99% 44%);
+   /*          background-color: hsl(@CurActivityBarColor 99% 44%); */
+            background-color: @ActivityBarColors.Last();
         }
         100%{
-            background-color: hsl(@CurActivityBarColor 99% 27%);
+/*             background-color: hsl(@CurActivityBarColor 99% 27%); */
+            background-color: @ActivityBarColors.First();
         }    
     }
 
