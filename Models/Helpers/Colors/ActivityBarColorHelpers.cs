@@ -94,6 +94,16 @@ namespace CustomPomodoro.Models.Helpers.Colors
             SetDefaultSaturationAndBrightLight(longBreakColors.First());
             SetDefaultSaturationAndDimLight(longBreakColors.Last());
         }
+
+        public static List<string> TransformHSLListToCSSCompatibleStringList(List<HSLColor> hslColors)
+        {
+            List<string> result = new();
+            foreach (HSLColor color in hslColors)
+            {
+                result.Add($"hsl({color.Hue} {color.Saturation}% {color.Lightness}%)");
+            }
+            return result;
+        }
     }
 }
 
