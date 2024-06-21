@@ -30,23 +30,14 @@ namespace CustomPomodoro.Components.Pages
             Work = 2
         }
 
-        //0 == RED
-        //266 == PURPLE
-        //191 == AQUA
-        //121 == GREEN
-        private const int WorkBarColor = 0;
-        private const int ShortBreakBarColor = 191;
-        private const int LongBreakBarColor = 121;
-
         public bool ShouldNavBarBeHidden { get; set; } = false;
 
-        //The "new ()" part of the statement below is for testing purposes ONLY. (Real data will be loaded from local machine.)
         [CascadingParameter]
         public MasterUserSettings UserSettings { get; set; }
 
         //The "ActivityBarColors" is in the form of a list to work with current functions
         // (& to allow possible adaptability in the future).
-        private List<string> ActivityBarColors { get; set; } = new ();
+        private List<string> CurActivityBarColors { get; set; } = new ();
         private string BgColor = HslColorSelection.GetNoActivityBgColor();
         public string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
         public string CountdownTimerDisplay { get; set; } = "00:00";
@@ -56,7 +47,6 @@ namespace CustomPomodoro.Components.Pages
         private WorkState LastWorkState { get; set; } = WorkState.LongBreak;
         private System.Timers.Timer ActualCountdownTimer { get; set; } = new();
         private int CompletedWorkSessionCount { get; set; } = 0;
-        private int CurActivityBarColor = 0;
         private string CurNavBarDisplay { get; set; } = "block";
         private string CurNavBarVisibility { get; set; } = "visible";
 
@@ -65,8 +55,8 @@ namespace CustomPomodoro.Components.Pages
             await UserSettings.LoadAllSettings();
 
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings._backgroundColorSettings.NoActivityBgColor);
-            ActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.WorkColors);
-            //NEW user setting stuff (above)---------
+            CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.WorkColors);
+            //Loading user settings (above)---------
 
             CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings._curPomodoroSet.WorkTime);
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings._curPomodoroSet.WorkTime);
@@ -333,23 +323,20 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.LongBreak;
 
                 //Optional: Trigger a bgColor.
-                ActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.WorkColors);
-                CurActivityBarColor = WorkBarColor;
+                CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.WorkColors);
             }
             else
             {
                 if (CompletedWorkSessionCount < UserSettings._curPomodoroSet.RepsBeforeLongBreak) 
                 {
                     LastWorkState = WorkState.ShortBreak;
-                    ActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.ShortBreakColors);
-                    CurActivityBarColor = ShortBreakBarColor;
+                    CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.ShortBreakColors);
                 }
 
                 else
                 {
                     LastWorkState = WorkState.LongBreak;
-                    ActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.LongBreakColors);
-                    CurActivityBarColor = LongBreakBarColor;
+                    CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.LongBreakColors);
                 }
 
                 NextWorkState = WorkState.Work;

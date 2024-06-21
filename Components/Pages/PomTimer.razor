@@ -9,19 +9,15 @@
 
     @@keyframes activity-in-progress {
         0%{
-/*             background-color: hsl(@CurActivityBarColor 99% 27%); */
-            background-color: @ActivityBarColors.First();
+            background-color: @CurActivityBarColors.First();
         }
         50%{
-   /*          background-color: hsl(@CurActivityBarColor 99% 44%); */
-            background-color: @ActivityBarColors.Last();
+            background-color: @CurActivityBarColors.Last();
         }
         100%{
-/*             background-color: hsl(@CurActivityBarColor 99% 27%); */
-            background-color: @ActivityBarColors.First();
+            background-color: @CurActivityBarColors.First();
         }    
     }
-
     
     .blazor-side-bar-to-hide {
         display: @CurNavBarDisplay;
