@@ -45,9 +45,7 @@ namespace CustomPomodoro.Components.Pages
         //Question: Can you call a method on a child component from "OnInitializedAsync"?
         protected override async Task OnInitializedAsync()
         {
-            //Load all settings. If no save file exists, just skip to setting all inputs to default color values.
             await UserSettings.LoadAllSettings();
-
 
             //Best to transfer global "UserSettings" bgColors & activityBarColors into local colors.
             // (This is because even if you don't click "save", any color changes made during the current session will be visible in the "timer" page.)
@@ -91,7 +89,6 @@ namespace CustomPomodoro.Components.Pages
                 if(fileContents != null) 
                 {
                     JObject fileContentsAsJObj = JObject.Parse(fileContents);
-
                     var activityColorSettings = JObject.Parse(fileContentsAsJObj["ActivityColorSettings"].ToString());
 
                     var workAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("WorkColors").ToString());
@@ -116,7 +113,7 @@ namespace CustomPomodoro.Components.Pages
         }
 
 
-        //Just make 1 giant save method in this page. (& STOP ADDING NEW FEATURES! FIX WHAT YOU HAVE!)
+        //Just make 1 giant save method in this page. (& STOP ADDING NEW FEATURES!)
         public async Task SaveColorChanges() 
         {
             PermissionStatus status = PermissionStatus.Unknown;
@@ -130,14 +127,10 @@ namespace CustomPomodoro.Components.Pages
             if(status == PermissionStatus.Granted) 
             {
                 string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
-
                 if (!File.Exists(saveFile)) 
                 {
                     File.Create(saveFile);
                 }
-                    
-
-
 
                 string bgSettingsAsJson = JsonConvert.SerializeObject(BgColorInputs);
                 JObject bgSettingsWithTitle = new JObject();
@@ -160,20 +153,12 @@ namespace CustomPomodoro.Components.Pages
 
 
                 File.WriteAllText(saveFile, finalJson);
+
+                //See the "Preferences API for saving user data (NOT SURE THIS IS THE BEST WAY for cross-platform saving. NEED TO VERIFY):
+                //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
+
+                await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
             }
-
-
-           
-
-            //See the "Preferences API for saving user data (NOT SURE THIS IS THE BEST WAY for cross-platform saving. NEED TO VERIFY):
-            //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
-
-
-            //See YouTube video for what you were doing: https://www.youtube.com/watch?v=3xqIXS1SBaU
-            //Before you continue, it might be best to create a class(es)/interface(s) for saving data as different formats. (In case of future use. It's also good practice for SOLID).
-            //string saveDataLocation = FileSystem.Current.AppDataDirectory;
-            //string saveFileLocationOfColorSettings = Path.Combine(saveDataLocation, "ColorSettings.json");
-
         }
 
         private void ToggleAdvancedSettings()
