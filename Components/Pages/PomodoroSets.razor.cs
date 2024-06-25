@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace CustomPomodoro.Components.Pages
 {
-    public partial class PomodoroSets
-    {
-        public List<PomodoroSet> UserPomodoroSets { get; set; } = PomSetLoadFileOps.GetExistingPomodoroSets();
-    }
+    //public partial class PomodoroSets
+    //{
+    //    public List<PomodoroSet> UserPomodoroSets { get; set; } = PomSetLoadFileOps.GetExistingPomodoroSets();
+    //}
 }

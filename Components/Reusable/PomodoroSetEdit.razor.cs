@@ -26,19 +26,19 @@ namespace CustomPomodoro.Components.Reusable
 
             Debug.WriteLine($"Set info updated.");
 
-            Debug.WriteLine($"ID: {NewPomodoroSet.Id}");
-            Debug.WriteLine($"Name: {NewPomodoroSet.Name}");
-            Debug.WriteLine($"Work: {NewPomodoroSet.WorkTime}");
-            Debug.WriteLine($"Short break: {NewPomodoroSet.ShortBreak}");
-            Debug.WriteLine($"Long break: {NewPomodoroSet.LongBreak}");
-            Debug.WriteLine($"Reps before long break: {NewPomodoroSet.RepsBeforeLongBreak}");
+            //Debug.WriteLine($"ID: {NewPomodoroSet.Id}");
+            //Debug.WriteLine($"Name: {NewPomodoroSet.Name}");
+            //Debug.WriteLine($"Work: {NewPomodoroSet.WorkTime}");
+            //Debug.WriteLine($"Short break: {NewPomodoroSet.ShortBreak}");
+            //Debug.WriteLine($"Long break: {NewPomodoroSet.LongBreak}");
+            //Debug.WriteLine($"Reps before long break: {NewPomodoroSet.RepsBeforeLongBreak}");
 
             if (NewPomodoroSet != null)
             {
                 string JsonSavePath = Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json");
                 if (File.Exists(JsonSavePath))
                 {
-                    Debug.WriteLine("File exists. Adding set to file...");
+                    //Debug.WriteLine("File exists. Adding set to file...");
                     string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
                     var ExistingPomLists = JsonConvert.DeserializeObject<List<PomodoroSet>>(PomListsFromJsonFile);
 

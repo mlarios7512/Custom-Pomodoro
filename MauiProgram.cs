@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CustomPomodoro.Models.UserSettings.Abstract;
+using CustomPomodoro.Models.UserSettings.Concrete;
+using Microsoft.Extensions.Logging;
 //using Blazorise;
 //using Blazorise.Bootstrap;
 
@@ -17,12 +19,13 @@ namespace CustomPomodoro
                 });
 
             builder.Services.AddMauiBlazorWebView();
-    //        builder.Services
-    //.AddBlazorise(options =>
-    //{
-    //    options.Immediate = true;
-    //})
-    //.AddBootstrapProviders();
+            //        builder.Services
+            //.AddBlazorise(options =>
+            //{
+            //    options.Immediate = true;
+            //})
+            //.AddBootstrapProviders();
+            builder.Services.AddSingleton<IMasterUserSettings,MasterUserSettings>();
 
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();

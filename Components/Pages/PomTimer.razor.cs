@@ -3,6 +3,7 @@ using CustomPomodoro.Models;
 using CustomPomodoro.Models.Helpers;
 using CustomPomodoro.Models.Helpers.Colors;
 using CustomPomodoro.Models.Helpers.PomTimer;
+using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -16,31 +17,31 @@ namespace CustomPomodoro.Components.Pages
 {
     public partial class PomTimer
     {
-        public enum TimerState
+        private enum TimerState
         {
             NotStarted = -1,
             Paused = 0,
             Started = 1
         }
 
-        public enum WorkState
+        private enum WorkState
         {
             ShortBreak = 0,
             LongBreak = 1,
             Work = 2
         }
 
-        public bool ShouldNavBarBeHidden { get; set; } = false;
+        private bool ShouldNavBarBeHidden { get; set; } = false;
 
-        [CascadingParameter]
-        public MasterUserSettings UserSettings { get; set; }
+        [Inject]
+        protected IMasterUserSettings? UserSettings { get; set; }
 
         //The "ActivityBarColors" is in the form of a list to work with current functions
         // (& to allow possible adaptability in the future).
-        private List<string> CurActivityBarColors { get; set; } = new ();
+        private List<string> CurActivityBarColors { get; set; } = new () {"hsl(0 0% 0%)", "hsl(0 0% 0%)" };
         private string BgColor = HslColorSelection.GetNoActivityBgColor();
-        public string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
-        public string CountdownTimerDisplay { get; set; } = "00:00";
+        private string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
+        private string CountdownTimerDisplay { get; set; } = "00:00";
         private int TimerInSeconds { get; set; } = 0;
         private TimerState MainTimerState { get; set; } = TimerState.NotStarted;
         private WorkState NextWorkState { get; set; } = WorkState.Work;
@@ -54,12 +55,12 @@ namespace CustomPomodoro.Components.Pages
         {
             await UserSettings.LoadAllSettings();
 
-            BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings._backgroundColorSettings.NoActivityBgColor);
-            CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.WorkColors);
+            BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
+            CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings.GetActivityBarSettings().WorkColors);
             //Loading user settings (above)---------
 
-            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings._curPomodoroSet.WorkTime);
-            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings._curPomodoroSet.WorkTime);
+            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().WorkTime);
+            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().WorkTime);
         }
         private void ShowNavBar() 
         {
@@ -111,7 +112,7 @@ namespace CustomPomodoro.Components.Pages
                     case WorkState.LongBreak:
                         NextWorkState = WorkState.LongBreak;
                         LastWorkState = WorkState.Work;
-                        CompletedWorkSessionCount = UserSettings._curPomodoroSet.RepsBeforeLongBreak;
+                        CompletedWorkSessionCount = UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak;
                         SetUpLongBreak();
                         break;
                 }
@@ -151,7 +152,7 @@ namespace CustomPomodoro.Components.Pages
                         CompletedWorkSessionCount++;
 
                         //NEED TO VERIFY THAT THIS CONDITIONAL LINE WORKS (New note: I'm not even sure this gets used):
-                        if (CompletedWorkSessionCount < UserSettings._curPomodoroSet.RepsBeforeLongBreak)
+                        if (CompletedWorkSessionCount < UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                             NextWorkState = WorkState.ShortBreak;
                         else
                             NextWorkState = WorkState.LongBreak;
@@ -190,13 +191,11 @@ namespace CustomPomodoro.Components.Pages
         {
             AltWorkStateDisplay[1] = "Work";
             AltWorkStateDisplay[0] = "Next session: ";
-            
-            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings._curPomodoroSet.WorkTime);
-            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings._curPomodoroSet.WorkTime);
 
+            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().WorkTime);
+            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().WorkTime);
 
-                MainTimerState = TimerState.NotStarted;
-            
+            MainTimerState = TimerState.NotStarted;
         }
 
         /// <summary>
@@ -208,7 +207,7 @@ namespace CustomPomodoro.Components.Pages
             bool? NeedSetUpShortSession = null;
 
             AltWorkStateDisplay[0] = "Next session: ";
-            if (CompletedWorkSessionCount + 1 >= UserSettings._curPomodoroSet.RepsBeforeLongBreak)
+            if (CompletedWorkSessionCount + 1 >= UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                 NeedSetUpShortSession = false;
             else
                 NeedSetUpShortSession = true;
@@ -218,16 +217,16 @@ namespace CustomPomodoro.Components.Pages
                 NextWorkState = WorkState.LongBreak;
 
                 AltWorkStateDisplay[1] = "Long break";
-                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings._curPomodoroSet.LongBreak);
-                CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings._curPomodoroSet.LongBreak);
+                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().LongBreak);
+                CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().LongBreak);
             }
             else
             {
                  NextWorkState = WorkState.ShortBreak;
 
                 AltWorkStateDisplay[1] = "Short break";
-                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings._curPomodoroSet.ShortBreak);
-                CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings._curPomodoroSet.ShortBreak);
+                TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().ShortBreak);
+                CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().ShortBreak);
             }
 
             MainTimerState = TimerState.NotStarted;
@@ -235,13 +234,13 @@ namespace CustomPomodoro.Components.Pages
 
         public async Task PauseTimer()
         {
-            BgColor = HslColorSelection.GetPausedActivityBgColor(UserSettings._backgroundColorSettings.PausedActivityColor);
+            BgColor = HslColorSelection.GetPausedActivityBgColor(UserSettings.GetBackgroundColorSettings().PausedActivityColor);
             MainTimerState = TimerState.Paused;
             ActualCountdownTimer.Enabled = false;
         }
         public async Task ContinueTimer()
         {
-            BgColor = HslColorSelection.GetActivityInProgressBgColor(UserSettings._backgroundColorSettings.ActivityInProgressColor);
+            BgColor = HslColorSelection.GetActivityInProgressBgColor(UserSettings.GetBackgroundColorSettings().ActivityInProgressColor);
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Enabled = true;
         }
@@ -250,8 +249,8 @@ namespace CustomPomodoro.Components.Pages
         {
             AltWorkStateDisplay[0] = "Next session: ";
             AltWorkStateDisplay[1] = "Short break";
-            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings._curPomodoroSet.ShortBreak);
-            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings._curPomodoroSet.ShortBreak);
+            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().ShortBreak);
+            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().ShortBreak);
 
             MainTimerState = TimerState.NotStarted;
         }
@@ -260,15 +259,15 @@ namespace CustomPomodoro.Components.Pages
         {
             AltWorkStateDisplay[0] = "Next session: ";
             AltWorkStateDisplay[1] = "Long break";
-            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings._curPomodoroSet.LongBreak);
-            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings._curPomodoroSet.LongBreak);
+            TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().LongBreak);
+            CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().LongBreak);
 
             MainTimerState = TimerState.NotStarted;
         }
 
         public async Task CancelSessionAndMakeItRepeatable()
         {
-            BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings._backgroundColorSettings.NoActivityBgColor);
+            BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
 
@@ -280,10 +279,10 @@ namespace CustomPomodoro.Components.Pages
                     NextWorkState = WorkState.Work;
 
                     //Keep in mind the CompletedSessionCount should've been incremented when the previous timer ended.
-                    if (CompletedWorkSessionCount >= UserSettings._curPomodoroSet.RepsBeforeLongBreak || 
+                    if (CompletedWorkSessionCount >= UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak ||
                         (CompletedWorkSessionCount == 0 && NextWorkState == WorkState.Work))
                         LastWorkState = WorkState.LongBreak;
-       
+
                     else
                         LastWorkState = WorkState.ShortBreak;
 
@@ -312,38 +311,37 @@ namespace CustomPomodoro.Components.Pages
         public async Task StartTimer(PomodoroSet pomoSet)
         {
             if (NextWorkState == WorkState.Work &&
-                (LastWorkState == WorkState.LongBreak || LastWorkState == WorkState.ShortBreak) )
+                (LastWorkState == WorkState.LongBreak || LastWorkState == WorkState.ShortBreak))
             {
                 //start work session (do NOT increment work session count or setup any time!)
                 LastWorkState = WorkState.Work;
 
-                if (CompletedWorkSessionCount < UserSettings._curPomodoroSet.RepsBeforeLongBreak)
+                if (CompletedWorkSessionCount < UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                     NextWorkState = WorkState.ShortBreak;
                 else
                     NextWorkState = WorkState.LongBreak;
 
-                //Optional: Trigger a bgColor.
-                CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.WorkColors);
+                CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings.GetActivityBarSettings().WorkColors);
             }
             else
             {
-                if (CompletedWorkSessionCount < UserSettings._curPomodoroSet.RepsBeforeLongBreak) 
+                if (CompletedWorkSessionCount < UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                 {
                     LastWorkState = WorkState.ShortBreak;
-                    CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.ShortBreakColors);
+                    CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings.GetActivityBarSettings().ShortBreakColors);
                 }
 
                 else
                 {
                     LastWorkState = WorkState.LongBreak;
-                    CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings._activityBarSettings.LongBreakColors);
+                    CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings.GetActivityBarSettings().LongBreakColors);
                 }
 
                 NextWorkState = WorkState.Work;
 
             }
 
-            BgColor = HslColorSelection.GetActivityInProgressBgColor(UserSettings._backgroundColorSettings.ActivityInProgressColor);
+            BgColor = HslColorSelection.GetActivityInProgressBgColor(UserSettings.GetBackgroundColorSettings().ActivityInProgressColor);
             HideNavBar();
             ActualCountdownTimer = new System.Timers.Timer(1000);
             ActualCountdownTimer.Enabled = true;
@@ -369,10 +367,10 @@ namespace CustomPomodoro.Components.Pages
                 }
                 else
                 {
-                    BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings._backgroundColorSettings.NoActivityBgColor);
+                    BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
                     ActualCountdownTimer.Enabled = false;
 
-                    if (CompletedWorkSessionCount + 1 > UserSettings._curPomodoroSet.RepsBeforeLongBreak)
+                    if (CompletedWorkSessionCount + 1 > UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                         CompletedWorkSessionCount = 0;
 
                     switch (NextWorkState) 
@@ -380,7 +378,7 @@ namespace CustomPomodoro.Components.Pages
                         case WorkState.Work:
                             SetUpWork();
 
-                            if (CompletedWorkSessionCount < UserSettings._curPomodoroSet.RepsBeforeLongBreak)
+                            if (CompletedWorkSessionCount < UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                                 LastWorkState = WorkState.ShortBreak;
                             else
                                 LastWorkState = WorkState.LongBreak;
