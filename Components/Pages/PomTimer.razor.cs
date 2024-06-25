@@ -378,7 +378,7 @@ namespace CustomPomodoro.Components.Pages
                         case WorkState.Work:
                             SetUpWork();
 
-                            if (CompletedWorkSessionCount < UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
+                            if (CompletedWorkSessionCount >=1 && CompletedWorkSessionCount < UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                                 LastWorkState = WorkState.ShortBreak;
                             else
                                 LastWorkState = WorkState.LongBreak;
