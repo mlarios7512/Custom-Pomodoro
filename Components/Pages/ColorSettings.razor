@@ -1,11 +1,12 @@
 ﻿@using CustomPomodoro.Components.Reusable;
+@using CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings;
 
 @page "/ColorSettings"
 
 
 
 
-<EditForm Model="ColorBarInputs" OnValidSubmit="@SaveAllColorChanges" FormName="UpdateColorSettings">
+<EditForm Model="ColorBarInputs" OnValidSubmit="@(() => @SaveColorSettingsOps.SaveAllColorSettings(BgColorInputs, ColorBarInputs))" FormName="UpdateColorSettings">
 
     <h4 class="mb-5">Background Colors</h4>
 

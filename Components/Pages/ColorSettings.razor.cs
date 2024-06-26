@@ -66,23 +66,6 @@ namespace CustomPomodoro.Components.Pages
             ColorBarInputs.SetAllColorsToDefaultValues();
         }
 
-        public async Task SaveAllColorChanges()
-        {
-            PermissionStatus status = PermissionStatus.Unknown;
-            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-            if (status != PermissionStatus.Granted)
-            {
-                await Application.Current.MainPage.DisplayAlert("Need storage permission", "Storage permission is required to create a save file.", "OK");
-            }
-
-            status = await Permissions.RequestAsync<Permissions.StorageWrite>();
-
-            if (status == PermissionStatus.Granted) 
-            {
-                await SaveColorSettingsOps.SaveSettingsToJSON(BgColorInputs, ColorBarInputs);
-            }
-        }
-
         private void ToggleAdvancedSettings()
         {
             DisplayAdvancedColorSettings = !DisplayAdvancedColorSettings;
