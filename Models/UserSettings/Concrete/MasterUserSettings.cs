@@ -45,7 +45,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
 
         //This will be used when starting the app.
-        public async Task LoadAllSettings() 
+        public async Task LoadAllColorSettings() 
         {
             PermissionStatus status = PermissionStatus.Unknown;
             status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
@@ -56,20 +56,19 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             status = await Permissions.RequestAsync<Permissions.StorageRead>();
 
-
-            //if (status == PermissionStatus.Granted) 
-            //{
-            //    _activityBarSettings = ColorSettings.LoadActivityBarSettings();
-            //    _backgroundColorSettings = ColorSettings.LoadBackgroundColorsSettings();
-            //}
-            //else 
-            //{
-            //    _activityBarSettings = new ActivityBarSettings();
-            //    _backgroundColorSettings = new BackgroundColorSettings();
-            //}
+            if (status == PermissionStatus.Granted)
+            {
+                _activityBarSettings = ColorSettings.LoadActivityBarSettings();
+                _backgroundColorSettings = ColorSettings.LoadBackgroundColorsSettings();
+            }
+            else
+            {
+                _activityBarSettings = new ActivityBarSettings();
+                _backgroundColorSettings = new BackgroundColorSettings();
+            }
             //TEMP CODE (below)
-            _activityBarSettings = new ActivityBarSettings();
-            _backgroundColorSettings = new BackgroundColorSettings();
+            //_activityBarSettings = new ActivityBarSettings();
+            //_backgroundColorSettings = new BackgroundColorSettings();
         }
 
 

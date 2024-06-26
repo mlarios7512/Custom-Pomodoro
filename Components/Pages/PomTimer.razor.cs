@@ -53,7 +53,7 @@ namespace CustomPomodoro.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await UserSettings.LoadAllSettings();
+            await UserSettings.LoadAllColorSettings();
 
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
             CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings.GetActivityBarSettings().WorkColors);

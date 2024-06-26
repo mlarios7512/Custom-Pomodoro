@@ -9,7 +9,7 @@ namespace CustomPomodoro.Models.UserSettings.Abstract
 {
     public interface IMasterUserSettings
     {
-        Task LoadAllSettings();
+        Task LoadAllColorSettings();
         BackgroundColorSettings GetBackgroundColorSettings();
         ActivityBarSettings GetActivityBarSettings();
         PomodoroSet GetCurPomodoroSet();
