@@ -1,4 +1,5 @@
 ﻿using CustomPomodoro.Components.Pages;
+using CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings;
 using CustomPomodoro.Models.UserSettings.Abstract;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,9 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 {
     public class MasterUserSettings:IMasterUserSettings
     {
-        //public static MasterUserSettings MasterSettings { get; set; }
-        //private static MasterUserSettings _masterSettings = new MasterUserSettings();
         public PomodoroSet _curPomodoroSet = new PomodoroSet();
         public ActivityBarSettings _activityBarSettings = new ActivityBarSettings();
         public BackgroundColorSettings _backgroundColorSettings = new BackgroundColorSettings();
-        //private MasterUserSettings() 
-        //{
-        //}
-
-        //public static MasterUserSettings GetSingletonInstance()
-        //{
-        //    return _masterSettings;
-
-        //}
 
         public BackgroundColorSettings GetBackgroundColorSettings() 
         {
@@ -42,8 +32,6 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             return _curPomodoroSet;
         }
 
-
-
         //This will be used when starting the app.
         public async Task LoadAllColorSettings() 
         {
@@ -58,17 +46,14 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if (status == PermissionStatus.Granted)
             {
-                _activityBarSettings = ColorSettings.LoadActivityBarSettings();
-                _backgroundColorSettings = ColorSettings.LoadBackgroundColorsSettings();
+                _activityBarSettings = LoadColorSettingsOps.LoadActivityBarSettings();
+                _backgroundColorSettings = LoadColorSettingsOps.LoadBackgroundColorsSettings();
             }
             else
             {
                 _activityBarSettings = new ActivityBarSettings();
                 _backgroundColorSettings = new BackgroundColorSettings();
             }
-            //TEMP CODE (below)
-            //_activityBarSettings = new ActivityBarSettings();
-            //_backgroundColorSettings = new BackgroundColorSettings();
         }
 
 

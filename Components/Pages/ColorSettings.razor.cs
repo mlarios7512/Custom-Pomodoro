@@ -66,59 +66,7 @@ namespace CustomPomodoro.Components.Pages
             ColorBarInputs.SetAllColorsToDefaultValues();
         }
 
-        //No async (uses a shared file).
-        public static BackgroundColorSettings LoadBackgroundColorsSettings()
-        {
-            string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
-            if (File.Exists(saveFile))
-            {
-                string fileContents = File.ReadAllText(saveFile);
-                JObject fileContentsAsJObj = JObject.Parse(fileContents);
-
-                return JsonConvert.DeserializeObject<BackgroundColorSettings>(fileContentsAsJObj["BackgroundColorSettings"].ToString());
-            }
-
-            return new BackgroundColorSettings();
-        }
-
-        //Don't use async (this uses a shared file).
-        public static ActivityBarSettings LoadActivityBarSettings()
-        {
-            string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
-            if (File.Exists(saveFile))
-            {
-                string fileContents = File.ReadAllText(saveFile);
-
-                if (fileContents != null)
-                {
-                    JObject fileContentsAsJObj = JObject.Parse(fileContents);
-                    var activityColorSettings = JObject.Parse(fileContentsAsJObj["ActivityColorSettings"].ToString());
-
-                    var workAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("WorkColors").ToString());
-                    var shortBreakAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("ShortBreakColors").ToString());
-                    var longBreakAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("LongBreakColors").ToString());
-
-                    ActivityBarSettings settingsToLoad = new ActivityBarSettings()
-                    {
-                        WorkColors = workAsObj,
-                        ShortBreakColors = shortBreakAsObj,
-                        LongBreakColors = longBreakAsObj
-                    };
-
-                    return settingsToLoad;
-                }
-
-                return new ActivityBarSettings();
-
-            }
-
-            return new ActivityBarSettings();
-        }
-
-
-        //Just make 1 giant save method in this page. (& STOP ADDING NEW FEATURES)
-        //Ideally, this should be put in a new directory "PersistanceLogic", w/ file name "PomColorSettingsOps" (create later).
-        public async Task SaveColorChanges()
+        public async Task SaveAllColorChanges()
         {
             PermissionStatus status = PermissionStatus.Unknown;
             status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
