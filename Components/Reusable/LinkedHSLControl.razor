@@ -14,7 +14,7 @@
     <div class="d-flex flex-column text-start custom-slider mt-1">
         <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
             <label class="@HueVisibilityString">Hue</label>
-            <input class="@HueVisibilityString" type="range" @onclick="HandleClick" @bind="Color.Hue" min="0" max="360"/>
+            <input class="@HueVisibilityString" type="range" @onclick="HandleInteraction" @ontouchmove="HandleInteraction" @bind="Color.Hue" @bind:event="oninput" min="0" max="360"/>
         </div>
 
         <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">

@@ -61,13 +61,12 @@ namespace CustomPomodoro.Components.Reusable
         It's not possilbe for me to fix.*/
                
         [Parameter]
-        public EventCallback OnClick { get; set; }
+        public EventCallback OnInteract { get; set; }
 
-        private async Task HandleClick()
+        private async Task HandleInteraction()
         {
-            Debug.WriteLine($" 'The 'HandleClick' event has been triggered!!! '");
-            if (OnClick.HasDelegate)
-                await OnClick.InvokeAsync();
+            if (OnInteract.HasDelegate)
+                await OnInteract.InvokeAsync();
         }
     }
 }

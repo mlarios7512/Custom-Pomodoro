@@ -41,7 +41,7 @@
 
         <div class="d-flex flex-row w-100 group-gap">
             <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[0]"
-                OnClick="UpdateSecondaryColorIfNeeded"
+                OnInteract="UpdateSecondaryColorIfNeeded"
                 Header="Work - 1"
                 Color="ColorBarInputs.WorkColors[0]"
                 IsPrimaryColorSelector="true"></LinkedHSLControl>
@@ -54,7 +54,7 @@
 
         <div class="d-flex flex-row w-100 group-gap">
             <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[1]"
-                        OnClick="UpdateSecondaryColorIfNeeded"
+                        OnInteract="UpdateSecondaryColorIfNeeded"
                         Header="Short break - 1"
                         Color="ColorBarInputs.ShortBreakColors[0]"
                         IsPrimaryColorSelector="true"></LinkedHSLControl>
@@ -67,7 +67,7 @@
 
          <div class="d-flex flex-row w-100 group-gap">
             <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[2]"
-                        OnClick="UpdateSecondaryColorIfNeeded"
+                        OnInteract="UpdateSecondaryColorIfNeeded"
                         Header="Long break - 1"
                         Color="ColorBarInputs.LongBreakColors[0]"
                         IsPrimaryColorSelector="true"></LinkedHSLControl>
