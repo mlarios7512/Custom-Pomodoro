@@ -39,8 +39,17 @@
 
     <section class="d-flex flex-column align-items-start">
 
+        <ConnectedHSLControl @ref="ConnectedActivityStatusColorControls[0]"
+                             FirstColor="ColorBarInputs.WorkColors[0]"
+                             SecondColor="ColorBarInputs.WorkColors[1]"
+                             OnInteract="UpdateSecondaryColorIfNeeded">
+
+        </ConnectedHSLControl>
+
         <div class="d-flex flex-row w-100 group-gap">
-            <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[0]"
+
+
+@*             <LinkedHSLControl @ref="PrimaryActivityStatusColorControls[0]"
                 OnInteract="UpdateSecondaryColorIfNeeded"
                 Header="Work - 1"
                 Color="ColorBarInputs.WorkColors[0]"
@@ -49,7 +58,7 @@
             <LinkedHSLControl @ref="SecondaryActivityStatusColorControls[0]"
                 Header="Work - 2" 
                 Color="ColorBarInputs.WorkColors[1]" 
-                IsPrimaryColorSelector="false"></LinkedHSLControl>
+                IsPrimaryColorSelector="false"></LinkedHSLControl> *@
         </div>
 
         <div class="d-flex flex-row w-100 group-gap">

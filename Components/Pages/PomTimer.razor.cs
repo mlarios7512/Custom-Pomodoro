@@ -74,7 +74,6 @@ namespace CustomPomodoro.Components.Pages
         }
         
 
-        //Noteable event: suffers from a glitch where: Sometimes gives you a "short break" when it should give you a "Long break".
         public void PrevSession() 
         {
             if(MainTimerState == TimerState.NotStarted) 
@@ -105,10 +104,6 @@ namespace CustomPomodoro.Components.Pages
                         SetUpShortBreak();
                         break;
 
-                    //Do NOT let the user go back if they try to use this to take a long break 1st (that does NOT make much sense).
-                    //(Plus, they could just use the "skip" feature to do that.)...
-
-
                     case WorkState.LongBreak:
                         NextWorkState = WorkState.LongBreak;
                         LastWorkState = WorkState.Work;
@@ -129,7 +124,7 @@ namespace CustomPomodoro.Components.Pages
             }
         }
 
-        public void RestartFullPomSession() 
+        public void RestartFullPomSession() //Move to a "helper" class (not sure which class yet).
         {
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
@@ -187,7 +182,7 @@ namespace CustomPomodoro.Components.Pages
 
         }
 
-        public void SetUpWork()
+        public void SetUpWork() //Move to a "helper" class (not sure which class yet).
         {
             AltWorkStateDisplay[1] = "Work";
             AltWorkStateDisplay[0] = "Next session: ";
@@ -202,7 +197,7 @@ namespace CustomPomodoro.Components.Pages
         /// Sets up a "short break" or "long break" (depending on current work session count). The only helper function which controlls "NextWorkState" & "LastWorkState" (all others
         /// are determined by a function triggered by the press of a button). 
         /// </summary>
-        public void SetUpTimerPropertiesForCorrectBreak()
+        public void SetUpTimerPropertiesForCorrectBreak() //Move to a "helper" class (not sure which class yet).
         {
             bool? NeedSetUpShortSession = null;
 
@@ -245,7 +240,7 @@ namespace CustomPomodoro.Components.Pages
             ActualCountdownTimer.Enabled = true;
         }
 
-        public async Task SetUpShortBreak() 
+        public async Task SetUpShortBreak() //Move to a "helper" class (not sure which class yet).
         {
             AltWorkStateDisplay[0] = "Next session: ";
             AltWorkStateDisplay[1] = "Short break";
@@ -255,7 +250,7 @@ namespace CustomPomodoro.Components.Pages
             MainTimerState = TimerState.NotStarted;
         }
 
-        public async Task SetUpLongBreak() 
+        public async Task SetUpLongBreak() //Move to a "helper" class (not sure which class yet).
         {
             AltWorkStateDisplay[0] = "Next session: ";
             AltWorkStateDisplay[1] = "Long break";
@@ -308,7 +303,7 @@ namespace CustomPomodoro.Components.Pages
 
         }
 
-        public async Task StartTimer(PomodoroSet pomoSet)
+        public async Task StartTimer()
         {
             if (NextWorkState == WorkState.Work &&
                 (LastWorkState == WorkState.LongBreak || LastWorkState == WorkState.ShortBreak))
@@ -350,7 +345,7 @@ namespace CustomPomodoro.Components.Pages
             ActualCountdownTimer.Elapsed += CountDownTimer;
         }
 
-        public string GetCountdownTimerDisplay(string workTime)
+        public string GetCountdownTimerDisplay(string workTime) //Move to a "helper" class (not sure which class yet).
         {
             int WorkTimeInSec = PomTimerHelpers.GetEndTimeInSecondsFormat(workTime);
             return $"{TimeSpan.FromSeconds(WorkTimeInSec):hh\\:mm\\:ss}";

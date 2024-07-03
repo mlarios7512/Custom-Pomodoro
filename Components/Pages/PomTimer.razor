@@ -76,7 +76,7 @@
             @{
                 if (MainTimerState == TimerState.NotStarted)
                 {
-                    <button class="btn btn-custom-start" style="max-width:75%; min-width:50%" @onclick="() => StartTimer(UserSettings.GetCurPomodoroSet())">Start</button>
+                    <button class="btn btn-custom-start" style="max-width:75%; min-width:50%" @onclick="() => StartTimer()">Start</button>
                 }
                 if (MainTimerState == TimerState.Paused)
                 {

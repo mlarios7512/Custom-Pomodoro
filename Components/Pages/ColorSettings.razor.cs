@@ -31,6 +31,14 @@ namespace CustomPomodoro.Components.Pages
             new LinkedHSLControl(),
             new LinkedHSLControl()
         };
+
+        private List<ConnectedHSLControl> ConnectedActivityStatusColorControls { get; set; } = new(3) 
+        {
+            new ConnectedHSLControl(),
+            new ConnectedHSLControl(),
+            new ConnectedHSLControl()
+        };
+
         private List<LinkedHSLControl> SecondaryActivityStatusColorControls { get; set; } = new List<LinkedHSLControl>(3)
         {
             new LinkedHSLControl(),
