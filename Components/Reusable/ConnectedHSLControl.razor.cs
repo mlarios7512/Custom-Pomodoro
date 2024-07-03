@@ -1,5 +1,6 @@
 ﻿using CustomPomodoro.Models;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,10 +25,8 @@ namespace CustomPomodoro.Components.Reusable
 
         [Parameter]
         public EventCallback OnInteract { get; set; }
-
-        public bool IsPrimaryColorSelector { get; set; } = true;
-
-        private string HueVisibilityString { get; set; } = string.Empty;
+        private string FirstHueVisibilityString { get; set; } = string.Empty;
+        private string SecondHueVisibilityString { get; set; } = string.Empty ;
 
         private string SatAndLightVisibilityString { get; set; } = string.Empty;
 
@@ -36,40 +35,37 @@ namespace CustomPomodoro.Components.Reusable
 
         protected override async Task OnInitializedAsync()
         {
-            if (IsPrimaryColorSelector)
-                HueVisibilityString = HTMLShowKeyword;
-            else
-                HueVisibilityString = HTMLHideKeyword;
-
+            FirstHueVisibilityString = HTMLShowKeyword;
+            SecondHueVisibilityString = HTMLHideKeyword;
             SatAndLightVisibilityString = HTMLHideKeyword;
         }
 
-        private async Task SyncHuesIfNeeded()
+        private async Task SyncHuesIfNeededMouse(MouseEventArgs e)
         {
-            Debug.WriteLine("Interaction with 1st hue occuring...");
-            if (OnInteract.HasDelegate)
+            //Checking if left button was held down when this was occuring.
+            if (e.Buttons == 1)
             {
-                Debug.WriteLine("Syncing 1st & 2nd hues...");
-                await OnInteract.InvokeAsync();
+                if (OnInteract.HasDelegate)
+                    await OnInteract.InvokeAsync();
             }
+        }
+
+        private async Task SyncHueIfNeededMobile() 
+        {
+            if (OnInteract.HasDelegate)
+                await OnInteract.InvokeAsync();
         }
 
         public void DisplayHueControlsOnly()
         {
+            SecondHueVisibilityString = HTMLHideKeyword;
             SatAndLightVisibilityString = HTMLHideKeyword;
         }
         public void DisplayAllHslColorControls()
         {
-            HueVisibilityString = HTMLShowKeyword;
+            FirstHueVisibilityString = HTMLShowKeyword;
+            SecondHueVisibilityString = HTMLShowKeyword;
             SatAndLightVisibilityString = HTMLShowKeyword;
         }
-        //NOT fully implemented.
-        public void HideAllHslControls()
-        {
-            HueVisibilityString = HTMLHideKeyword;
-            SatAndLightVisibilityString = HTMLHideKeyword;
-        }
-
-
     }
 }

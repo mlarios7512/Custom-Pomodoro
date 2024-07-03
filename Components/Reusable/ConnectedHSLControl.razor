@@ -1,7 +1,6 @@
 ﻿@using CustomPomodoro.Models;
 
 <div class="d-flex flex-row w-100 group-gap gap-3">
-    <!--1st color-->
     <div class="individual-content col-6 my-5 linked-color-option-one">
         <h5>@FirstColorTitle</h5>
         <div class="linked-color-preview" style="background-color:hsl(@FirstColor.Hue, @FirstColor.Saturation%, @FirstColor.Lightness%);">
@@ -9,8 +8,8 @@
         <div class="individual-content col-6 my-5">
             <div class="d-flex flex-column text-start custom-slider mt-1">
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
-                    <label class="@HueVisibilityString">Hue</label>
-                    <input class="@HueVisibilityString" type="range" @onmousemove="SyncHuesIfNeeded" @ontouchmove="SyncHuesIfNeeded" @bind="FirstColor.Hue" @bind:event="oninput" min="0" max="360" />
+                    <label class="@FirstHueVisibilityString">Hue</label>
+                    <input class="@FirstHueVisibilityString" type="range" @onmousemove="SyncHuesIfNeededMouse" @ontouchmove="SyncHueIfNeededMobile" @bind="FirstColor.Hue" @bind:event="oninput" min="0" max="360" />
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
@@ -27,7 +26,6 @@
     </div>
 
     <div class="individual-content col-6 my-5 linked-color-option-two">
-        <!--2nd color (implement later, below)-->
         <h5>@SecondColorTitle</h5>
         <div class="linked-color-preview" style="background-color:hsl(@SecondColor.Hue, @SecondColor.Saturation%, @SecondColor.Lightness%);">
         </div>
@@ -35,8 +33,8 @@
         <div class="individual-content col-6 my-5">
             <div class="d-flex flex-column text-start custom-slider mt-1">
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
-                    <label class="@HueVisibilityString">Hue</label>
-                    <input class="@HueVisibilityString" type="range" @onclick="SyncHuesIfNeeded" @ontouchmove="SyncHuesIfNeeded" @bind="SecondColor.Hue" @bind:event="oninput" min="0" max="360" />
+                    <label class="@SecondHueVisibilityString">Hue</label>
+                    <input class="@SecondHueVisibilityString" type="range" @onmousemove="SyncHuesIfNeededMouse" @ontouchmove="SyncHueIfNeededMobile" @bind="SecondColor.Hue" @bind:event="oninput" min="0" max="360" />
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
