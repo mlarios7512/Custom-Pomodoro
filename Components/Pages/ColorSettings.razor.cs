@@ -88,35 +88,8 @@ namespace CustomPomodoro.Components.Pages
 
                 foreach (var control in ConnectedActivityStatusColorControls)
                     control.DisplayHueControlsOnly();
-                //TO DO: Hide all other controls. Display 1st color hue only.
             }
         }
-
-        //Will need to change this to make use of "ConnectedHSLControl" instead.
-        //private void ToggleAdvancedSettings()
-        //{
-        //    DisplayAdvancedColorSettings = !DisplayAdvancedColorSettings;
-        //    if (DisplayAdvancedColorSettings == true)
-        //    {
-        //        foreach (var control in PrimaryActivityStatusColorControls)
-        //            control.DisplayAllHslColorControls();
-
-        //        foreach (var control in SecondaryActivityStatusColorControls)
-        //            control.DisplayAllHslColorControls();
-        //    }
-        //    else
-        //    {
-        //        ColorBarInputs.ResetAllColorValuesExceptPrimaryHue();
-        //        foreach (var control in PrimaryActivityStatusColorControls)
-        //        {
-        //            control.DisplayHueControlsOnly();
-        //        }
-        //        foreach (var control in SecondaryActivityStatusColorControls)
-        //        {
-        //            control.HideAllHslControls();
-        //        }
-        //    }
-        //}
 
         private void MakeSimilarStageOneAndTwoColors()
         {
