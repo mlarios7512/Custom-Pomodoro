@@ -18,6 +18,11 @@ namespace CustomPomodoro.Components.Reusable
         public HSLColor SecondColor { get; set; }
 
         [Parameter]
+        public string FirstColorTitle { get; set; }
+        [Parameter]
+        public string SecondColorTitle { get; set;}
+
+        [Parameter]
         public EventCallback OnInteract { get; set; }
 
         public bool IsPrimaryColorSelector { get; set; } = true;
