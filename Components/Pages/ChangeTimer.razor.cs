@@ -17,7 +17,6 @@ namespace CustomPomodoro.Components.Pages
     {
         [Inject]
         protected IMasterUserSettings? UserSettings { get; set; }
-        private SoloPomodoroSettings PomodoroSettings { get; set; } = new();
         private PomodoroSet SetToEdit { get; set; }
         protected override async Task OnInitializedAsync() 
         {
