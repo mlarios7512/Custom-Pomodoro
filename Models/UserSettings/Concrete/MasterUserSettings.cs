@@ -41,7 +41,18 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         public async Task<PomodoroLoadSetStatus> LoadCurPomodoroSet() 
         {
             //Fix implementation within "PomSetLoadFileOps" to make it work here.
-            return PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSet);
+            PermissionStatus status = PermissionStatus.Unknown;
+            status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
+
+            if(status != PermissionStatus.Granted) 
+            {
+                await Application.Current.MainPage.DisplayAlert("Need storage permission", "Storage permission is required to load pomodoro set.", "OK");
+                return PomodoroLoadSetStatus.NoSetFound;
+            }
+            else 
+            {
+                return PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSet);
+            }
         }
 
         //This will be used when starting the app.

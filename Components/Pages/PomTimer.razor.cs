@@ -51,10 +51,20 @@ namespace CustomPomodoro.Components.Pages
         private int CompletedWorkSessionCount { get; set; } = 0;
         private string CurNavBarDisplay { get; set; } = "block";
         private string CurNavBarVisibility { get; set; } = "visible";
+        private bool HasAttemptedToLoadPomodoroSet { get; set; } = false;
+        private PomodoroLoadSetStatus PomSetLoadStatus { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            await UserSettings.LoadCurPomodoroSet();
+            
+            PomSetLoadStatus = UserSettings.LoadCurPomodoroSet().Result;
+            HasAttemptedToLoadPomodoroSet = true;
+            if(PomSetLoadStatus == PomodoroLoadSetStatus.NoSetFound) 
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "No existing pomodoro set was found. Default settings will be used.", "OK");
+            }
+
+
             await UserSettings.LoadAllColorSettings();
 
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
@@ -64,6 +74,8 @@ namespace CustomPomodoro.Components.Pages
             CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().WorkTime);
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().WorkTime);
         }
+
+
         private void ShowNavBar() 
         {
             CurNavBarDisplay = "block" ;
