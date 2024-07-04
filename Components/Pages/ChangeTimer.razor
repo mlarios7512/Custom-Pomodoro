@@ -1,7 +1,7 @@
 ﻿@page "/ChangeTimer"
 
 <h3 class="mb-5">Change Timer</h3>
-<EditForm Model="PomodoroSettings" OnValidSubmit="@ChangeTimerProps" FormName="UpdateTimerInfo">
+<EditForm Model="SetToEdit" OnValidSubmit="@ChangeTimerProps" FormName="UpdateTimerInfo">
     <div class="mb-4 row">
         <label for="worktime-input" class="col-sm-4 col-form-label">Work time</label>
         <div class="col-sm-4">
@@ -29,21 +29,6 @@
             <InputText placeholder="0 to 59 min (ex:25:00)" id="long-break-input" @bind-Value="SetToEdit.LongBreak" class="form-control timer-property-input" pattern="^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$" minlength="1" maxlength="5" required></InputText>
         </div>
     </div>
-
-    <div class="form-check form-switch mb-4">
-        <input class="form-check-input" type="checkbox" role="switch" id="switch-input-auto-start-next-timer">
-        <label class="form-check-label" for="switch-input-auto-start-next-timer">Auto-start timer sessions</label>
-    </div>
-
-    @{
-        if (DeviceInfo.Current.Platform == DevicePlatform.Android)
-        {
-            <div class="form-check form-switch mb-4">
-                <input class="form-check-input" type="checkbox" role="switch" id="switch-input-vibrate-on-timer-end">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Vibrate on timer end</label>
-            </div>
-        }
-    }
 
     <button class="btn btn-custom-start mt-4" type="submit">Save</button>
 </EditForm>
