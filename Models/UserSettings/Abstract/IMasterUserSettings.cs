@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings.PomSetLoadFileOps;
 
 namespace CustomPomodoro.Models.UserSettings.Abstract
 {
@@ -13,5 +14,7 @@ namespace CustomPomodoro.Models.UserSettings.Abstract
         BackgroundColorSettings GetBackgroundColorSettings();
         ActivityBarSettings GetActivityBarSettings();
         PomodoroSet GetCurPomodoroSet();
+        Task<PomodoroLoadSetStatus> LoadCurPomodoroSet();
+
     }
 }

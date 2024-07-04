@@ -1,5 +1,6 @@
 ﻿using CustomPomodoro.Components.Pages;
 using CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings;
+using CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings;
 using CustomPomodoro.Models.UserSettings.Abstract;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings.PomSetLoadFileOps;
 
 namespace CustomPomodoro.Models.UserSettings.Concrete
 {
@@ -30,6 +32,16 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         public PomodoroSet GetCurPomodoroSet() 
         {
             return _curPomodoroSet;
+        }
+
+        /// <summary>
+        /// Loads a pomodoro set and loads it as the current pomodoro set.
+        /// </summary>
+        /// <returns>A status code indicating the result of the file loading operation.</returns>
+        public async Task<PomodoroLoadSetStatus> LoadCurPomodoroSet() 
+        {
+            //Fix implementation within "PomSetLoadFileOps" to make it work here.
+            return PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSet);
         }
 
         //This will be used when starting the app.

@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings.PomSetLoadFileOps;
 
 namespace CustomPomodoro.Components.Pages
 {
@@ -53,6 +54,7 @@ namespace CustomPomodoro.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            await UserSettings.LoadCurPomodoroSet();
             await UserSettings.LoadAllColorSettings();
 
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
