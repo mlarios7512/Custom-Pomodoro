@@ -17,6 +17,7 @@ namespace CustomPomodoro.Components.Pages
     {
         [Inject]
         protected IMasterUserSettings? UserSettings { get; set; }
+        private SoloPomodoroSettings PomodoroSettings { get; set; } = new();
         private PomodoroSet SetToEdit { get; set; }
         protected override async Task OnInitializedAsync() 
         {
@@ -31,12 +32,12 @@ namespace CustomPomodoro.Components.Pages
             bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(SetToEdit);
 
             //Preferences.Default.Set("auto-start-sessions", true);
-            //if(DeviceInfo.Current.Platform == DevicePlatform.Android)
+            //if (DeviceInfo.Current.Platform == DevicePlatform.Android)
             //    Preferences.Default.Set("vibrate-on-timer-end", true);
 
             if (SaveSucessful) 
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been applied.", "OK");
             }
             else 
             {

@@ -34,38 +34,32 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             return _curPomodoroSet;
         }
 
+
+        //General rule: If a function invovles loading something that required user permissions to create a
+        // save file for it, CHECK the current permissions for it but do NOT REQUEST permissions for it
+        // (such as with an alert). There is a high chance it will choke the UI during boot up (& probably annoy the user).
+        // See official android docs for guidelines: https://developer.android.com/training/permissions/requesting
+
         /// <summary>
         /// Loads a pomodoro set and loads it as the current pomodoro set.
         /// </summary>
         /// <returns>A status code indicating the result of the file loading operation.</returns>
-        public async Task<PomodoroLoadSetStatus> LoadCurPomodoroSet() 
+        public async Task LoadCurPomodoroSet() 
         {
-            //Fix implementation within "PomSetLoadFileOps" to make it work here.
             PermissionStatus status = PermissionStatus.Unknown;
             status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
 
-            if(status != PermissionStatus.Granted) 
+            if(status == PermissionStatus.Granted) 
             {
-                await Application.Current.MainPage.DisplayAlert("Need storage permission", "Storage permission is required to load pomodoro set.", "OK");
-                return PomodoroLoadSetStatus.NoSetFound;
-            }
-            else 
-            {
-                return PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSet);
+                PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSet);
             }
         }
 
-        //This will be used when starting the app.
+        //Used when starting the app.
         public async Task LoadAllColorSettings() 
         {
             PermissionStatus status = PermissionStatus.Unknown;
             status = await Permissions.CheckStatusAsync<Permissions.StorageRead>();
-            if (status != PermissionStatus.Granted)
-            {
-                await Application.Current.MainPage.DisplayAlert("Need storage permission", "Storage permission is required to load user settings.", "OK");
-            }
-
-            status = await Permissions.RequestAsync<Permissions.StorageRead>();
 
             if (status == PermissionStatus.Granted)
             {

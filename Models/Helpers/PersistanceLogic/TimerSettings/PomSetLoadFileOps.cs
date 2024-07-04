@@ -9,14 +9,6 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
 {
     public class PomSetLoadFileOps
     {
-
-        public enum PomodoroLoadSetStatus 
-        {
-            //Error = -1,
-            NoSetFound = 0,
-            Success = 1,
-        }
-
         private const string _saveFileName = "PomodoroSets.json";
 
         //public static List<PomodoroSet> GetExistingPomodoroSets()
@@ -39,10 +31,9 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
         //    return ExistingPomLists;
         //}
 
-        public static PomodoroLoadSetStatus LoadCurrentPomodoroSetFromFile(ref PomodoroSet pomSet)
+        public static Task LoadCurrentPomodoroSetFromFile(ref PomodoroSet pomSet)
         {
             string JsonSavePath = Path.Combine(AppContext.BaseDirectory, _saveFileName);
-            PomodoroLoadSetStatus LoadSetStatus = PomodoroLoadSetStatus.Success;
 
             if (File.Exists(JsonSavePath)) 
             {
@@ -51,7 +42,6 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
 
                 if (pomSet == null) 
                 {
-                    LoadSetStatus = PomodoroLoadSetStatus.NoSetFound;
                     pomSet = new PomodoroSet();
                 }
                 
@@ -59,10 +49,8 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
             else 
             {
                 pomSet = new PomodoroSet();
-                LoadSetStatus = PomodoroLoadSetStatus.NoSetFound;
             }
-            
-            return LoadSetStatus;
+            return Task.FromResult(pomSet);
         }
     }
 }
