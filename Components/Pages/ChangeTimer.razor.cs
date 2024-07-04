@@ -1,4 +1,5 @@
 ﻿using CustomPomodoro.Models;
+using CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings;
 using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using Microsoft.AspNetCore.Components;
@@ -27,7 +28,21 @@ namespace CustomPomodoro.Components.Pages
             //string NewPomodoroId = Guid.NewGuid().ToString();
             //PomoSetWithTimerInfoOnly.Id = NewPomodoroId;
 
-            await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
+            bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(SetToEdit);
+
+            //Preferences.Default.Set("auto-start-sessions", true);
+            //if(DeviceInfo.Current.Platform == DevicePlatform.Android)
+            //    Preferences.Default.Set("vibrate-on-timer-end", true);
+
+            if (SaveSucessful) 
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
+            }
+            else 
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "An error occured when saving changes.", "OK");
+            }
+            
 
 
         }
