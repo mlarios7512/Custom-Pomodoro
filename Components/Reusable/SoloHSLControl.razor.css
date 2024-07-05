@@ -17,6 +17,11 @@ input[type='range'] {
     border-color: #CDCDCD;
 }
 
+.hue-num-display {
+    color: darkgray;
+    margin-left: 6px;
+}
+
 @media (max-width: 767.98px) {
     .prime-content {
         max-width: 100%;
