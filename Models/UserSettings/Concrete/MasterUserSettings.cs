@@ -35,6 +35,28 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         }
 
 
+        public async Task SaveUserPomodoroSet(PomodoroSet setToSave) 
+        {            
+            await Permissions.RequestAsync<Permissions.StorageWrite>();
+            PermissionStatus status = PermissionStatus.Unknown;
+            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+
+            if (status == PermissionStatus.Granted)
+            {
+                bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(setToSave);
+
+                if (SaveSucessful)
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
+                else
+                    await Application.Current.MainPage.DisplayAlert("Alert", "An error occured when saving changes.", "OK");
+            }
+            else 
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
+            }
+        }
+
+
         //General rule: If a function invovles loading something that required user permissions to create a
         // save file for it, CHECK the current permissions for it but do NOT REQUEST permissions for it
         // (such as with an alert). There is a high chance it will choke the UI during boot up (& probably annoy the user).

@@ -28,23 +28,13 @@ namespace CustomPomodoro.Components.Pages
             //string NewPomodoroId = Guid.NewGuid().ToString();
             //PomoSetWithTimerInfoOnly.Id = NewPomodoroId;
 
-            bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(SetToEdit);
+
 
             //Preferences.Default.Set("auto-start-sessions", true);
             //if (DeviceInfo.Current.Platform == DevicePlatform.Android)
             //    Preferences.Default.Set("vibrate-on-timer-end", true);
 
-            if (SaveSucessful) 
-            {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been applied.", "OK");
-            }
-            else 
-            {
-                await Application.Current.MainPage.DisplayAlert("Alert", "An error occured when saving changes.", "OK");
-            }
-            
-
-
+            await UserSettings.SaveUserPomodoroSet(SetToEdit);
         }
     }
 }
