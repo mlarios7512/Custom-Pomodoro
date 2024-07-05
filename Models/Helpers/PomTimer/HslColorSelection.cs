@@ -47,16 +47,16 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
 
         public static HSLColor GetDefaultNoActivityBgColor()
         {
-            return new HSLColor(240, 4, 46);
+            return new HSLColor(0, 0, 0);
         }
         public static HSLColor GetDefaultActivityInProgressBgColor()
         {
-            return new HSLColor(240, 6, 10);
+            return new HSLColor(0, 0, 0);
         }
 
         public static HSLColor GetDefaultPausedActivityBgColor()
         {
-            return new HSLColor(202, 96, 22);
+            return new HSLColor(207, 100, 26);
         }
 
 

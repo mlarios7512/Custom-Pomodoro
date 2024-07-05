@@ -9,8 +9,8 @@ namespace CustomPomodoro.Models.Helpers.Colors
     public class ActivityBarColorHelpers
     {
         private const int DefaultWorkHue = 0;
-        private const int DefaultShortBreakHue = 191;
-        private const int DefaultLongBreakHue = 121;
+        private const int DefaultShortBreakHue = 121;
+        private const int DefaultLongBreakHue = 60;
 
         private const int DefaultSaturation = 99;
         private const int DefaultLightBright = 44;
