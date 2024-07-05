@@ -5,24 +5,31 @@
         <h5>@FirstColorTitle</h5>
         <div class="linked-color-preview" style="background-color:hsl(@FirstColor.Hue, @FirstColor.Saturation%, @FirstColor.Lightness%);">
         </div>
-        <div class="individual-content col-6 my-5">
-            <div class="d-flex flex-column text-start custom-slider mt-1">
+
+        <div class="col-6 my-5">
+            <div class="d-flex flex-column w-100 text-start mt-1">
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
-                    <label class="@FirstHueVisibilityString">Hue</label>
+                    <label class="@FirstHueVisibilityString">Hue <span class="hue-num-display">@FirstColor.Hue</span></label>
                     <input class="@FirstHueVisibilityString" type="range" @onmousemove="SyncHuesIfNeededMouse" @ontouchmove="SyncHueIfNeededMobile" @bind="FirstColor.Hue" @bind:event="oninput" min="0" max="360" />
+    
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
-                    <label>Saturation</label>
-                    <input type="range" @bind="FirstColor.Saturation" min="0" max="100" />
+                    <label>Saturation <span class="hue-num-display">@FirstColor.Saturation</span></label>
+
+                    <input type="range" @bind="FirstColor.Saturation" @bind:event="oninput" min="0" max="100" />
+                    
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
-                    <label>Light</label>
-                    <input type="range" @bind="FirstColor.Lightness" min="0" max="100" />
+                    <label>Light @FirstColor.Lightness <span class="hue-num-display">@FirstColor.Lightness</span></label>
+                    <input type="range" @bind="FirstColor.Lightness" @bind:event="oninput" min="0" max="100" />
+                   
                 </div>
             </div>
         </div>
+
+
     </div>
 
     <div class="individual-content col-6 my-5 linked-color-option-two">
@@ -30,21 +37,24 @@
         <div class="linked-color-preview" style="background-color:hsl(@SecondColor.Hue, @SecondColor.Saturation%, @SecondColor.Lightness%);">
         </div>
 
-        <div class="individual-content col-6 my-5">
+        <div class="col-6 my-5">
             <div class="d-flex flex-column text-start custom-slider mt-1">
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
-                    <label class="@SecondHueVisibilityString">Hue</label>
+                    <label class="flex-shrink-1 @SecondHueVisibilityString">Hue <span class="hue-num-display @SecondHueVisibilityString">@SecondColor.Hue</span></label>
                     <input class="@SecondHueVisibilityString" type="range" @onmousemove="SyncHuesIfNeededMouse" @ontouchmove="SyncHueIfNeededMobile" @bind="SecondColor.Hue" @bind:event="oninput" min="0" max="360" />
+                    
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
-                    <label>Saturation</label>
-                    <input type="range" @bind="SecondColor.Saturation" min="0" max="100" />
+                    <label>Saturation <span class="hue-num-display">@SecondColor.Saturation</span></label>
+                    <input type="range" @bind="SecondColor.Saturation" @bind:event="oninput" min="0" max="100" />
+                    
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
-                    <label>Light</label>
-                    <input type="range" @bind="SecondColor.Lightness" min="0" max="100" />
+                    <label>Light <span class="hue-num-display">@SecondColor.Lightness</span></label>
+                    <input type="range" @bind="SecondColor.Lightness" @bind:event="oninput" min="0" max="100" />
+                    
                 </div>
             </div>
         </div>

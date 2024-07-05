@@ -50,6 +50,9 @@ namespace CustomPomodoro.Components.Reusable
             }
         }
 
+        //Note: There is a glitch with this.
+        //If you touch the scroll bar (but do NOT drag it), then the 1st hue will change color, but the 2nd one will not. (at least within android emulator) 
+        //Maybe this could help: https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.web.toucheventargs?view=aspnetcore-8.0
         private async Task SyncHueIfNeededMobile() 
         {
             if (OnInteract.HasDelegate)
