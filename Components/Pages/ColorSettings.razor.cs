@@ -24,26 +24,11 @@ namespace CustomPomodoro.Components.Pages
         private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
         private bool DisplayAdvancedColorSettings { get; set; } = false;
-        private const string _saveFileName = "ColorSettings.json";
-        private List<LinkedHSLControl> PrimaryActivityStatusColorControls { get; set; } = new List<LinkedHSLControl>(3)
-        {
-            new LinkedHSLControl(),
-            new LinkedHSLControl(),
-            new LinkedHSLControl()
-        };
-
         private List<ConnectedHSLControl> ConnectedActivityStatusColorControls { get; set; } = new(3) 
         {
             new ConnectedHSLControl(),
             new ConnectedHSLControl(),
             new ConnectedHSLControl()
-        };
-
-        private List<LinkedHSLControl> SecondaryActivityStatusColorControls { get; set; } = new List<LinkedHSLControl>(3)
-        {
-            new LinkedHSLControl(),
-            new LinkedHSLControl(),
-            new LinkedHSLControl()
         };
         private List<SoloHSLControl> BgColorControls { get; set; } = new List<SoloHSLControl>()
         {
