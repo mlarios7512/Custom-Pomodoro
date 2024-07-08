@@ -17,10 +17,12 @@ namespace CustomPomodoro.Components.Pages
     {
         [Inject]
         protected IMasterUserSettings? UserSettings { get; set; }
-        private PomodoroSet SetToEdit { get; set; }
+        private PomodoroTimerSettings TimerSettings { get; set; } = new();
+        
+        //private PomodoroSet SetToEdit { get; set; }
         protected override async Task OnInitializedAsync() 
         {
-            SetToEdit = UserSettings.GetCurPomodoroSet();
+            //SetToEdit = UserSettings.GetCurPomodoroSet();
         }
         private async Task ChangeTimerProps() 
         {
@@ -34,7 +36,7 @@ namespace CustomPomodoro.Components.Pages
             //if (DeviceInfo.Current.Platform == DevicePlatform.Android)
             //    Preferences.Default.Set("vibrate-on-timer-end", true);
 
-            await UserSettings.SaveUserPomodoroSet(SetToEdit);
+            //await UserSettings.SaveUserPomodoroSet(SetToEdit);
         }
     }
 }
