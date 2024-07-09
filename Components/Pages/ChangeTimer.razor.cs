@@ -5,7 +5,9 @@ using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using CustomPomodoro.ViewModels.InputClones;
 using CustomPomodoro.ViewModels.Pages.ChangeTimer;
+using GameController;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Maui.Controls.PlatformConfiguration;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -52,25 +54,41 @@ namespace CustomPomodoro.Components.Pages
             SettingsVM.PomSetInput.WT_Seconds = sessionTime[1];
         }
 
+        private static string TransformInputAsFormattedStringForStroage(int sessionTimeInSeconds) 
+        {
+            string formattedInput = $"{TimeSpan.FromSeconds(sessionTimeInSeconds):mm\\:ss}";
+
+            //To do: Trim "formattedInput" to a single '0' (for minutes only) if possible.
+            // Ex: 0:13 instead of 00:13   <--- aka, 13 seconds.
+
+            if(formattedInput.First() == '0')
+                formattedInput = formattedInput.Substring(1);
+            
+
+            return formattedInput;
+        }
+
         private static PomodoroSet DummyPomSetInputToPersistentPomSet(PomTimerSetInputClone userInput, out PomodoroSet pomodoroSetOptionsToSave) 
         {
             pomodoroSetOptionsToSave = new PomodoroSet();
             int workTimeInSeconds = Int32.Parse(userInput.WT_Minutes) * 60;
             workTimeInSeconds += Int32.Parse(userInput.WT_Seconds);
-            pomodoroSetOptionsToSave.WorkTime = PomTimerHelpers.PrintCountdownTimer(workTimeInSeconds);
+            pomodoroSetOptionsToSave.WorkTime = TransformInputAsFormattedStringForStroage(workTimeInSeconds);
 
             int shortBreakInSeconds = Int32.Parse(userInput.SBT_Minutes) * 60;
             shortBreakInSeconds += Int32.Parse(userInput.SBT_Seconds);
-            pomodoroSetOptionsToSave.ShortBreak = PomTimerHelpers.PrintCountdownTimer(shortBreakInSeconds);
+            pomodoroSetOptionsToSave.ShortBreak = TransformInputAsFormattedStringForStroage(shortBreakInSeconds);
 
             int longBreakInSeconds = Int32.Parse(userInput.LBT_Minutes) * 60;
             longBreakInSeconds += Int32.Parse(userInput.LBT_Seconds);
-            pomodoroSetOptionsToSave.LongBreak = PomTimerHelpers.PrintCountdownTimer(longBreakInSeconds);
+            pomodoroSetOptionsToSave.LongBreak = TransformInputAsFormattedStringForStroage(longBreakInSeconds);
 
             pomodoroSetOptionsToSave.RepsBeforeLongBreak = userInput.RepsBeforeLongBreak;
             return pomodoroSetOptionsToSave;
         }
 
+        //Make sure the "pattern" is translated (& trimmed if needed) correctly when stored in local storage. 
+        // Keep in mind, windows users can crash it by inputting non-integer input.So make sure to FILTER THAT OUT on the BACKEND!
         private async Task SaveChanges() 
         {
             //This is for future use (if implementing sets of pomodoro timers).
@@ -87,15 +105,13 @@ namespace CustomPomodoro.Components.Pages
             //Append any other existing view-model pomodoro set settings (if any)
             // to "generalTimerSettingsToSave" here before sending it to json file.
 
-
+      
 
             //Preferences.Default.Set("auto-start-sessions", true);
             //if (DeviceInfo.Current.Platform == DevicePlatform.Android)
             //    Preferences.Default.Set("vibrate-on-timer-end", true);
 
-            //await UserSettings.SaveUserPomodoroSet(pomSetSettingsToSave);
-
-            //await UserSettings.SaveUserPomodoroSet(SettingsVM.PomSetInput);
+            await UserSettings.SaveUserPomodoroSet(pomSetSettingsToSave);
         }
     }
 }
