@@ -1,7 +1,10 @@
 ﻿using CustomPomodoro.Models;
+using CustomPomodoro.Models.Helpers;
 using CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings;
 using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
+using CustomPomodoro.ViewModels.InputClones;
+using CustomPomodoro.ViewModels.Pages.ChangeTimer;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -17,18 +20,72 @@ namespace CustomPomodoro.Components.Pages
     {
         [Inject]
         protected IMasterUserSettings? UserSettings { get; set; }
-        private PomodoroTimerSettings TimerSettings { get; set; } = new();
+        private ChangeTimerVM SettingsVM { get; set; } = new ChangeTimerVM();
         
         //private PomodoroSet SetToEdit { get; set; }
         protected override async Task OnInitializedAsync() 
         {
+            try 
+            {
+                this.PersistentPomSetToDummyPomSet(UserSettings.GetCurPomodoroSet());
+            }
+            catch(Exception e) 
+            {
+                
+            }
+            
             //SetToEdit = UserSettings.GetCurPomodoroSet();
         }
-        private async Task ChangeTimerProps() 
+
+        private void PersistentPomSetToDummyPomSet(PomodoroSet savedSet) 
+        {
+            string[] sessionTime = savedSet.WorkTime.Split(":");
+            SettingsVM.PomSetInput.WT_Minutes = sessionTime[0];
+            SettingsVM.PomSetInput.WT_Seconds = sessionTime[1];
+
+            sessionTime = savedSet.ShortBreak.Split(":");
+            SettingsVM.PomSetInput.WT_Minutes = sessionTime[0];
+            SettingsVM.PomSetInput.WT_Seconds = sessionTime[1];
+
+            sessionTime = savedSet.LongBreak.Split(":");
+            SettingsVM.PomSetInput.WT_Minutes = sessionTime[0];
+            SettingsVM.PomSetInput.WT_Seconds = sessionTime[1];
+        }
+
+        private static PomodoroSet DummyPomSetInputToPersistentPomSet(PomTimerSetInputClone userInput, out PomodoroSet pomodoroSetOptionsToSave) 
+        {
+            pomodoroSetOptionsToSave = new PomodoroSet();
+            int workTimeInSeconds = Int32.Parse(userInput.WT_Minutes) * 60;
+            workTimeInSeconds += Int32.Parse(userInput.WT_Seconds);
+            pomodoroSetOptionsToSave.WorkTime = PomTimerHelpers.PrintCountdownTimer(workTimeInSeconds);
+
+            int shortBreakInSeconds = Int32.Parse(userInput.SBT_Minutes) * 60;
+            shortBreakInSeconds += Int32.Parse(userInput.SBT_Seconds);
+            pomodoroSetOptionsToSave.ShortBreak = PomTimerHelpers.PrintCountdownTimer(shortBreakInSeconds);
+
+            int longBreakInSeconds = Int32.Parse(userInput.LBT_Minutes) * 60;
+            longBreakInSeconds += Int32.Parse(userInput.LBT_Seconds);
+            pomodoroSetOptionsToSave.LongBreak = PomTimerHelpers.PrintCountdownTimer(longBreakInSeconds);
+
+            pomodoroSetOptionsToSave.RepsBeforeLongBreak = userInput.RepsBeforeLongBreak;
+            return pomodoroSetOptionsToSave;
+        }
+
+        private async Task SaveChanges() 
         {
             //This is for future use (if implementing sets of pomodoro timers).
             //string NewPomodoroId = Guid.NewGuid().ToString();
             //PomoSetWithTimerInfoOnly.Id = NewPomodoroId;
+
+
+            PomodoroTimerSettings pomSetSettingsToSave = new ();
+            PomodoroSet tempPomSet = new();
+
+            DummyPomSetInputToPersistentPomSet(SettingsVM.PomSetInput, out tempPomSet);
+            pomSetSettingsToSave.StoredPomSet = tempPomSet;
+
+            //Append any other existing view-model pomodoro set settings (if any)
+            // to "generalTimerSettingsToSave" here before sending it to json file.
 
 
 
@@ -36,7 +93,9 @@ namespace CustomPomodoro.Components.Pages
             //if (DeviceInfo.Current.Platform == DevicePlatform.Android)
             //    Preferences.Default.Set("vibrate-on-timer-end", true);
 
-            //await UserSettings.SaveUserPomodoroSet(SetToEdit);
+            //await UserSettings.SaveUserPomodoroSet(pomSetSettingsToSave);
+
+            //await UserSettings.SaveUserPomodoroSet(SettingsVM.PomSetInput);
         }
     }
 }
