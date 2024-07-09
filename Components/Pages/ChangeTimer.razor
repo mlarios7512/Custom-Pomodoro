@@ -1,7 +1,7 @@
 ﻿@page "/ChangeTimer"
 
 <h3 class="mb-5">Change Timer</h3>
-<EditForm Model="TimerSettings" OnValidSubmit="@ChangeTimerProps" FormName="UpdateTimerInfo">
+<EditForm Model="SettingsVM" OnValidSubmit="@SaveChanges" FormName="UpdateTimerInfo">
 
     <div class="mb-4">
         <label class="text-white col-sm-4 col-form-label">Work Time</label>
@@ -9,64 +9,37 @@
             <!--Make sure the "pattern" is translated (& trimmed if needed) correctly when stored in local storage. 
 
             Keep in mind, windows users can crash it by inputting non-integer input. So make sure to FILTER THAT OUT on the BACKEND!-->
-            <InputText class="rounded-2" inputmode="numeric" pattern="^[0-5][0-9]$" size="2" maxlength="2" placeholder="min" @bind-Value="TimerSettings.InputDummy.WT_Minutes" required></InputText>
+            <!--Pattern needs REWORK to allow omission of preceeding 0's (such as "7" minutes instead of "07" minutes input).-->
+            <InputText class="rounded-2" inputmode="numeric" pattern="^[0-5][0-9]$" size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.WT_Minutes" required></InputText>
             <span class="flex-shrink-1 text-white fw-bolder">:</span>
-            <InputText class="rounded-2" inputmode="numeric" pattern="^[0-5][0-9]$" size="2" maxlength="2" placeholder="sec" @bind-Value="TimerSettings.InputDummy.WT_Seconds" required></InputText>
+            <InputText class="rounded-2" inputmode="numeric" pattern="^[0-5][0-9]$" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.WT_Seconds" required></InputText>
         </div>
     </div>
 
     <div class="mb-4">
         <label class="text-white col-sm-4 col-form-label">Short break time</label>
         <div class="d-flex flex-row">
-            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="min" @bind-Value="TimerSettings.InputDummy.SBT_Minutes" required></InputText>
+            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.SBT_Minutes" required></InputText>
             <span class="flex-shrink-1 text-white fw-bolder">:</span>
-            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="sec" @bind-Value="TimerSettings.InputDummy.SBT_Seconds" required></InputText>
+            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.SBT_Seconds" required></InputText>
         </div>
     </div>
 
     <div class="mb-4">
         <label class="text-white col-sm-4 col-form-label">Reps before long break</label>
         <div class="d-flex flex-row">
-            <InputNumber class="rounded-2" placeholder="any num 2 to 9" id="work-reps-input" @bind-Value="TimerSettings.InputDummy.RepsBeforeLongBreak" min="2" max="9" pattern="^[2-9]{1}$" required></InputNumber>
+            <InputNumber class="rounded-2" placeholder="any num 2 to 9" id="work-reps-input" @bind-Value="SettingsVM.PomSetInput.RepsBeforeLongBreak" min="2" max="9" pattern="^[2-9]{1}$" required></InputNumber>
         </div>
     </div>
 
     <div class="mb-4">
-        <label class="text-white col-sm-4 col-form-label">Short break time</label>
+        <label class="text-white col-sm-4 col-form-label">Long break time</label>
         <div class="d-flex flex-row">
-            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="min" @bind-Value="TimerSettings.InputDummy.LBT_Minutes" required></InputText>
+            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.LBT_Minutes" required></InputText>
             <span class="flex-shrink-1 text-white fw-bolder">:</span>
-            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="sec" @bind-Value="TimerSettings.InputDummy.LBT_Seconds" required></InputText>
+            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.LBT_Seconds" required></InputText>
         </div>
     </div>
-    @* <div class="mb-4 row">
-        <label for="worktime-input" class="col-sm-4 col-form-label">Work time</label>
-        <div class="col-sm-4">
-            <!--Use this with the future "int" HTML inputs: inputmode="numeric" (helps for android devices)-->
-            <InputText placeholder="0 to 59 min (ex:25:00)" id="worktime-input" @bind-Value="SetToEdit.WorkTime" class="form-control timer-property-input" pattern="^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$" minlength="1" maxlength="5" required></InputText>
-        </div>
-    </div>
-
-    <div class="mb-4 row">
-        <label for="short-break-input" class="col-sm-4 col-form-label">Short break time</label>
-        <div class="col-sm-4">
-            <InputText placeholder="0 to 59 min (ex:25:00)" id="short-break-input" @bind-Value="SetToEdit.ShortBreak" class="form-control timer-property-input" pattern="^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$" minlength="1" maxlength="5" required></InputText>
-        </div>
-    </div>
-
-    <div class="mb-4 row">
-        <label for="work-reps-input" class="col-sm-4 col-form-label">Work reps (before long break)</label>
-        <div class="col-sm-4">
-            <InputNumber placeholder="any num 2 to 9" id="work-reps-input" @bind-Value="SetToEdit.RepsBeforeLongBreak" class="form-control timer-property-input" min="2" max="9" pattern="^[2-9]{1}$" required></InputNumber>
-        </div>
-    </div>
-
-    <div class="mb-4 row">
-        <label for="long-break-input" class="col-sm-4 col-form-label">Long break time</label>
-        <div class="col-sm-4">
-            <InputText placeholder="0 to 59 min (ex:25:00)" id="long-break-input" @bind-Value="SetToEdit.LongBreak" class="form-control timer-property-input" pattern="^([0-5]?[0-9]|2[0-3]):[0-5][0-9]$" minlength="1" maxlength="5" required></InputText>
-        </div>
-    </div> *@
 
     <button class="btn btn-custom-start mt-4" type="submit">Save</button>
 </EditForm>
