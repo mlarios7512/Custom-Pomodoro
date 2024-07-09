@@ -5,7 +5,6 @@ using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using CustomPomodoro.ViewModels.InputClones;
 using CustomPomodoro.ViewModels.Pages.ChangeTimer;
-using GameController;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Maui.Controls.PlatformConfiguration;
 using System;
@@ -61,9 +60,11 @@ namespace CustomPomodoro.Components.Pages
             //To do: Trim "formattedInput" to a single '0' (for minutes only) if possible.
             // Ex: 0:13 instead of 00:13   <--- aka, 13 seconds.
 
-            if(formattedInput.First() == '0')
-                formattedInput = formattedInput.Substring(1);
-            
+            if (formattedInput.Length == 5)
+            {
+                if (formattedInput.First() == '0')
+                    formattedInput = formattedInput.Substring(1);
+            }
 
             return formattedInput;
         }
