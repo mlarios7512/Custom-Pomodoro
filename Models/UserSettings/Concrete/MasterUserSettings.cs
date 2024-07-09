@@ -15,9 +15,9 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 {
     public class MasterUserSettings:IMasterUserSettings
     {
-        public PomodoroSet _curPomodoroSet = new PomodoroSet();
-        public ActivityBarSettings _activityBarSettings = new ActivityBarSettings();
-        public BackgroundColorSettings _backgroundColorSettings = new BackgroundColorSettings();
+        public ActivityBarSettings _activityBarSettings = new ();
+        public BackgroundColorSettings _backgroundColorSettings = new ();
+        public PomodoroTimerSettings _curPomodoroSetSetttings = new(); 
 
         public BackgroundColorSettings GetBackgroundColorSettings() 
         {
@@ -31,11 +31,11 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
         public PomodoroSet GetCurPomodoroSet() 
         {
-            return _curPomodoroSet;
+            return _curPomodoroSetSetttings.StoredPomSet;
         }
 
 
-        public async Task SaveUserPomodoroSet(PomodoroSet setToSave) 
+        public async Task SaveUserPomodoroSet(PomodoroTimerSettings settingsToSave) 
         {            
             await Permissions.RequestAsync<Permissions.StorageWrite>();
             PermissionStatus status = PermissionStatus.Unknown;
@@ -43,7 +43,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if (status == PermissionStatus.Granted)
             {
-                bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(setToSave);
+                bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(settingsToSave);
 
                 if (SaveSucessful)
                     await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
@@ -63,9 +63,8 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         // See official android docs for guidelines: https://developer.android.com/training/permissions/requesting
 
         /// <summary>
-        /// Loads a pomodoro set and loads it as the current pomodoro set.
+        /// Loads a pomodoro set and its settings and as the current one in use by the user.
         /// </summary>
-        /// <returns>A status code indicating the result of the file loading operation.</returns>
         public async Task LoadCurPomodoroSet() 
         {
             PermissionStatus status = PermissionStatus.Unknown;
@@ -73,7 +72,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if(status == PermissionStatus.Granted) 
             {
-                PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSet);
+                PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSetSetttings);
             }
         }
 

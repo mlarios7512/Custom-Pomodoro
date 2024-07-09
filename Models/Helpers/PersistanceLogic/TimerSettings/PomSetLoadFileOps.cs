@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CustomPomodoro.Models.UserSettings.Concrete;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,24 +32,24 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
         //    return ExistingPomLists;
         //}
 
-        public static Task LoadCurrentPomodoroSetFromFile(ref PomodoroSet pomSet)
+        public static Task LoadCurrentPomodoroSetFromFile(ref PomodoroTimerSettings pomSet)
         {
             string JsonSavePath = Path.Combine(AppContext.BaseDirectory, _saveFileName);
 
             if (File.Exists(JsonSavePath)) 
             {
                 string PomSetFromJsonFile = File.ReadAllText(JsonSavePath);
-                pomSet = JsonConvert.DeserializeObject<PomodoroSet>(PomSetFromJsonFile);
+                pomSet = JsonConvert.DeserializeObject<PomodoroTimerSettings>(PomSetFromJsonFile);
 
                 if (pomSet == null) 
                 {
-                    pomSet = new PomodoroSet();
+                    pomSet = new PomodoroTimerSettings();
                 }
                 
             }
             else 
             {
-                pomSet = new PomodoroSet();
+                pomSet = new PomodoroTimerSettings();
             }
             return Task.FromResult(pomSet);
         }

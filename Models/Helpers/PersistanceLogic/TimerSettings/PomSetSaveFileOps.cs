@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CustomPomodoro.Models.UserSettings.Concrete;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,13 +24,13 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="newPomodoroSet"></param>
+        /// <param name="newPomSetSettings"></param>
         /// <returns>A bool indicating if save was sucessful. (True if successful. False if otherwise)</returns>
-        public static bool CreateNewSaveFile(PomodoroSet newPomodoroSet) 
+        public static bool CreateNewSaveFile(PomodoroTimerSettings newPomSetSettings) 
         {
             try 
             {
-                var convertedJson = JsonConvert.SerializeObject(newPomodoroSet, Formatting.Indented);
+                var convertedJson = JsonConvert.SerializeObject(newPomSetSettings, Formatting.Indented);
                 File.WriteAllText(Path.Combine(AppContext.BaseDirectory, _saveFileName), convertedJson);
                 return true;
             }
