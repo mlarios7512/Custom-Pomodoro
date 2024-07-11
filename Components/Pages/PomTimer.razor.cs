@@ -270,6 +270,7 @@ namespace CustomPomodoro.Components.Pages
 
         public async Task CancelSessionAndMakeItRepeatable()
         {
+            ActualCountdownTimer.Elapsed -= CountDownTimer;
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
@@ -378,6 +379,7 @@ namespace CustomPomodoro.Components.Pages
                 }
                 else
                 {
+                    ActualCountdownTimer.Elapsed -= CountDownTimer;
                     BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
                     ActualCountdownTimer.Enabled = false;
 
