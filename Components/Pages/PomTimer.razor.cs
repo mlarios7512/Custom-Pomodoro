@@ -356,7 +356,15 @@ namespace CustomPomodoro.Components.Pages
         public string GetCountdownTimerDisplay(string workTime) //Move to a "helper" class (not sure which class yet).
         {
             int WorkTimeInSec = PomTimerHelpers.GetEndTimeInSecondsFormat(workTime);
-            return $"{TimeSpan.FromSeconds(WorkTimeInSec):mm\\:ss}";
+
+
+            string formattedInput = $"{TimeSpan.FromSeconds(WorkTimeInSec):mm\\:ss}";
+            if (formattedInput.Length == 5)
+            {
+                if (formattedInput.First() == '0')
+                    formattedInput = formattedInput.Substring(1);
+            }
+            return formattedInput;
         }
 
         public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)

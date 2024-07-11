@@ -22,7 +22,14 @@ namespace CustomPomodoro.Models.Helpers
 
         public static string PrintCountdownTimer(int timeInSeconds)
         {
-            return $"{TimeSpan.FromSeconds(timeInSeconds):mm\\:ss}";
+            string formattedInput = $"{TimeSpan.FromSeconds(timeInSeconds):mm\\:ss}";
+            if (formattedInput.Length == 5)
+            {
+                if (formattedInput.First() == '0')
+                    formattedInput = formattedInput.Substring(1);
+            }
+
+            return formattedInput;
         }
 
         //The "hexColor" input will eventually be input via "CurPomodoroSet" for the class "PomTimer".
