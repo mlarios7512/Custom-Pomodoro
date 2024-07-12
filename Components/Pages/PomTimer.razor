@@ -31,9 +31,17 @@
         @{
             if (MainTimerState == TimerState.NotStarted)
             {
-                <div class="col-4"><button class="btn btn-session-intervention" @onclick="() => PrevSession()">Prev </button></div>
-                <div class="col-4"><button class="btn btn-session-intervention" @onclick="() => RestartFullPomSession()">Reset</button></div>
-                <div class="col-4"><button class="btn btn-session-intervention" @onclick="() => NextSession()">Skip</button></div>
+                <div class="col-4">
+                    <button class="w-100 btn btn-session-intervention" @onclick="() => PrevSession()">Prev </button>
+                </div>  
+                
+                <div class="col-4">
+                    <button class="w-100 col-4 btn btn-session-intervention" @onclick="() => RestartFullPomSession()">Reset</button>
+                </div>
+
+                <div class="col-4">
+                    <button class="w-100 col-4 btn btn-session-intervention" @onclick="() => NextSession()">Skip</button>
+                </div>
             }
         }
     </div>
