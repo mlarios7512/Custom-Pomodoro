@@ -21,3 +21,39 @@
 .btn-session-intervention:hover {
     color: lightgray;
 }
+
+/*.start-btn-nav-visible{
+    margin-left: 22%;
+}*/
+
+.start-btn-nav-hidden{
+    margin-left: 0%;
+}
+
+
+@media (min-width: 645.98px) and (max-width: 810.98px){
+    .start-btn-nav-visible {
+        margin-left: 22%;
+    }
+}
+
+
+@media (min-width: 811.98px) and (max-width: 992px) {
+    .start-btn-nav-visible {
+        margin-left: 23%;
+    }
+}
+
+
+@media (min-width: 991.98px) and (max-width: 1199.98px) {
+    .start-btn-nav-visible {
+        margin-left: 22%;
+    }
+}
+
+
+@media (min-width: 1200px) and (max-width: 1920.98px) {
+    .start-btn-nav-visible {
+        margin-left: 20%;
+    }
+}

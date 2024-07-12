@@ -51,6 +51,7 @@ namespace CustomPomodoro.Components.Pages
         private int CompletedWorkSessionCount { get; set; } = 0;
         private string CurNavBarDisplay { get; set; } = "block";
         private string CurNavBarVisibility { get; set; } = "visible";
+        private string StartBtnVisibilityClass { get; set; } = "start-btn-nav-visible";
 
         protected override async Task OnInitializedAsync()
         {
@@ -71,13 +72,15 @@ namespace CustomPomodoro.Components.Pages
 
         private void ShowNavBar() 
         {
-            CurNavBarDisplay = "block" ;
+            CurNavBarDisplay = "block";
             CurNavBarVisibility = "visible";
+            StartBtnVisibilityClass = "start-btn-nav-visible";
         }
         private void HideNavBar() 
         {
             CurNavBarDisplay = "none";
             CurNavBarVisibility = "hidden";
+            StartBtnVisibilityClass = "start-btn-nav-hidden";
         }
         
 

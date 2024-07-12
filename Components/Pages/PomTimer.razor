@@ -77,14 +77,34 @@
         }
     </div>
 </section>
-<section class=" mb-5">
-    <div id="primary-btn-flex" class="fixed-bottom mb-5">
+<section class="d-flex fixed-bottom mb-5 gap-4" style="align-items:center; justify-content:center;">
 
-        <div class="d-flex flex-row gap-4" style="align-items: center; justify-content: center;">
+        @{
+            @if(MainTimerState == TimerState.NotStarted)
+            {
+                //"mx-5" for ver. w/ navbar. "mx-0" for ver. w/o navbar.
+                <div class="col-3 px-5 @StartBtnVisibilityClass"></div>
+                <button class="col-6 btn btn-custom-start" @onclick="() => StartTimer()">Start</button>
+                <div class="col-3"></div>
+            }
+            else if(MainTimerState == TimerState.Paused)
+            {
+                <button class="btn btn-secondary" style="max-width:36%; min-width:35%;" @onclick="() => ContinueTimer()">Continue</button>
+                <button class="btn btn-custom-stop" style="max-width:36%; min-width:35%;" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
+            }
+            else if(MainTimerState == TimerState.Started)
+            {
+                <button class="btn custom-cancel-btn" style="max-width:36%; min-width:35%;" @onclick="() => PauseTimer()">Pause</button>
+                <button class="btn btn-custom-stop" style="max-width:36%; min-width:35%;" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
+            }
+        }
+
+        @* <div class="d-flex flex-row gap-4" style="align-items: center; justify-content: center;">
             @{
                 if (MainTimerState == TimerState.NotStarted)
                 {
-                    <button class="btn btn-custom-start" style="max-width:75%; min-width:50%" @onclick="() => StartTimer()">Start</button>
+                    
+                   
                 }
                 if (MainTimerState == TimerState.Paused)
                 {
@@ -97,6 +117,5 @@
                     <button class="btn btn-custom-stop" style="max-width:36%; min-width:35%;" @onclick="() => CancelSessionAndMakeItRepeatable()">Cancel session</button>
                 }
             }
-        </div>
-    </div>
+        </div> *@
 </section>
