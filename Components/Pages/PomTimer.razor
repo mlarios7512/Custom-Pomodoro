@@ -60,7 +60,7 @@
 
 <section id="set-info-UI-display">
     <div class="container mb-5">
-        <div class="row gap-xs-4">
+        <div class="row gap-xs-4 text-lg-center">
             <div class="col-lg-4 col-sm-6">Finished work sessions: @CompletedWorkSessionCount of @UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak</div>
             <div class="col-lg-4 col-sm-6">Work time: @UserSettings.GetCurPomodoroSet().WorkTime</div>
             <div class="col-lg-4 col-sm-6">Break times: @UserSettings.GetCurPomodoroSet().ShortBreak - @UserSettings.GetCurPomodoroSet().LongBreak</div>
@@ -100,7 +100,3 @@
         </div>
     </div>
 </section>
-
-@code {
-    // string j = Path.Combine(AppContext.BaseDirectory, "preferredDir.json");
-}
