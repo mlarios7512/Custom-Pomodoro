@@ -33,9 +33,14 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                     return new BackgroundColorSettings();
                 }
             }
-            catch (Exception ex) 
+            catch (System.NullReferenceException ex) 
             {
-                Debug.WriteLine($"An error occured when extracting 'background color' settings from file: {ex}");
+                Debug.WriteLine($"Error extracting 'activity bar colors' from file. File contents likely null or empty string. INFO: {ex}.");
+                return new BackgroundColorSettings();
+            }
+            catch(Newtonsoft.Json.JsonReaderException ex) 
+            {
+                Debug.WriteLine($"Error extracting 'activity bar colors' from file. File contents likely malformed. INFO: {ex}.");
                 return new BackgroundColorSettings();
             }
         }
@@ -71,9 +76,16 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                     return new ActivityBarSettings();
                 }
             }
-            catch (Exception ex) 
+            //Newtonsoft.Json.JsonReaderException: occurs when 'fileContents' is null or empty string.
+            //System.NullReferenceException: occurs when data within 'fileContents' is malformed. 
+            catch (System.NullReferenceException ex) 
             {
-                Debug.WriteLine($"Error extracting 'activity bar colors' from file: {ex}.");
+                Debug.WriteLine($"Error extracting 'activity bar colors' from file. File contents likely null or empty string. INFO: {ex}.");
+                return new ActivityBarSettings();
+            }
+            catch (Newtonsoft.Json.JsonReaderException ex) 
+            {
+                Debug.WriteLine($"Error extracting 'activity bar colors' from file. File contents likely malformed. INFO: {ex}.");
                 return new ActivityBarSettings();
             }
         }
