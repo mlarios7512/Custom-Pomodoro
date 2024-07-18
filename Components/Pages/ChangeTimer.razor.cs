@@ -27,8 +27,6 @@ namespace CustomPomodoro.Components.Pages
         protected override async Task OnInitializedAsync() 
         {
             this.PersistentPomSetToDummyPomSet(UserSettings.GetCurPomodoroSet());
-
-            //SetToEdit = UserSettings.GetCurPomodoroSet();
         }
 
         private void PersistentPomSetToDummyPomSet(PomodoroSet savedSet)
@@ -38,12 +36,14 @@ namespace CustomPomodoro.Components.Pages
             SettingsVM.PomSetInput.WT_Seconds = sessionTime[1];
 
             sessionTime = savedSet.ShortBreak.Split(":");
-            SettingsVM.PomSetInput.WT_Minutes = sessionTime[0];
-            SettingsVM.PomSetInput.WT_Seconds = sessionTime[1];
+            SettingsVM.PomSetInput.SBT_Minutes = sessionTime[0];
+            SettingsVM.PomSetInput.SBT_Seconds = sessionTime[1];
 
             sessionTime = savedSet.LongBreak.Split(":");
-            SettingsVM.PomSetInput.WT_Minutes = sessionTime[0];
-            SettingsVM.PomSetInput.WT_Seconds = sessionTime[1]; 
+            SettingsVM.PomSetInput.LBT_Minutes = sessionTime[0];
+            SettingsVM.PomSetInput.LBT_Seconds = sessionTime[1];
+
+            SettingsVM.PomSetInput.RepsBeforeLongBreak = savedSet.RepsBeforeLongBreak;
         }
 
         private static string TransformInputAsFormattedStringForStroage(int sessionTimeInSeconds) 
