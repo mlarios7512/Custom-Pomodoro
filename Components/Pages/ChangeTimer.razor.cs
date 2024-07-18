@@ -26,19 +26,12 @@ namespace CustomPomodoro.Components.Pages
         //private PomodoroSet SetToEdit { get; set; }
         protected override async Task OnInitializedAsync() 
         {
-            try 
-            {
-                this.PersistentPomSetToDummyPomSet(UserSettings.GetCurPomodoroSet());
-            }
-            catch(Exception e) 
-            {
-                
-            }
-            
+            this.PersistentPomSetToDummyPomSet(UserSettings.GetCurPomodoroSet());
+
             //SetToEdit = UserSettings.GetCurPomodoroSet();
         }
 
-        private void PersistentPomSetToDummyPomSet(PomodoroSet savedSet) 
+        private void PersistentPomSetToDummyPomSet(PomodoroSet savedSet)
         {
             string[] sessionTime = savedSet.WorkTime.Split(":");
             SettingsVM.PomSetInput.WT_Minutes = sessionTime[0];
@@ -50,7 +43,7 @@ namespace CustomPomodoro.Components.Pages
 
             sessionTime = savedSet.LongBreak.Split(":");
             SettingsVM.PomSetInput.WT_Minutes = sessionTime[0];
-            SettingsVM.PomSetInput.WT_Seconds = sessionTime[1];
+            SettingsVM.PomSetInput.WT_Seconds = sessionTime[1]; 
         }
 
         private static string TransformInputAsFormattedStringForStroage(int sessionTimeInSeconds) 
