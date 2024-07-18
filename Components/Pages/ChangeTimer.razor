@@ -15,9 +15,9 @@
     <div class="mb-4">
         <label class="text-white col-sm-4 col-form-label">Short break time</label>
         <div class="d-flex flex-row">
-            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.SBT_Minutes" required></InputText>
+            <InputText class="rounded-2" inputmode="numeric" pattern="^[0-5]?[0-9]$"  size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.SBT_Minutes" required></InputText>
             <span class="flex-shrink-1 text-white fw-bolder">:</span>
-            <InputText class="rounded-2" inputmode="numeric" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.SBT_Seconds" required></InputText>
+            <InputText class="rounded-2" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.SBT_Seconds" required></InputText>
         </div>
     </div>
 
