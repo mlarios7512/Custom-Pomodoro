@@ -20,9 +20,13 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
             if (File.Exists(saveFile))
             {
                 string fileContents = File.ReadAllText(saveFile);
-                JObject fileContentsAsJObj = JObject.Parse(fileContents);
+                if (!String.IsNullOrEmpty(fileContents))
+                {
+                    JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
-                return JsonConvert.DeserializeObject<BackgroundColorSettings>(fileContentsAsJObj["BackgroundColorSettings"].ToString());
+                    return JsonConvert.DeserializeObject<BackgroundColorSettings>(fileContentsAsJObj["BackgroundColorSettings"].ToString());
+                }
+                return new BackgroundColorSettings();
             }
 
             return new BackgroundColorSettings();
@@ -35,7 +39,7 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
             {
                 string fileContents = File.ReadAllText(saveFile);
 
-                if (fileContents != null)
+                if (!String.IsNullOrEmpty(fileContents))
                 {
                     JObject fileContentsAsJObj = JObject.Parse(fileContents);
                     var activityColorSettings = JObject.Parse(fileContentsAsJObj["ActivityColorSettings"].ToString());
