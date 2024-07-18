@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,30 +18,38 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
         public static BackgroundColorSettings LoadBackgroundColorsSettings()
         {
             string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
-            if (File.Exists(saveFile))
+
+            try 
             {
-                string fileContents = File.ReadAllText(saveFile);
-                if (!String.IsNullOrEmpty(fileContents))
+                if (File.Exists(saveFile))
                 {
+                    string fileContents = File.ReadAllText(saveFile);
                     JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
                     return JsonConvert.DeserializeObject<BackgroundColorSettings>(fileContentsAsJObj["BackgroundColorSettings"].ToString());
                 }
+                else 
+                {
+                    return new BackgroundColorSettings();
+                }
+            }
+            catch (Exception ex) 
+            {
+                Debug.WriteLine($"An error occured when extracting 'background color' settings from file: {ex}");
                 return new BackgroundColorSettings();
             }
-
-            return new BackgroundColorSettings();
         }
 
         public static ActivityBarSettings LoadActivityBarSettings() 
         {
             string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
-            if (File.Exists(saveFile))
-            {
-                string fileContents = File.ReadAllText(saveFile);
 
-                if (!String.IsNullOrEmpty(fileContents))
+            try 
+            {
+                if (File.Exists(saveFile))
                 {
+                    string fileContents = File.ReadAllText(saveFile);
+
                     JObject fileContentsAsJObj = JObject.Parse(fileContents);
                     var activityColorSettings = JObject.Parse(fileContentsAsJObj["ActivityColorSettings"].ToString());
 
@@ -57,12 +66,16 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
 
                     return settingsToLoad;
                 }
-
-                return new ActivityBarSettings();
-
+                else 
+                {
+                    return new ActivityBarSettings();
+                }
             }
-
-            return new ActivityBarSettings();
+            catch (Exception ex) 
+            {
+                Debug.WriteLine($"Error extracting 'activity bar colors' from file: {ex}.");
+                return new ActivityBarSettings();
+            }
         }
     }
 }
