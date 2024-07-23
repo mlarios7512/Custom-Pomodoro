@@ -99,11 +99,17 @@ namespace CustomPomodoro.Components.Pages
             //Append any other existing view-model pomodoro set settings (if any)
             // to "generalTimerSettingsToSave" here before sending it to json file.
 
-      
+
 
             //Preferences.Default.Set("auto-start-sessions", true);
-            //if (DeviceInfo.Current.Platform == DevicePlatform.Android)
-            //    Preferences.Default.Set("vibrate-on-timer-end", true);
+            if (DeviceInfo.Current.Platform == DevicePlatform.Android) 
+            {
+                if(SettingsVM.VibrateOnSessionEnd == true)
+                    Preferences.Default.Set("vibrate-on-timer-end", true);
+                else
+                    Preferences.Default.Set("vibrate-on-timer-end", false);
+            }
+                
 
             await UserSettings.SaveUserPomodoroSet(pomSetSettingsToSave);
         }

@@ -11,12 +11,16 @@ namespace CustomPomodoro.ViewModels.Pages.ChangeTimer
 {
     public partial class ChangeTimerVM
     {
+
         public PomTimerSetInputClone PomSetInput { get; set; } = new();
+
+        //Platform specific property inputs - below: (assumes these inputs will be stored within MAUI "preferences"):
+
+        //Android
+        public bool VibrateOnSessionEnd { get; set; } = false;
 
         public static void DummyPomSetInputToRealPomSet(PomTimerSetInputClone userInput, ref PomodoroSet pomSet)
         {
-            //int totalSeconds = userInput.WT_Seconds  Integer.To;
-
             int workTimeInSeconds = Int32.Parse(userInput.WT_Minutes) * 60;
             workTimeInSeconds += Int32.Parse(userInput.WT_Seconds);
             pomSet.WorkTime = PomTimerHelpers.PrintCountdownTimer(workTimeInSeconds);

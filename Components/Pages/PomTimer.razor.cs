@@ -240,6 +240,9 @@ namespace CustomPomodoro.Components.Pages
 
         public async Task PauseTimer()
         {
+            //To do later:
+            //--Hide BgColor when timer is paused. 
+            //--Change words to "paused session" instead of "current session".
             BgColor = HslColorSelection.GetPausedActivityBgColor(UserSettings.GetBackgroundColorSettings().PausedActivityColor);
             MainTimerState = TimerState.Paused;
             ActualCountdownTimer.Enabled = false;
@@ -382,6 +385,12 @@ namespace CustomPomodoro.Components.Pages
                 }
                 else
                 {
+                    if (DeviceInfo.Current.Platform == DevicePlatform.Android) 
+                    {
+                        if (Preferences.Default.Get("vibrate-on-timer-end", true) == true)
+                            Vibration.Vibrate(2000);
+                    }
+
                     ActualCountdownTimer.Elapsed -= CountDownTimer;
                     BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
                     ActualCountdownTimer.Enabled = false;

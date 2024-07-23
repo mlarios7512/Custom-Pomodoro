@@ -37,5 +37,16 @@
         </div>
     </div>
 
+    @{
+        if (DeviceInfo.Current.Platform == DevicePlatform.Android)
+        {
+            <div class="form-check form-switch">
+                <label class="form-check-label" for="vibrateOnSessionEnd">Vibrate on timer expiration</label>
+                <input class="form-check-input" @bind-value="SettingsVM.VibrateOnSessionEnd" type="checkbox" role="switch" id="vibrateOnSessionEnd">
+            </div>
+        }
+    }
+
+
     <button class="btn btn-custom-start mt-4" type="submit">Save</button>
 </EditForm>
