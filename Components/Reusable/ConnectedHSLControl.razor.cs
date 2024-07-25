@@ -31,13 +31,14 @@ namespace CustomPomodoro.Components.Reusable
         private string SatAndLightVisibilityString { get; set; } = string.Empty;
 
         private const string HTMLShowKeyword = "visible";
-        private const string HTMLHideKeyword = "invisible";
+        private const string HTMLHideOnlyKeyword = "invisible";
+        private const string HTMLHideAndMinimizedKeyword = "hidden-and-minimized";
 
         protected override async Task OnInitializedAsync()
         {
             FirstHueVisibilityString = HTMLShowKeyword;
-            SecondHueVisibilityString = HTMLHideKeyword;
-            SatAndLightVisibilityString = HTMLHideKeyword;
+            SecondHueVisibilityString = HTMLHideOnlyKeyword;
+            SatAndLightVisibilityString = HTMLHideAndMinimizedKeyword;
         }
 
         private async Task SyncHuesIfNeededMouse(MouseEventArgs e)
@@ -61,8 +62,8 @@ namespace CustomPomodoro.Components.Reusable
 
         public void DisplayHueControlsOnly()
         {
-            SecondHueVisibilityString = HTMLHideKeyword;
-            SatAndLightVisibilityString = HTMLHideKeyword;
+            SecondHueVisibilityString = HTMLHideOnlyKeyword;
+            SatAndLightVisibilityString = HTMLHideAndMinimizedKeyword;
         }
         public void DisplayAllHslColorControls()
         {
