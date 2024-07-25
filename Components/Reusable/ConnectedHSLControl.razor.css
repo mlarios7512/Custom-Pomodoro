@@ -27,6 +27,15 @@ input[type='range'] {
     max-height: 0px;
 }
 
+.basic-show{
+    visibility:visible;
+}
+
+.experimental-hiding{
+    visibility:inherit;
+    max-height:inherit;
+}
+
 @media (max-width: 767.98px) {
     .individual-content {
         max-width: 100%;

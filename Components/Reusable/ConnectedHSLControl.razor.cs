@@ -30,7 +30,7 @@ namespace CustomPomodoro.Components.Reusable
 
         private string SatAndLightVisibilityString { get; set; } = string.Empty;
 
-        private const string HTMLShowKeyword = "visible";
+        private const string HTMLShowKeyword = "experimental-hiding";
         private const string HTMLHideOnlyKeyword = "invisible";
         private const string HTMLHideAndMinimizedKeyword = "hidden-and-minimized";
 

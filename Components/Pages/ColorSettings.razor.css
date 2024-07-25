@@ -32,6 +32,12 @@ label{
     color:white;
 }
 
+.hidden-and-minimized {
+    visibility: hidden;
+    max-height: 0px;
+    overflow:hidden;
+}
+
 @media (max-width: 767.98px) {
     .default-values-btn {
         width: auto;

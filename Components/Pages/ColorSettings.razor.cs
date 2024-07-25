@@ -24,6 +24,8 @@ namespace CustomPomodoro.Components.Pages
         private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
         private bool DisplayAdvancedColorSettings { get; set; } = false;
+        private bool DisplayActivityBarColorControls { get; set; } = true;
+        private string ActivityBarControlsVisibility { get; set; } = string.Empty;
         private List<ConnectedHSLControl> ConnectedActivityStatusColorControls { get; set; } = new(3) 
         {
             new ConnectedHSLControl(),
@@ -40,6 +42,7 @@ namespace CustomPomodoro.Components.Pages
         //Question: Can you call a method on a child component from "OnInitializedAsync"?
         protected override async Task OnInitializedAsync()
         {
+            ActivityBarControlsVisibility = string.Empty;
             //Don't use "await" here or you risk the wrong colors as starting input in the subsequent code.
             UserSettings.LoadAllColorSettings();
 
@@ -57,6 +60,26 @@ namespace CustomPomodoro.Components.Pages
         private async Task GetDefaultActivityBarColorValues()
         {
             ColorBarInputs.SetAllColorsToDefaultValues();
+        }
+
+        private void ToggleActivityBarOperationalStatus() 
+        {
+            //To do:
+            //--Hide inputs when switched off.
+            //--Show inputs when switched on.
+            //--Modify JSON to accomodate for the additional property enable/disable property.
+            //-----Appropriately handle saving of options to make sure there are no errors.
+            DisplayActivityBarColorControls = !DisplayActivityBarColorControls;
+            if (DisplayActivityBarColorControls == true) 
+            {
+                //Display controls. (Alter saving logic if needed).
+                ActivityBarControlsVisibility = "";
+            }
+            else 
+            {
+                //Hide controls. (Alter saving logic if needed).
+                ActivityBarControlsVisibility = "hidden-and-minimized";
+            }
         }
 
         private void ToggleAdvancedSettings() 

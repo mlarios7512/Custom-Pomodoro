@@ -3,6 +3,10 @@
 
 @page "/ColorSettings"
 
+<style>
+
+
+</style>
 
 
 
@@ -30,14 +34,24 @@
 
 
     <h4 class="preceding-section-header">Activity Bar Colors</h4>
-    <br />
-        <div class="form-check form-switch">
-            <label class="form-check-label" for="advancedColorOptions">Advanced color options</label>
-        <input class="form-check-input" @onclick="ToggleAdvancedSettings" type="checkbox" role="switch" id="advancedColorOptions">
-        </div>
-    <br />
 
-    <section class="d-flex flex-column align-items-start">
+    <div class="form-check form-switch mx-5">
+        <label class="form-check-label" for="enableActivityBar">Enable bar colors</label>
+        <input class="form-check-input" @onclick="ToggleActivityBarOperationalStatus" type="checkbox" role="switch" id="enableActivityBar" />
+    </div>
+
+    
+    
+                
+    
+
+    <div class="form-check form-switch mx-5 @ActivityBarControlsVisibility">
+        <label class="form-check-label" for="advancedColorOptions">Advanced color options</label>
+        <input class="form-check-input" @onclick="ToggleAdvancedSettings" type="checkbox" role="switch" id="advancedColorOptions">
+    </div>
+    
+
+    <section class="d-flex flex-column align-items-start @ActivityBarControlsVisibility">
 
         <ConnectedHSLControl 
             @ref="ConnectedActivityStatusColorControls[0]"
