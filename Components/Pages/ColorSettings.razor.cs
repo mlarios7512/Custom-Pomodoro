@@ -23,6 +23,7 @@ namespace CustomPomodoro.Components.Pages
         protected IMasterUserSettings UserSettings { get; set; }
         private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
+
         private bool DisplayAdvancedColorSettings { get; set; } = false;
         private bool DisplayActivityBarColorControls { get; set; } = true;
         private string ActivityBarControlsVisibility { get; set; } = string.Empty;
@@ -74,11 +75,14 @@ namespace CustomPomodoro.Components.Pages
             {
                 //Display controls. (Alter saving logic if needed).
                 ActivityBarControlsVisibility = "";
+                ColorBarInputs.EnableActivityBar = true;
             }
             else 
             {
                 //Hide controls. (Alter saving logic if needed).
                 ActivityBarControlsVisibility = "hidden-and-minimized";
+                ColorBarInputs.EnableActivityBar = false;
+
             }
         }
 
