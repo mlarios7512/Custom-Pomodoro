@@ -17,6 +17,61 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
 
         }
 
+        public async static Task SaveAllColorSettings_V2(BackgroundColorSettings bgColorInputs, ActivityBarSettings colorBarInputs)
+        {
+            PermissionStatus status = PermissionStatus.Unknown;
+            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+            if (status != PermissionStatus.Granted)
+            {
+                await Application.Current.MainPage.DisplayAlert("Need storage permission", "Storage permission is required to create a save file.", "OK");
+            }
+
+            status = await Permissions.RequestAsync<Permissions.StorageWrite>();
+
+            if (status == PermissionStatus.Granted)
+            {
+                string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
+                if (!File.Exists(saveFile))
+                {
+                    File.Create(saveFile);
+                }
+
+                //---Changes from v1 start here----
+
+                MainColorSettings settingsToSave = new MainColorSettings()
+                {
+                    ActivityColorSettings = colorBarInputs,
+                    BackgroundColorSettings = bgColorInputs,
+                };
+
+                //string bgSettingsAsJson = JsonConvert.SerializeObject(bgColorInputs);
+                //JObject bgSettingsWithTitle = new JObject();
+                //bgSettingsWithTitle["BackgroundColorSettings"] = bgSettingsAsJson;
+
+                //string barSettingsAsJson = JsonConvert.SerializeObject(colorBarInputs);
+                //JObject barSettingsWithTitle = new JObject();
+                //barSettingsWithTitle["ActivityColorSettings"] = barSettingsAsJson;
+
+
+                ////Merging solution taken from "David Rettenbacher": https://stackoverflow.com/questions/21160337/how-can-i-merge-two-jobject
+                //var mergeSettings = new JsonMergeSettings
+                //{
+                //    MergeArrayHandling = MergeArrayHandling.Union
+                //};
+
+                //bgSettingsWithTitle.Merge(barSettingsWithTitle, mergeSettings);
+                //string finalJson = bgSettingsWithTitle.ToString();
+
+                string finalJson = JsonConvert.SerializeObject(settingsToSave);
+                File.WriteAllText(saveFile, finalJson);
+
+                //See the "Preferences API for saving user data (NOT SURE THIS IS THE BEST WAY for cross-platform saving. NEED TO VERIFY):
+                //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
+
+                await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
+            }
+        }
+
         public async static Task SaveAllColorSettings(BackgroundColorSettings bgColorInputs, ActivityBarSettings colorBarInputs)
         {
             PermissionStatus status = PermissionStatus.Unknown;
