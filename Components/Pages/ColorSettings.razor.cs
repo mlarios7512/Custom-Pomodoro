@@ -25,8 +25,10 @@ namespace CustomPomodoro.Components.Pages
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
 
         private bool DisplayAdvancedColorSettings { get; set; } = false;
-        private bool DisplayActivityBarColorControls { get; set; } = true;
+
+        //You still need this. Do NOT remove it!
         private string ActivityBarControlsVisibility { get; set; } = string.Empty;
+        private const string ActivityBarHiddenHTMLKeyword = "hidden-and-minimized";
         private List<ConnectedHSLControl> ConnectedActivityStatusColorControls { get; set; } = new(3) 
         {
             new ConnectedHSLControl(),
@@ -51,6 +53,20 @@ namespace CustomPomodoro.Components.Pages
             // (This is because even if you don't click "save", any color changes made during the current session will be visible in the "timer" page.)
             BgColorInputs = UserSettings.GetBackgroundColorSettings();
             ColorBarInputs = UserSettings.GetActivityBarSettings();
+
+            if (UserSettings.GetActivityBarSettings().EnableActivityBar) 
+            {
+                ColorBarInputs.EnableActivityBar = true;
+                ActivityBarControlsVisibility = string.Empty;
+            }
+            else 
+            {
+                ColorBarInputs.EnableActivityBar = false;
+                ActivityBarControlsVisibility = ActivityBarHiddenHTMLKeyword;
+            }
+                
+
+
         }
 
         private async Task GetDefaultBgColorValues()
@@ -65,24 +81,16 @@ namespace CustomPomodoro.Components.Pages
 
         private void ToggleActivityBarOperationalStatus() 
         {
-            //To do:
-            //--Hide inputs when switched off.
-            //--Show inputs when switched on.
-            //--Modify JSON to accomodate for the additional property enable/disable property.
-            //-----Appropriately handle saving of options to make sure there are no errors.
-            DisplayActivityBarColorControls = !DisplayActivityBarColorControls;
-            if (DisplayActivityBarColorControls == true) 
+            ColorBarInputs.EnableActivityBar = !ColorBarInputs.EnableActivityBar;
+            if (ColorBarInputs.EnableActivityBar == true) 
             {
-                //Display controls. (Alter saving logic if needed).
                 ActivityBarControlsVisibility = "";
                 ColorBarInputs.EnableActivityBar = true;
             }
             else 
             {
-                //Hide controls. (Alter saving logic if needed).
-                ActivityBarControlsVisibility = "hidden-and-minimized";
+                ActivityBarControlsVisibility = ActivityBarHiddenHTMLKeyword;
                 ColorBarInputs.EnableActivityBar = false;
-
             }
         }
 
