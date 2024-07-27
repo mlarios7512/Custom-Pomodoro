@@ -38,7 +38,19 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
             {
                 return false;
             }
-           
+        }
+
+        public static async Task SaveAndroidVibrationOnTimerEndDecision(bool vibrateOnTimerEnd) 
+        {
+            if (Permissions.CheckStatusAsync<Permissions.Vibrate>().Result == PermissionStatus.Granted
+                && vibrateOnTimerEnd == true)
+            {
+                Preferences.Default.Set("vibrate-on-timer-end", true);
+            }
+            else
+            {
+                Preferences.Default.Set("vibrate-on-timer-end", false);
+            }   
         }
 
     }
