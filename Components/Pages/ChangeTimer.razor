@@ -42,7 +42,7 @@
         {
             <div class="form-check form-switch">
                 <label class="form-check-label" for="vibrateOnSessionEnd">Vibrate on timer expiration</label>
-                <input class="form-check-input" @bind-value="SettingsVM.VibrateOnSessionEnd" type="checkbox" role="switch" id="vibrateOnSessionEnd">
+                <input class="form-check-input" @ontouchstart="RequestVibrationPermission" @bind-value="SettingsVM.VibrateOnSessionEnd" type="checkbox" role="switch" id="vibrateOnSessionEnd">
             </div>
         }
     }

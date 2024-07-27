@@ -81,6 +81,23 @@ namespace CustomPomodoro.Components.Pages
             return pomodoroSetOptionsToSave;
         }
 
+        private async Task RequestVibrationPermission() 
+        {
+            PermissionStatus vibration = PermissionStatus.Unknown;
+            vibration = await Permissions.CheckStatusAsync<Permissions.Vibrate>();
+
+            if(vibration != PermissionStatus.Granted) 
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Permission is required to enable vibration.", "OK");
+                vibration = await Permissions.RequestAsync<Permissions.Vibrate>();
+                SettingsVM.VibrateOnSessionEnd = false;
+            }
+            else 
+            {
+                SettingsVM.VibrateOnSessionEnd = true;
+            }
+        }
+
         //Make sure the "pattern" is translated (& trimmed if needed) correctly when stored in local storage. 
         // Keep in mind, windows users can crash it by inputting non-integer input.So make sure to FILTER THAT OUT on the BACKEND!
         private async Task SaveChanges() 
@@ -98,20 +115,14 @@ namespace CustomPomodoro.Components.Pages
 
             //Append any other existing view-model pomodoro set settings (if any)
             // to "generalTimerSettingsToSave" here before sending it to json file.
-
-
-
-            //Preferences.Default.Set("auto-start-sessions", true);
-            if (DeviceInfo.Current.Platform == DevicePlatform.Android) 
-            {
-                if(SettingsVM.VibrateOnSessionEnd == true)
-                    Preferences.Default.Set("vibrate-on-timer-end", true);
-                else
-                    Preferences.Default.Set("vibrate-on-timer-end", false);
-            }
-                
-
+            
             await UserSettings.SaveUserPomodoroSet(pomSetSettingsToSave);
+            
+            
+            if(DeviceInfo.Current.Platform == DevicePlatform.Android) 
+            {
+                await PomSetSaveFileOps.SaveAndroidVibrationOnTimerEndDecision(SettingsVM.VibrateOnSessionEnd);
+            }
         }
     }
 }

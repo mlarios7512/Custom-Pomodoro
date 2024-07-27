@@ -387,10 +387,11 @@ namespace CustomPomodoro.Components.Pages
                 }
                 else
                 {
+                    
                     if (DeviceInfo.Current.Platform == DevicePlatform.Android) 
                     {
                         if (Preferences.Default.Get("vibrate-on-timer-end", true) == true)
-                            Vibration.Vibrate(2000);
+                            Vibration.Vibrate(2000);    
                     }
 
                     ActualCountdownTimer.Elapsed -= CountDownTimer;
