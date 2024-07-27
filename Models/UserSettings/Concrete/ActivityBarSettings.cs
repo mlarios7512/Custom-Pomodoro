@@ -15,10 +15,11 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         public List<HSLColor> WorkColors { get; set; } = ActivityBarColorHelpers.GetDefaultWorkColors();
         public List<HSLColor> ShortBreakColors { get; set; } = ActivityBarColorHelpers.GetDefaultShortBreakColors();
         public List<HSLColor> LongBreakColors { get; set; } = ActivityBarColorHelpers.GetDefaultLongBreakColors();
+        public bool EnableActivityBar { get; set; } = true;
 
         public ActivityBarSettings()
         {
-
+            
         }
         public void SetAllColorsToDefaultValues()
         {
