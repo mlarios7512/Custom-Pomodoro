@@ -48,7 +48,7 @@
 </section>
 
 @{
-    if(MainTimerState != TimerState.NotStarted && UserSettings.GetActivityBarSettings().EnableActivityBar == true)
+    if(MainTimerState == TimerState.Started && UserSettings.GetActivityBarSettings().EnableActivityBar == true)
     {
         <div id="color-bar">
             &nbsp

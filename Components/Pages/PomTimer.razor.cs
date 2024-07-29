@@ -243,15 +243,15 @@ namespace CustomPomodoro.Components.Pages
             //To do later:
             //--Hide BgColor when timer is paused. 
             //--Change words to "paused session" instead of "current session".
-            AltWorkStateDisplay[0] = "Paused session: ";
             BgColor = HslColorSelection.GetPausedActivityBgColor(UserSettings.GetBackgroundColorSettings().PausedActivityColor);
+            AltWorkStateDisplay[0] = "Paused session: ";
             MainTimerState = TimerState.Paused;
             ActualCountdownTimer.Enabled = false;
         }
         public async Task ContinueTimer()
         {
-            AltWorkStateDisplay[0] = "Current session: ";
             BgColor = HslColorSelection.GetActivityInProgressBgColor(UserSettings.GetBackgroundColorSettings().ActivityInProgressColor);
+            AltWorkStateDisplay[0] = "Current session: ";
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Enabled = true;
         }
