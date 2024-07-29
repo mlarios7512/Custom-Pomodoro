@@ -25,8 +25,6 @@ namespace CustomPomodoro.Components.Pages
         private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
 
         private bool DisplayAdvancedColorSettings { get; set; } = false;
-
-        //You still need this. Do NOT remove it!
         private string ActivityBarControlsVisibility { get; set; } = string.Empty;
         private const string ActivityBarHiddenHTMLKeyword = "hidden-and-minimized";
         private List<ConnectedHSLControl> ConnectedActivityStatusColorControls { get; set; } = new(3) 
@@ -41,8 +39,6 @@ namespace CustomPomodoro.Components.Pages
             new SoloHSLControl(),
             new SoloHSLControl()
         };
-
-        //Question: Can you call a method on a child component from "OnInitializedAsync"?
         protected override async Task OnInitializedAsync()
         {
             ActivityBarControlsVisibility = string.Empty;
@@ -64,9 +60,6 @@ namespace CustomPomodoro.Components.Pages
                 ColorBarInputs.EnableActivityBar = false;
                 ActivityBarControlsVisibility = ActivityBarHiddenHTMLKeyword;
             }
-                
-
-
         }
 
         private async Task GetDefaultBgColorValues()

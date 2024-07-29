@@ -3,32 +3,25 @@
 
 @page "/ColorSettings"
 
-<style>
-
-
-</style>
-
-
-
 <EditForm Model="ColorBarInputs" OnValidSubmit="@(() => @SaveColorSettingsOps.SaveAllColorSettings_V2(BgColorInputs, ColorBarInputs))" FormName="UpdateColorSettings">
 
     <h4 class="mb-5">Background Colors</h4>
 
     <section class="d-flex flex-column mb-5">
-                <SoloHSLControl
-                    @ref="BgColorControls[0]"
-                    Header="Timer not running"
-                    Color="BgColorInputs.NoActivityBgColor"></SoloHSLControl>
+        <SoloHSLControl
+            @ref="BgColorControls[0]"
+            Header="Timer not running"
+            Color="BgColorInputs.NoActivityBgColor"></SoloHSLControl>
             
-                <SoloHSLControl 
-                        @ref="BgColorControls[1]"
-                        Header="Timer running"
-                        Color="BgColorInputs.ActivityInProgressColor"></SoloHSLControl>
+        <SoloHSLControl 
+                @ref="BgColorControls[1]"
+                Header="Timer running"
+                Color="BgColorInputs.ActivityInProgressColor"></SoloHSLControl>
   
-                <SoloHSLControl 
-                        @ref="BgColorControls[2]"
-                        Header="Timer paused"
-                        Color="BgColorInputs.PausedActivityColor"></SoloHSLControl>
+        <SoloHSLControl 
+                @ref="BgColorControls[2]"
+                Header="Timer paused"
+                Color="BgColorInputs.PausedActivityColor"></SoloHSLControl>
         <button type="button" class="btn default-values-btn" @onclick="GetDefaultBgColorValues">Default colors</button>
     </section>
 
@@ -40,16 +33,10 @@
         <input class="form-check-input" @onclick="ToggleActivityBarOperationalStatus" type="checkbox" role="switch" id="enableActivityBar" @bind="ColorBarInputs.EnableActivityBar" />
     </div>
 
-    
-    
-                
-    
-
     <div class="form-check form-switch mx-5 @ActivityBarControlsVisibility">
         <label class="form-check-label" for="advancedColorOptions">Advanced color options</label>
         <input class="form-check-input" @onclick="ToggleAdvancedSettings" type="checkbox" role="switch" id="advancedColorOptions">
     </div>
-    
 
     <section class="d-flex flex-column align-items-start @ActivityBarControlsVisibility">
 
@@ -82,7 +69,6 @@
 
         <button type="button" class="btn default-values-btn" @onclick="GetDefaultActivityBarColorValues">Default colors</button>
     </section>
-    
 
     <button class="btn btn-custom-start mb-3 mt-5" type="submit">Save</button>
  

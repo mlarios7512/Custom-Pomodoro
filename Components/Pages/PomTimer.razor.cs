@@ -37,8 +37,6 @@ namespace CustomPomodoro.Components.Pages
         [Inject]
         protected IMasterUserSettings? UserSettings { get; set; }
 
-        //The "ActivityBarColors" is in the form of a list to work with current functions
-        // (& to allow possible adaptability in the future).
         private List<string> CurActivityBarColors { get; set; } = new () {"hsl(0 0% 0%)", "hsl(0 0% 0%)" };
         private string BgColor = HslColorSelection.GetNoActivityBgColor();
         private string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
@@ -55,20 +53,15 @@ namespace CustomPomodoro.Components.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            
             await UserSettings.LoadCurPomodoroSet();
-
-
             await UserSettings.LoadAllColorSettings();
 
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
             CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings.GetActivityBarSettings().WorkColors);
-            //Loading user settings (above)---------
 
             CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().WorkTime);
             TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().WorkTime);
         }
-
 
         private void ShowNavBar() 
         {
@@ -86,7 +79,6 @@ namespace CustomPomodoro.Components.Pages
 
         public void PrevSession() 
         {
-            //Vibration.Vibrate(5000);
             if(MainTimerState == TimerState.NotStarted) 
             {
                 switch (LastWorkState)
@@ -204,10 +196,6 @@ namespace CustomPomodoro.Components.Pages
             MainTimerState = TimerState.NotStarted;
         }
 
-        /// <summary>
-        /// Sets up a "short break" or "long break" (depending on current work session count). The only helper function which controlls "NextWorkState" & "LastWorkState" (all others
-        /// are determined by a function triggered by the press of a button). 
-        /// </summary>
         public void SetUpTimerPropertiesForCorrectBreak() //Move to a "helper" class (not sure which class yet).
         {
             bool? NeedSetUpShortSession = null;
@@ -228,7 +216,7 @@ namespace CustomPomodoro.Components.Pages
             }
             else
             {
-                 NextWorkState = WorkState.ShortBreak;
+                NextWorkState = WorkState.ShortBreak;
 
                 AltWorkStateDisplay[1] = "Short break";
                 TimerInSeconds = PomTimerHelpers.GetEndTimeInSecondsFormat(UserSettings.GetCurPomodoroSet().ShortBreak);
@@ -240,9 +228,6 @@ namespace CustomPomodoro.Components.Pages
 
         public async Task PauseTimer()
         {
-            //To do later:
-            //--Hide BgColor when timer is paused. 
-            //--Change words to "paused session" instead of "current session".
             BgColor = HslColorSelection.GetPausedActivityBgColor(UserSettings.GetBackgroundColorSettings().PausedActivityColor);
             AltWorkStateDisplay[0] = "Paused session: ";
             MainTimerState = TimerState.Paused;

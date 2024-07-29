@@ -57,10 +57,12 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         }
 
 
-        //General rule: If a function invovles loading something that required user permissions to create a
+        //General rule: If a function invovles LOADING settings that required user permissions to create a
         // save file for it, CHECK the current permissions for it but do NOT REQUEST permissions for it
         // (such as with an alert). There is a high chance it will choke the UI during boot up (& probably annoy the user).
         // See official android docs for guidelines: https://developer.android.com/training/permissions/requesting
+
+        //For SAVING settings: ALWAYS check, then request user permissions within the same attempt.
 
         /// <summary>
         /// Loads a pomodoro set and its settings and as the current one in use by the user.

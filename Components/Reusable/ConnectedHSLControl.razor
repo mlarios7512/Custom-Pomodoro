@@ -2,6 +2,7 @@
 
 <div class="d-flex flex-row w-100 group-gap @FirstHueVisibilityString" >
     <div class="individual-content col-6 my-5 linked-color-option-one">
+
         <h5>@FirstColorTitle</h5>
         <div class="linked-color-preview" style="background-color:hsl(@FirstColor.Hue, @FirstColor.Saturation%, @FirstColor.Lightness%);">
         </div>
@@ -11,28 +12,24 @@
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
                     <label class="@FirstHueVisibilityString">Hue <span class="hue-num-display">@FirstColor.Hue</span></label>
                     <input class="@FirstHueVisibilityString" type="range" @onmousemove="SyncHuesIfNeededMouse" @ontouchmove="SyncHueIfNeededMobile" @bind="FirstColor.Hue" @bind:event="oninput" min="0" max="360" />
-    
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
                     <label>Saturation <span class="hue-num-display">@FirstColor.Saturation</span></label>
-
-                    <input type="range" @bind="FirstColor.Saturation" @bind:event="oninput" min="0" max="100" />
-                    
+                    <input type="range" @bind="FirstColor.Saturation" @bind:event="oninput" min="0" max="100" />   
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
                     <label>Light <span class="hue-num-display">@FirstColor.Lightness</span></label>
                     <input type="range" @bind="FirstColor.Lightness" @bind:event="oninput" min="0" max="100" />
-                   
                 </div>
             </div>
         </div>
 
-
     </div>
 
     <div class="individual-content col-6 my-5 linked-color-option-two @FirstHueVisibilityString">
+
         <h5>@SecondColorTitle</h5>
         <div class="linked-color-preview" style="background-color:hsl(@SecondColor.Hue, @SecondColor.Saturation%, @SecondColor.Lightness%);">
         </div>
@@ -42,22 +39,20 @@
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap">
                     <label class="flex-shrink-1 @SecondHueVisibilityString">Hue <span class="hue-num-display @SecondHueVisibilityString">@SecondColor.Hue</span></label>
                     <input class="@SecondHueVisibilityString" type="range" @onmousemove="SyncHuesIfNeededMouse" @ontouchmove="SyncHueIfNeededMobile" @bind="SecondColor.Hue" @bind:event="oninput" min="0" max="360" />
-                    
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
                     <label>Saturation <span class="hue-num-display">@SecondColor.Saturation</span></label>
                     <input type="range" @bind="SecondColor.Saturation" @bind:event="oninput" min="0" max="100" />
-                    
                 </div>
 
                 <div class="d-flex flex-column gap-2 flex-wrap flex-lg-nowrap @SatAndLightVisibilityString">
                     <label>Light <span class="hue-num-display">@SecondColor.Lightness</span></label>
                     <input type="range" @bind="SecondColor.Lightness" @bind:event="oninput" min="0" max="100" />
-                    
                 </div>
             </div>
         </div>
+
     </div>
    
    
