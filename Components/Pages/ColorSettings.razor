@@ -3,7 +3,7 @@
 
 @page "/ColorSettings"
 
-<EditForm Model="ColorBarInputs" OnValidSubmit="@(() => @SaveColorSettingsOps.SaveAllColorSettings_V2(BgColorInputs, ColorBarInputs))" FormName="UpdateColorSettings">
+<EditForm Model="LocalColorInputs" OnValidSubmit="@(() => @SaveColorSettingsOps.SaveAllColorSettings(LocalColorInputs))" FormName="UpdateColorSettings">
 
     <h4 class="mb-5">Background Colors</h4>
 
@@ -11,17 +11,17 @@
         <SoloHSLControl
             @ref="BgColorControls[0]"
             Header="Timer not running"
-            Color="BgColorInputs.NoActivityBgColor"></SoloHSLControl>
+            Color="LocalColorInputs.BackgroundColorSettings.NoActivityBgColor"></SoloHSLControl>
             
         <SoloHSLControl 
                 @ref="BgColorControls[1]"
                 Header="Timer running"
-                Color="BgColorInputs.ActivityInProgressColor"></SoloHSLControl>
+                        Color="LocalColorInputs.BackgroundColorSettings.ActivityInProgressColor"></SoloHSLControl>
   
         <SoloHSLControl 
                 @ref="BgColorControls[2]"
                 Header="Timer paused"
-                Color="BgColorInputs.PausedActivityColor"></SoloHSLControl>
+                Color="LocalColorInputs.BackgroundColorSettings.PausedActivityColor"></SoloHSLControl>
         <button type="button" class="btn default-values-btn" @onclick="GetDefaultBgColorValues">Default colors</button>
     </section>
 
@@ -30,7 +30,7 @@
 
     <div class="form-check form-switch mx-5">
         <label class="form-check-label" for="enableActivityBar">Enable bar colors</label>
-        <input class="form-check-input" @onclick="ToggleActivityBarOperationalStatus" type="checkbox" role="switch" id="enableActivityBar" @bind="ColorBarInputs.EnableActivityBar" />
+        <input class="form-check-input" @onclick="ToggleActivityBarOperationalStatus" type="checkbox" role="switch" id="enableActivityBar" @bind="LocalColorInputs.ActivityColorSettings.EnableActivityBar" />
     </div>
 
     <div class="form-check form-switch mx-5 @ActivityBarControlsVisibility">
@@ -42,27 +42,27 @@
 
         <ConnectedHSLControl 
             @ref="ConnectedActivityStatusColorControls[0]"
-            FirstColor="ColorBarInputs.WorkColors[0]"
+            FirstColor="LocalColorInputs.ActivityColorSettings.WorkColors[0]"
             FirstColorTitle="Work 1"
-            SecondColor="ColorBarInputs.WorkColors[1]"
+            SecondColor="LocalColorInputs.ActivityColorSettings.WorkColors[1]"
             SecondColorTitle="Work 2"
             OnInteract="UpdateSecondaryColorIfNeeded">
         </ConnectedHSLControl>
 
         <ConnectedHSLControl 
             @ref="ConnectedActivityStatusColorControls[1]"
-            FirstColor="ColorBarInputs.ShortBreakColors[0]"
+            FirstColor="LocalColorInputs.ActivityColorSettings.ShortBreakColors[0]"
             FirstColorTitle="Short break 1"
-            SecondColor="ColorBarInputs.ShortBreakColors[1]"
+            SecondColor="LocalColorInputs.ActivityColorSettings.ShortBreakColors[1]"
             SecondColorTitle="Short break 2"
             OnInteract="UpdateSecondaryColorIfNeeded">
         </ConnectedHSLControl>
 
         <ConnectedHSLControl 
             @ref="ConnectedActivityStatusColorControls[2]"
-            FirstColor="ColorBarInputs.LongBreakColors[0]"
+                             FirstColor="LocalColorInputs.ActivityColorSettings.LongBreakColors[0]"
             FirstColorTitle="Long break 1"
-            SecondColor="ColorBarInputs.LongBreakColors[1]"
+            SecondColor="LocalColorInputs.ActivityColorSettings.LongBreakColors[1]"
             SecondColorTitle="Long break 2"
             OnInteract="UpdateSecondaryColorIfNeeded">
         </ConnectedHSLControl>

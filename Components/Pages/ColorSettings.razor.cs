@@ -21,9 +21,7 @@ namespace CustomPomodoro.Components.Pages
     {
         [Inject]
         protected IMasterUserSettings UserSettings { get; set; }
-        private BackgroundColorSettings BgColorInputs = new BackgroundColorSettings();
-        private ActivityBarSettings ColorBarInputs { get; set; } = new ActivityBarSettings();
-
+        private MainColorSettings LocalColorInputs = new();
         private bool DisplayAdvancedColorSettings { get; set; } = false;
         private string ActivityBarControlsVisibility { get; set; } = string.Empty;
         private const string ActivityBarHiddenHTMLKeyword = "hidden-and-minimized";
@@ -42,48 +40,47 @@ namespace CustomPomodoro.Components.Pages
         protected override async Task OnInitializedAsync()
         {
             ActivityBarControlsVisibility = string.Empty;
-            //Don't use "await" here or you risk the wrong colors as starting input in the subsequent code.
             UserSettings.LoadAllColorSettings();
 
             //Best to transfer global "UserSettings" bgColors & activityBarColors into local colors.
             // (This is because even if you don't click "save", any color changes made during the current session will be visible in the "timer" page.)
-            BgColorInputs = UserSettings.GetBackgroundColorSettings();
-            ColorBarInputs = UserSettings.GetActivityBarSettings();
+            LocalColorInputs.BackgroundColorSettings = UserSettings.GetBackgroundColorSettings();
+            LocalColorInputs.ActivityColorSettings = UserSettings.GetActivityBarSettings();
 
             if (UserSettings.GetActivityBarSettings().EnableActivityBar) 
             {
-                ColorBarInputs.EnableActivityBar = true;
+                LocalColorInputs.ActivityColorSettings.EnableActivityBar = true;
                 ActivityBarControlsVisibility = string.Empty;
             }
             else 
             {
-                ColorBarInputs.EnableActivityBar = false;
+                LocalColorInputs.ActivityColorSettings.EnableActivityBar = false;
                 ActivityBarControlsVisibility = ActivityBarHiddenHTMLKeyword;
             }
         }
 
         private async Task GetDefaultBgColorValues()
         {
-            BgColorInputs.SetDefaultColorsValues();
+             LocalColorInputs.BackgroundColorSettings.SetDefaultColorsValues();
         }
 
         private async Task GetDefaultActivityBarColorValues()
         {
-            ColorBarInputs.SetAllColorsToDefaultValues();
+            LocalColorInputs.ActivityColorSettings.SetAllColorsToDefaultValues();
         }
 
         private void ToggleActivityBarOperationalStatus() 
         {
-            ColorBarInputs.EnableActivityBar = !ColorBarInputs.EnableActivityBar;
-            if (ColorBarInputs.EnableActivityBar == true) 
+            LocalColorInputs.ActivityColorSettings.EnableActivityBar = !LocalColorInputs.ActivityColorSettings.EnableActivityBar;
+            if (LocalColorInputs.ActivityColorSettings.EnableActivityBar == true) 
             {
                 ActivityBarControlsVisibility = "";
-                ColorBarInputs.EnableActivityBar = true;
+                LocalColorInputs.ActivityColorSettings.EnableActivityBar = true;
             }
             else 
             {
                 ActivityBarControlsVisibility = ActivityBarHiddenHTMLKeyword;
-                ColorBarInputs.EnableActivityBar = false;
+                LocalColorInputs.ActivityColorSettings.EnableActivityBar = false;
             }
         }
 
@@ -97,7 +94,7 @@ namespace CustomPomodoro.Components.Pages
             }
             else 
             {
-                ColorBarInputs.ResetAllColorValuesExceptPrimaryHue();
+                LocalColorInputs.ActivityColorSettings.ResetAllColorValuesExceptPrimaryHue();
 
                 foreach (var control in ConnectedActivityStatusColorControls)
                     control.DisplayHueControlsOnly();
@@ -106,9 +103,9 @@ namespace CustomPomodoro.Components.Pages
 
         private void MakeSimilarStageOneAndTwoColors()
         {
-            ColorBarInputs.WorkColors.Last().Hue = ColorBarInputs.WorkColors.First().Hue;
-            ColorBarInputs.ShortBreakColors.Last().Hue = ColorBarInputs.ShortBreakColors.First().Hue;
-            ColorBarInputs.LongBreakColors.Last().Hue = ColorBarInputs.LongBreakColors.First().Hue;
+            LocalColorInputs.ActivityColorSettings.WorkColors.Last().Hue = LocalColorInputs.ActivityColorSettings.WorkColors.First().Hue;
+            LocalColorInputs.ActivityColorSettings.ShortBreakColors.Last().Hue = LocalColorInputs.ActivityColorSettings.ShortBreakColors.First().Hue;
+            LocalColorInputs.ActivityColorSettings.LongBreakColors.Last().Hue = LocalColorInputs.ActivityColorSettings.LongBreakColors.First().Hue;
         }
 
         private void UpdateSecondaryColorIfNeeded()
