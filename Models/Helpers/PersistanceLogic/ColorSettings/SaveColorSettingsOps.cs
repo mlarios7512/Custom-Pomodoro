@@ -35,14 +35,15 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                 string finalJson = JsonConvert.SerializeObject(colorSettings);
                 File.WriteAllText(saveFile, finalJson);
 
-                //See the "Preferences API for saving user data cross-platform (Note: using this only for minor differences, such as vibration vs toast on timer end):
+                //See the "Preferences API for saving user data cross-platform
+                // (Note: Currently using this only for minor differences, such as vibration on Android vs toast on Windows for timer end):
                 //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
 
                 return true;
             }
-            catch (Newtonsoft.Json.JsonReaderException ex) 
+            catch (Exception ex) 
             {
-                Debug.WriteLine($"Error extracting 'activity bar colors' from file. File contents likely malformed. INFO: {ex}.");
+                Debug.WriteLine($"An unknown error occured when saving to file: {ex}.");
                 return false;
             }
         }
