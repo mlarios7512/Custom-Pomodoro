@@ -17,7 +17,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
     {
         public ActivityBarSettings _activityBarSettings = new ();
         public BackgroundColorSettings _backgroundColorSettings = new ();
-        public PomodoroTimerSettings _curPomodoroSetSetttings = new(); 
+        public PomodoroTimerSettings _curPomodoroSetSetttings = new();
 
         public BackgroundColorSettings GetBackgroundColorSettings() 
         {
@@ -52,6 +52,31 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             }
             else 
             {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
+            }
+        }
+
+        public async Task SaveUserColorSettings(MainColorSettings settingsToSave) 
+        {
+            await Permissions.RequestAsync<Permissions.StorageWrite>();
+            PermissionStatus writePermission = PermissionStatus.Unknown;
+            writePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+
+
+            if (writePermission == PermissionStatus.Granted) 
+            {
+                //To do: implement save logic here.
+                //Alert user if success OR failure occurs. 
+                bool saveSucess = await SaveColorSettingsOps.SaveAllColorSettings(settingsToSave);
+                if (saveSucess) 
+                    await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
+                else 
+                    await Application.Current.MainPage.DisplayAlert("Error", "An error occured when saving changes.", "OK");
+            }
+            else 
+            {
+                //To do: Write logic to save to "MainColorSettings" within "UserSettings" (once you create it for "UserSettings")
+                // so that setting are saved for the duration of the session.
                 await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
             }
         }

@@ -3,7 +3,7 @@
 
 @page "/ColorSettings"
 
-<EditForm Model="LocalColorInputs" OnValidSubmit="@(() => @SaveColorSettingsOps.SaveAllColorSettings(LocalColorInputs))" FormName="UpdateColorSettings">
+<EditForm Model="LocalColorInputs" OnValidSubmit="@SaveChanges" FormName="UpdateColorSettings">
 
     <h4 class="mb-5">Background Colors</h4>
 

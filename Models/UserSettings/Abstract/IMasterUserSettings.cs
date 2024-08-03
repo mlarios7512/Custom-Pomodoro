@@ -17,5 +17,7 @@ namespace CustomPomodoro.Models.UserSettings.Abstract
         Task SaveUserPomodoroSet(PomodoroTimerSettings setttingsToSave);
         Task LoadCurPomodoroSet();
 
+        Task SaveUserColorSettings(MainColorSettings settingsToSave);
+
     }
 }

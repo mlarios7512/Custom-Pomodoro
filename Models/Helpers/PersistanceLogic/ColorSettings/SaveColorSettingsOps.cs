@@ -18,45 +18,34 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
 
         }
 
-        public async static Task SaveAllColorSettings(MainColorSettings colorSettings)
+        /// <summary>
+        /// Saves new user colorSettings
+        /// </summary>
+        /// <param name="colorSettings">The new user color settings to save.</param>
+        /// <returns>Returns False if an error occured when saving. Returns true otherwise (including if permission was denied).</returns>
+        public async static Task<bool> SaveAllColorSettings(MainColorSettings colorSettings)
         {
-            PermissionStatus status = PermissionStatus.Unknown;
-            status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-            if (status != PermissionStatus.Granted)
+            try
             {
-                await Application.Current.MainPage.DisplayAlert("Need storage permission", "Storage permission is required to create a save file.", "OK");
+                string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
+                if (!File.Exists(saveFile))
+                {
+                    File.Create(saveFile);
+                }
+                string finalJson = JsonConvert.SerializeObject(colorSettings);
+                File.WriteAllText(saveFile, finalJson);
+
+                //See the "Preferences API for saving user data cross-platform (Note: using this only for minor differences, such as vibration vs toast on timer end):
+                //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
+
+                return true;
             }
-
-            status = await Permissions.RequestAsync<Permissions.StorageWrite>();
-
-            if (status == PermissionStatus.Granted)
+            catch (Newtonsoft.Json.JsonReaderException ex) 
             {
-                try
-                {
-
-
-                    string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
-                    if (!File.Exists(saveFile))
-                    {
-                        File.Create(saveFile);
-                    }
-                    string finalJson = JsonConvert.SerializeObject(colorSettings);
-                    File.WriteAllText(saveFile, finalJson);
-
-                    //See the "Preferences API for saving user data cross-platform (Note: using this only for minor differences, such as vibration vs toast on timer end):
-                    //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
-
-                    await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
-                }
-                catch (Newtonsoft.Json.JsonReaderException ex) 
-                {
-                    Debug.WriteLine($"Error extracting 'activity bar colors' from file. File contents likely malformed. INFO: {ex}.");
-                    await Application.Current.MainPage.DisplayAlert("Error", "There was a problem saving the color settings to file", "OK");
-                }
-                
+                Debug.WriteLine($"Error extracting 'activity bar colors' from file. File contents likely malformed. INFO: {ex}.");
+                return false;
             }
         }
-
         
     }
 }

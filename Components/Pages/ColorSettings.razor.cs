@@ -116,5 +116,10 @@ namespace CustomPomodoro.Components.Pages
             }
 
         }
+
+        private async Task SaveChanges() 
+        {
+            UserSettings?.SaveUserColorSettings(LocalColorInputs);
+        }
     }
 }
