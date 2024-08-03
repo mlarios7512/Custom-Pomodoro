@@ -15,23 +15,27 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 {
     public class MasterUserSettings:IMasterUserSettings
     {
-        public ActivityBarSettings _activityBarSettings = new ();
-        public BackgroundColorSettings _backgroundColorSettings = new ();
+        public MainColorSettings _mainColorSettings = new ();
         public PomodoroTimerSettings _curPomodoroSetSetttings = new();
 
         public BackgroundColorSettings GetBackgroundColorSettings() 
         {
-            return _backgroundColorSettings;
+            return _mainColorSettings.BackgroundColorSettings;
         }
 
         public ActivityBarSettings GetActivityBarSettings() 
         {
-            return _activityBarSettings;
+            return _mainColorSettings.ActivityColorSettings;
         }
 
         public PomodoroSet GetCurPomodoroSet() 
         {
             return _curPomodoroSetSetttings.StoredPomSet;
+        }
+
+        public MainColorSettings GetMainColorSettings() 
+        {
+            return _mainColorSettings;
         }
 
 
@@ -44,7 +48,6 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             if (status == PermissionStatus.Granted)
             {
                 bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(settingsToSave);
-
                 if (SaveSucessful)
                     await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
                 else
@@ -52,7 +55,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             }
             else 
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
+                await Application.Current.MainPage.DisplayAlert("Alert", "Save file permission denied. Changes saved for this session only.", "OK");
             }
         }
 
@@ -65,8 +68,6 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if (writePermission == PermissionStatus.Granted) 
             {
-                //To do: implement save logic here.
-                //Alert user if success OR failure occurs. 
                 bool saveSucess = await SaveColorSettingsOps.SaveAllColorSettings(settingsToSave);
                 if (saveSucess) 
                     await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
@@ -75,9 +76,8 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             }
             else 
             {
-                //To do: Write logic to save to "MainColorSettings" within "UserSettings" (once you create it for "UserSettings")
-                // so that setting are saved for the duration of the session.
-                await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
+                _mainColorSettings = settingsToSave;
+                await Application.Current.MainPage.DisplayAlert("Alert", "Save file permission denied. Changes saved for this session only.", "OK");
             }
         }
 
@@ -87,10 +87,10 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         // (such as with an alert). There is a high chance it will choke the UI during boot up (& probably annoy the user).
         // See official android docs for guidelines: https://developer.android.com/training/permissions/requesting
 
-        //For SAVING settings: ALWAYS check, then request user permissions within the same attempt.
+        //For SAVING settings: ALWAYS check permissions, then request user permissions within the same attempt to save a file.
 
         /// <summary>
-        /// Loads a pomodoro set and its settings and as the current one in use by the user.
+        /// Loads a pomodoro set and its settings as the current one in use by the user.
         /// </summary>
         public async Task LoadCurPomodoroSet() 
         {
@@ -111,13 +111,16 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if (status == PermissionStatus.Granted)
             {
-                _activityBarSettings = LoadColorSettingsOps.LoadActivityBarSettings_V2();
-                _backgroundColorSettings = LoadColorSettingsOps.LoadBackgroundColorsSettings();
+                _mainColorSettings.ActivityColorSettings = LoadColorSettingsOps.LoadActivityBarSettings_V2();
+                _mainColorSettings.BackgroundColorSettings = LoadColorSettingsOps.LoadBackgroundColorsSettings();
             }
             else
             {
-                _activityBarSettings = new ActivityBarSettings();
-                _backgroundColorSettings = new BackgroundColorSettings();
+                if(_mainColorSettings.ActivityColorSettings == null)
+                    _mainColorSettings.ActivityColorSettings = new ActivityBarSettings();
+
+                if (_mainColorSettings.BackgroundColorSettings == null)
+                    _mainColorSettings.BackgroundColorSettings = new BackgroundColorSettings();
             }
         }
 

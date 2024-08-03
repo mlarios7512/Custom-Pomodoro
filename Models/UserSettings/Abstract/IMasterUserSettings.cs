@@ -13,6 +13,7 @@ namespace CustomPomodoro.Models.UserSettings.Abstract
         Task LoadAllColorSettings();
         BackgroundColorSettings GetBackgroundColorSettings();
         ActivityBarSettings GetActivityBarSettings();
+        MainColorSettings GetMainColorSettings();
         PomodoroSet GetCurPomodoroSet();
         Task SaveUserPomodoroSet(PomodoroTimerSettings setttingsToSave);
         Task LoadCurPomodoroSet();

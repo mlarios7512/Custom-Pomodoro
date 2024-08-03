@@ -12,26 +12,6 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
     {
         private const string _saveFileName = "PomodoroSets.json";
 
-        //public static List<PomodoroSet> GetExistingPomodoroSets()
-        //{
-        //    string JsonSavePath = Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json");
-        //    List<PomodoroSet> ExistingPomLists = new List<PomodoroSet>();
-        //    try
-        //    {
-        //        string PomListsFromJsonFile = File.ReadAllText(JsonSavePath);
-        //        ExistingPomLists = JsonConvert.DeserializeObject<List<PomodoroSet>>(PomListsFromJsonFile);
-        //    }
-        //    catch (FileNotFoundException)
-        //    {
-        //        return new List<PomodoroSet>();
-        //    }
-
-        //    if (ExistingPomLists == null)
-        //        return new List<PomodoroSet>();
-
-        //    return ExistingPomLists;
-        //}
-
         public static Task LoadCurrentPomodoroSetFromFile(ref PomodoroTimerSettings pomSet)
         {
             string JsonSavePath = Path.Combine(AppContext.BaseDirectory, _saveFileName);
@@ -42,12 +22,11 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
                 pomSet = JsonConvert.DeserializeObject<PomodoroTimerSettings>(PomSetFromJsonFile);
 
                 if (pomSet == null) 
-                {
                     pomSet = new PomodoroTimerSettings();
-                }
+                
                 
             }
-            else 
+            else if(pomSet == null)
             {
                 pomSet = new PomodoroTimerSettings();
             }
