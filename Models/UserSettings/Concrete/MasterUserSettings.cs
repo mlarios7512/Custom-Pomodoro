@@ -111,7 +111,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if (status == PermissionStatus.Granted)
             {
-                _mainColorSettings.ActivityColorSettings = LoadColorSettingsOps.LoadActivityBarSettings_V2();
+                _mainColorSettings.ActivityColorSettings = LoadColorSettingsOps.LoadActivityBarSettings();
                 _mainColorSettings.BackgroundColorSettings = LoadColorSettingsOps.LoadBackgroundColorsSettings();
             }
             else
