@@ -1,8 +1,8 @@
 ﻿//using Android.OS;
 using CustomPomodoro.Models;
 using CustomPomodoro.Models.Helpers;
-using CustomPomodoro.Models.Helpers.Colors;
-using CustomPomodoro.Models.Helpers.PomTimer;
+using CustomPomodoro.Models.Helpers.BusinessLogic.Colors;
+using CustomPomodoro.Models.Helpers.BusinessLogic.PomTimer;
 using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using Microsoft.AspNetCore.Components;

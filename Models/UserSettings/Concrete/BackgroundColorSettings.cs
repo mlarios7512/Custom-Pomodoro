@@ -1,4 +1,4 @@
-﻿using CustomPomodoro.Models.Helpers.PomTimer;
+﻿using CustomPomodoro.Models.Helpers.BusinessLogic.PomTimer;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;

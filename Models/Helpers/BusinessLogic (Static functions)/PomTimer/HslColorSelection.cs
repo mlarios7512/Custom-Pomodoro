@@ -6,41 +6,41 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomPomodoro.Models.Helpers.PomTimer
+namespace CustomPomodoro.Models.Helpers.BusinessLogic.PomTimer
 {
     internal class HslColorSelection
     {
-        private static string FormatHSLToCSS(HSLColor color) 
+        private static string FormatHSLToCSS(HSLColor color)
         {
             return $"hsl({color.Hue}, {color.Saturation}%, {color.Lightness}%)";
-        } 
+        }
         public static string GetNoActivityBgColor(HSLColor? color = null)
         {
             HSLColor DefaultNoActivityBgColor = new HSLColor(240, 4, 46);
 
-            if (color == null) 
+            if (color == null)
                 return FormatHSLToCSS(DefaultNoActivityBgColor);
-            
-            return FormatHSLToCSS((HSLColor)color);
+
+            return FormatHSLToCSS(color);
         }
         public static string GetActivityInProgressBgColor(HSLColor? color = null)
         {
             HSLColor DefaultActivityInProgressBgColor = new HSLColor(240, 6, 10);
 
-            if (color == null) 
-                return FormatHSLToCSS((HSLColor)DefaultActivityInProgressBgColor);
-            
-            return FormatHSLToCSS((HSLColor)color);
+            if (color == null)
+                return FormatHSLToCSS(DefaultActivityInProgressBgColor);
+
+            return FormatHSLToCSS(color);
         }
 
-        public static string GetPausedActivityBgColor(HSLColor? color = null) 
+        public static string GetPausedActivityBgColor(HSLColor? color = null)
         {
             HSLColor DefaultPausedActivityBgColor = new HSLColor(202, 96, 22);
 
-            if (color == null) 
-                return FormatHSLToCSS((HSLColor)DefaultPausedActivityBgColor);
+            if (color == null)
+                return FormatHSLToCSS(DefaultPausedActivityBgColor);
 
-            return FormatHSLToCSS((HSLColor)color);
+            return FormatHSLToCSS(color);
         }
 
         /*----------------*/
@@ -64,8 +64,8 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
         private const int BarActivityStatusSaturation = 99;
         private const int BarActivityStatusLightnessDim = 27;
         private const int BarActivityStatusLightnessBright = 44;
-        
-        private static (string,string) GetDefaultOrUserDefinedBarColors(int adminDefaultColor, HSLColor? colorOne, HSLColor? colorTwo ) 
+
+        private static (string, string) GetDefaultOrUserDefinedBarColors(int adminDefaultColor, HSLColor? colorOne, HSLColor? colorTwo)
         {
             HSLColor DefaultStatusColorBright = new HSLColor(
                adminDefaultColor,
@@ -94,12 +94,12 @@ namespace CustomPomodoro.Models.Helpers.PomTimer
 
         //If we decide to limit the HSL color options for "activity status bar", we do it from the
         //input form's backend (to avoid limiting potential reuse).
-        public static (string,string) GetWorkStatusBarColor(HSLColor? colorOne = null, HSLColor? colorTwo = null) 
+        public static (string, string) GetWorkStatusBarColor(HSLColor? colorOne = null, HSLColor? colorTwo = null)
         {
             return GetDefaultOrUserDefinedBarColors(0, colorOne, colorTwo);
         }
 
-        public static (string,string) GetShortBreakStatusBarColor(HSLColor? colorOne = null, HSLColor? colorTwo = null)
+        public static (string, string) GetShortBreakStatusBarColor(HSLColor? colorOne = null, HSLColor? colorTwo = null)
         {
             return GetDefaultOrUserDefinedBarColors(191, colorOne, colorTwo);
         }

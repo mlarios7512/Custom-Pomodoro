@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomPomodoro.Models.Helpers.Colors
+namespace CustomPomodoro.Models.Helpers.BusinessLogic.Colors
 {
     public class ActivityBarColorHelpers
     {
@@ -27,21 +27,21 @@ namespace CustomPomodoro.Models.Helpers.Colors
             color.Lightness = DefaultLightDim;
         }
 
-        public static List<HSLColor> GetDefaultWorkColors() 
+        public static List<HSLColor> GetDefaultWorkColors()
         {
             List<HSLColor> WorkColors = new List<HSLColor>();
 
-            HSLColor color = new HSLColor(DefaultWorkHue, 0,0);
+            HSLColor color = new HSLColor(DefaultWorkHue, 0, 0);
             SetDefaultSaturationAndBrightLight(color);
             WorkColors.Add(color);
 
-            color = new HSLColor(DefaultWorkHue, 0,0);
+            color = new HSLColor(DefaultWorkHue, 0, 0);
             SetDefaultSaturationAndDimLight(color);
             WorkColors.Add(color);
             return WorkColors;
         }
 
-        public static List<HSLColor> GetDefaultShortBreakColors() 
+        public static List<HSLColor> GetDefaultShortBreakColors()
         {
             List<HSLColor> WorkColors = new List<HSLColor>();
 
@@ -56,7 +56,7 @@ namespace CustomPomodoro.Models.Helpers.Colors
         }
 
         //"Get" functions
-        public static List<HSLColor> GetDefaultLongBreakColors() 
+        public static List<HSLColor> GetDefaultLongBreakColors()
         {
             List<HSLColor> WorkColors = new List<HSLColor>();
 
@@ -71,7 +71,7 @@ namespace CustomPomodoro.Models.Helpers.Colors
         }
 
         //"Set" functions
-        public static void SetDefaultWorkColors(List<HSLColor> workColors) 
+        public static void SetDefaultWorkColors(List<HSLColor> workColors)
         {
             workColors.First().Hue = DefaultWorkHue;
             workColors.Last().Hue = DefaultWorkHue;
@@ -79,15 +79,15 @@ namespace CustomPomodoro.Models.Helpers.Colors
             SetDefaultSaturationAndDimLight(workColors.Last());
         }
 
-        public static void SetDefaultShortBreakColors( List<HSLColor> shortBreakColors) 
+        public static void SetDefaultShortBreakColors(List<HSLColor> shortBreakColors)
         {
             shortBreakColors.First().Hue = DefaultShortBreakHue;
             shortBreakColors.Last().Hue = DefaultShortBreakHue;
             SetDefaultSaturationAndBrightLight(shortBreakColors.First());
-            SetDefaultSaturationAndDimLight (shortBreakColors.Last());
+            SetDefaultSaturationAndDimLight(shortBreakColors.Last());
         }
 
-        public static void SetDefaultLongBreakColors( List<HSLColor> longBreakColors) 
+        public static void SetDefaultLongBreakColors(List<HSLColor> longBreakColors)
         {
             longBreakColors.First().Hue = DefaultLongBreakHue;
             longBreakColors.Last().Hue = DefaultLongBreakHue;
