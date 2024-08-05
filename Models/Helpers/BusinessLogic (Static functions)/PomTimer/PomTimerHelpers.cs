@@ -31,18 +31,5 @@ namespace CustomPomodoro.Models.Helpers
 
             return formattedInput;
         }
-
-        //The "hexColor" input will eventually be input via "CurPomodoroSet" for the class "PomTimer".
-        public static string TransitionToColor(string? hexColor)
-        {
-            Regex HexColorVerification = new Regex("^#(?:[0-9a-fA-F]{3}){1,2}$");
-            if(String.IsNullOrEmpty(hexColor) == false) 
-            {
-                if (HexColorVerification.IsMatch(hexColor) == true) 
-                    return hexColor;
-                
-            }
-            return "#44403c";
-        }
     }
 }
