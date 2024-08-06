@@ -5,3 +5,35 @@
 label{
     color:white;
 }
+
+.timer-input {
+    margin-left: 10%;
+    width: 50%;
+}
+
+@media (max-width: 767.98px) {
+    .timer-input{
+        margin-left: 10%;
+        width:80%;
+    }
+}
+
+@media (min-width: 767.98px) and (max-width: 992px) {
+    .timer-input {
+        margin-left: 10%;
+        width: 80%;
+    }
+}
+
+@media (min-width: 991.98px) and (max-width: 1199.98px) {
+    .timer-input {
+        margin-left: 10%;
+        width: 55%;
+    }
+}
+@media (min-width: 1200px) and (max-width: 1920.98px) {
+    .timer-input {
+        margin-left: 10%;
+        width: 45%;
+    }
+}

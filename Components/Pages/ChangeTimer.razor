@@ -3,37 +3,37 @@
 <h3 class="mb-5">Change Timer</h3>
 <EditForm Model="SettingsVM" OnValidSubmit="@SaveChanges" FormName="UpdateTimerInfo">
 
-    <div class="mb-4">
+    <div class="mb-4 fs-5">
         <label class="text-white col-sm-4 col-form-label">Work Time</label>
-        <div class="d-flex flex-row">
-            <InputText class="rounded-3" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.WT_Minutes" required></InputText>
-            <span class="flex-shrink-1 text-white fw-bolder">:</span>
-            <InputText class="rounded-3" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.WT_Seconds" required></InputText>
+        <div class="d-flex flex-row fw-bolder timer-input justify-content-center">
+            <InputText class="rounded-3 text-center flex-grow-1" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.WT_Minutes" required></InputText>
+            <span class="flex-shrink-1 text-white align-self-center p-1">:</span>
+            <InputText class="rounded-3 text-center flex-grow-1" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.WT_Seconds" required></InputText>
         </div>
     </div>
 
-    <div class="mb-4">
+    <div class="mb-4 fs-5">
         <label class="text-white col-sm-4 col-form-label">Short break time</label>
-        <div class="d-flex flex-row">
-            <InputText class="rounded-3" inputmode="numeric" pattern="^[0-5]?[0-9]$"  size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.SBT_Minutes" required></InputText>
-            <span class="flex-shrink-1 text-white fw-bolder">:</span>
-            <InputText class="rounded-3" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.SBT_Seconds" required></InputText>
+        <div class="d-flex flex-row fw-bolder timer-input">
+            <InputText class="rounded-3 text-center flex-grow-1" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.SBT_Minutes" required></InputText>
+            <span class="flex-shrink-1 text-white align-self-center p-1">:</span>
+            <InputText class="rounded-3 text-center flex-grow-1" inputmode="numeric" pattern="^[0-5]?[0-9]$" size="2" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.SBT_Seconds" required></InputText>
+        </div>
+    </div>
+
+    <div class="mb-4 fs-5">
+        <label class="text-white col-sm-4 col-form-label">Long break time</label>
+        <div class="d-flex flex-row fw-bolder timer-input">
+            <InputText class="rounded-3 text-center flex-grow-1" inputmode="numeric" size="2" pattern="^[0-5]?[0-9]$" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.LBT_Minutes" required></InputText>
+            <span class="flex-shrink-1 text-white align-self-center p-1">:</span>
+            <InputText class="rounded-3 text-center flex-grow-1" inputmode="numeric" size="2" pattern="^[0-5]?[0-9]$" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.LBT_Seconds" required></InputText>
         </div>
     </div>
 
     <div class="mb-4">
         <label class="text-white col-sm-4 col-form-label">Reps before long break</label>
-        <div class="d-flex flex-row">
-            <InputNumber class="rounded-3" placeholder="any num 2 to 9" id="work-reps-input" @bind-Value="SettingsVM.PomSetInput.RepsBeforeLongBreak" min="2" max="9" pattern="^[2-9]{1}$" required></InputNumber>
-        </div>
-    </div>
-
-    <div class="mb-4">
-        <label class="text-white col-sm-4 col-form-label">Long break time</label>
-        <div class="d-flex flex-row">
-            <InputText class="rounded-3" inputmode="numeric" size="2" pattern="^[0-5]?[0-9]$" maxlength="2" placeholder="min" @bind-Value="SettingsVM.PomSetInput.LBT_Minutes" required></InputText>
-            <span class="flex-shrink-1 text-white fw-bolder">:</span>
-            <InputText class="rounded-3" inputmode="numeric" size="2" pattern="^[0-5]?[0-9]$" maxlength="2" placeholder="sec" @bind-Value="SettingsVM.PomSetInput.LBT_Seconds" required></InputText>
+        <div class="d-flex flex-row timer-input">
+            <InputNumber class="rounded-3 fs-5" placeholder="any num 2 to 9" @bind-Value="SettingsVM.PomSetInput.RepsBeforeLongBreak" min="2" max="9" pattern="^[2-9]{1}$" required></InputNumber>
         </div>
     </div>
 
