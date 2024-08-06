@@ -22,8 +22,6 @@ namespace CustomPomodoro.Components.Pages
         [Inject]
         protected IMasterUserSettings? UserSettings { get; set; }
         private ChangeTimerVM SettingsVM { get; set; } = new ChangeTimerVM();
-        
-        //private PomodoroSet SetToEdit { get; set; }
         protected override async Task OnInitializedAsync() 
         {
             this.PersistentPomSetToDummyPomSet(UserSettings.GetCurPomodoroSet());
@@ -49,9 +47,6 @@ namespace CustomPomodoro.Components.Pages
         private static string TransformInputAsFormattedStringForStroage(int sessionTimeInSeconds) 
         {
             string formattedInput = $"{TimeSpan.FromSeconds(sessionTimeInSeconds):mm\\:ss}";
-
-            //To do: Trim "formattedInput" to a single '0' (for minutes only) if possible.
-            // Ex: 0:13 instead of 00:13   <--- aka, 13 seconds.
 
             if (formattedInput.Length == 5)
             {
@@ -98,11 +93,9 @@ namespace CustomPomodoro.Components.Pages
             }
         }
 
-        //Make sure the "pattern" is translated (& trimmed if needed) correctly when stored in local storage. 
-        // Keep in mind, windows users can crash it by inputting non-integer input.So make sure to FILTER THAT OUT on the BACKEND!
         private async Task SaveChanges() 
         {
-            //This is for future use (if implementing sets of pomodoro timers).
+            //This is for implementing sets of pomodoro timers, now a future feature.
             //string NewPomodoroId = Guid.NewGuid().ToString();
             //PomoSetWithTimerInfoOnly.Id = NewPomodoroId;
 
@@ -113,13 +106,12 @@ namespace CustomPomodoro.Components.Pages
             DummyPomSetInputToPersistentPomSet(SettingsVM.PomSetInput, out tempPomSet);
             pomSetSettingsToSave.StoredPomSet = tempPomSet;
 
-            //Append any other existing view-model pomodoro set settings (if any)
-            // to "generalTimerSettingsToSave" here before sending it to json file.
             
             await UserSettings.SaveUserPomodoroSet(pomSetSettingsToSave);
+
             
-            
-            if(DeviceInfo.Current.Platform == DevicePlatform.Android) 
+            //Append any other existing view-model pomodoro set settings (if any).
+            if (DeviceInfo.Current.Platform == DevicePlatform.Android) 
             {
                 await PomSetSaveFileOps.SaveAndroidVibrationOnTimerEndDecision(SettingsVM.VibrateOnSessionEnd);
             }
