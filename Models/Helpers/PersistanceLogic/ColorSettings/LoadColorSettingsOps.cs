@@ -1,5 +1,4 @@
-﻿using CustomPomodoro.Models.UserSettings.Concrete;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -15,7 +14,7 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
         private const string _saveFileName = "ColorSettings.json";
         public LoadColorSettingsOps() { }
 
-        public static BackgroundColorSettings LoadBackgroundColorsSettings()
+        public static BackgroundColorOptions LoadBackgroundColorsSettings()
         {
             string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
 
@@ -26,26 +25,26 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                     string fileContents = File.ReadAllText(saveFile);
                     JObject fileContentsAsJObj = JObject.Parse(fileContents);
 
-                    return JsonConvert.DeserializeObject<BackgroundColorSettings>(fileContentsAsJObj["BackgroundColorSettings"].ToString());
+                    return JsonConvert.DeserializeObject<BackgroundColorOptions>(fileContentsAsJObj["BackgroundColorSettings"].ToString());
                 }
                 else
                 {
-                    return new BackgroundColorSettings();
+                    return new BackgroundColorOptions();
                 }
             }
             catch (System.NullReferenceException ex)
             {
                 Debug.WriteLine($"Error extracting 'activity bar colors' from file. (File contents likely null or empty string.) ERROR INFO: {ex}.");
-                return new BackgroundColorSettings();
+                return new BackgroundColorOptions();
             }
             catch (Newtonsoft.Json.JsonReaderException ex)
             {
                 Debug.WriteLine($"Error extracting 'activity bar colors' from file. (File contents likely malformed.) ERROR INFO: {ex}.");
-                return new BackgroundColorSettings();
+                return new BackgroundColorOptions();
             }
         }
 
-        public static ActivityBarSettings LoadActivityBarSettings()
+        public static ActivityBarOptions LoadActivityBarSettings()
         {
             string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
 
@@ -74,7 +73,7 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                     var longBreakAsObj = JsonConvert.DeserializeObject<List<HSLColor>>(activityColorSettings.SelectToken("LongBreakColors").ToString());
                     bool enableActivityBar = (bool)activityColorSettings.SelectToken("EnableActivityBar");
 
-                    ActivityBarSettings settingsToLoad = new ActivityBarSettings()
+                    ActivityBarOptions settingsToLoad = new ActivityBarOptions()
                     {
                         WorkColors = workAsObj,
                         ShortBreakColors = shortBreakAsObj,
@@ -86,18 +85,18 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                 }
                 else
                 {
-                    return new ActivityBarSettings();
+                    return new ActivityBarOptions();
                 }
             }
             catch (System.NullReferenceException ex)
             {
                 Debug.WriteLine($"Error extracting 'activity bar colors' from file. (File contents likely null or empty string.)\n ERROR INFO: {ex}.");
-                return new ActivityBarSettings();
+                return new ActivityBarOptions();
             }
             catch (Newtonsoft.Json.JsonReaderException ex)
             {
                 Debug.WriteLine($"Error extracting 'activity bar colors' from file. (File contents likely malformed.)\n ERROR INFO: {ex}.");
-                return new ActivityBarSettings();
+                return new ActivityBarOptions();
             }
         }
     }

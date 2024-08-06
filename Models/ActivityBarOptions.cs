@@ -8,18 +8,18 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using CustomPomodoro.Models.Helpers.BusinessLogic.Colors;
 
-namespace CustomPomodoro.Models.UserSettings.Concrete
+namespace CustomPomodoro.Models
 {
-    public class ActivityBarSettings
+    public class ActivityBarOptions
     {
         public List<HSLColor> WorkColors { get; set; } = ActivityBarColorHelpers.GetDefaultWorkColors();
         public List<HSLColor> ShortBreakColors { get; set; } = ActivityBarColorHelpers.GetDefaultShortBreakColors();
         public List<HSLColor> LongBreakColors { get; set; } = ActivityBarColorHelpers.GetDefaultLongBreakColors();
         public bool EnableActivityBar { get; set; } = true;
 
-        public ActivityBarSettings()
+        public ActivityBarOptions()
         {
-            
+
         }
         public void SetAllColorsToDefaultValues()
         {

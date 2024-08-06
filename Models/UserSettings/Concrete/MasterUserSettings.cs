@@ -18,12 +18,12 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
         public MainColorSettings _mainColorSettings = new ();
         public PomodoroTimerSettings _curPomodoroSetSetttings = new();
 
-        public BackgroundColorSettings GetBackgroundColorSettings() 
+        public BackgroundColorOptions GetBackgroundColorSettings() 
         {
             return _mainColorSettings.BackgroundColorSettings;
         }
 
-        public ActivityBarSettings GetActivityBarSettings() 
+        public ActivityBarOptions GetActivityBarSettings() 
         {
             return _mainColorSettings.ActivityColorSettings;
         }
@@ -117,10 +117,10 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             else
             {
                 if(_mainColorSettings.ActivityColorSettings == null)
-                    _mainColorSettings.ActivityColorSettings = new ActivityBarSettings();
+                    _mainColorSettings.ActivityColorSettings = new ActivityBarOptions();
 
                 if (_mainColorSettings.BackgroundColorSettings == null)
-                    _mainColorSettings.BackgroundColorSettings = new BackgroundColorSettings();
+                    _mainColorSettings.BackgroundColorSettings = new BackgroundColorOptions();
             }
         }
 
