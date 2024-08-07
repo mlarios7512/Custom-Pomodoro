@@ -16,7 +16,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
     public class MasterUserSettings:IMasterUserSettings
     {
         public MainColorSettings _mainColorSettings = new ();
-        public PomodoroTimerSettings _curPomodoroSetSetttings = new();
+        public PomodoroTimerSettings _curPomodoroSetSettings = new();
 
         public BackgroundColorOptions GetBackgroundColorSettings() 
         {
@@ -30,7 +30,7 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
         public PomodoroSet GetCurPomodoroSet() 
         {
-            return _curPomodoroSetSetttings.StoredPomSet;
+            return _curPomodoroSetSettings.StoredPomSet;
         }
 
         public MainColorSettings GetMainColorSettings() 
@@ -55,6 +55,8 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
             }
             else 
             {
+                //This line assumes the parameter itself is 100% verified by this point.
+                _curPomodoroSetSettings = settingsToSave;
                 await Application.Current.MainPage.DisplayAlert("Alert", "Save file permission denied. Changes saved for this session only.", "OK");
             }
         }
@@ -99,7 +101,12 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if(status == PermissionStatus.Granted) 
             {
-                PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSetSetttings);
+                PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSetSettings);
+            }
+            else 
+            {
+                if (_curPomodoroSetSettings == null)
+                    _curPomodoroSetSettings = new PomodoroTimerSettings();
             }
         }
 
