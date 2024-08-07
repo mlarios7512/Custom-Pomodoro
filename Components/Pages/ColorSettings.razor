@@ -10,7 +10,7 @@
     <section class="d-flex flex-column mb-5">
         <SoloHSLControl
             @ref="BgColorControls[0]"
-            Header="Timer not running"
+            Header="Timer not started"
             Color="LocalColorInputs.BackgroundColorSettings.NoActivityBgColor"></SoloHSLControl>
             
         <SoloHSLControl 
@@ -60,7 +60,7 @@
 
         <ConnectedHSLControl 
             @ref="ConnectedActivityStatusColorControls[2]"
-                             FirstColor="LocalColorInputs.ActivityColorSettings.LongBreakColors[0]"
+            FirstColor="LocalColorInputs.ActivityColorSettings.LongBreakColors[0]"
             FirstColorTitle="Long break 1"
             SecondColor="LocalColorInputs.ActivityColorSettings.LongBreakColors[1]"
             SecondColorTitle="Long break 2"
