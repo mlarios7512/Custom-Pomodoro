@@ -27,23 +27,14 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
         {
             try
             {
-                string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
-                if (!File.Exists(saveFile))
-                {
-                    File.Create(saveFile);
-                }
                 string finalJson = JsonConvert.SerializeObject(colorSettings);
-                File.WriteAllText(saveFile, finalJson);
-
-                //See the "Preferences API for saving user data cross-platform
-                // (Note: Currently using this only for minor differences, such as vibration on Android vs toast on Windows for timer end):
-                //https://learn.microsoft.com/en-us/dotnet/maui/platform-integration/storage/preferences?view=net-maui-8.0&tabs=windows
+                File.WriteAllText(Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName), finalJson);
 
                 return true;
             }
             catch (Exception ex) 
             {
-                Debug.WriteLine($"An unknown error occured when saving to file: {ex}.");
+                Debug.WriteLine($"An error occured when saving to file: {ex}.");
                 return false;
             }
         }
