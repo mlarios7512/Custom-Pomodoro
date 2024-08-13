@@ -32,6 +32,13 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
             try 
             {
                 var finalJson = JsonConvert.SerializeObject(newPomSetSettings, Formatting.Indented);
+
+                var savePath = FileSystem.Current.AppDataDirectory;
+                if(!Path.Exists(savePath)) 
+                {
+                    Directory.CreateDirectory(savePath);
+                }
+
                 File.WriteAllText(Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName), finalJson);
                 return true;
             }

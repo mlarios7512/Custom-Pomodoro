@@ -28,6 +28,13 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
             try
             {
                 string finalJson = JsonConvert.SerializeObject(colorSettings);
+
+                var savePath = FileSystem.Current.AppDataDirectory;
+                if (!Path.Exists(savePath))
+                {
+                    Directory.CreateDirectory(savePath);
+                }
+
                 File.WriteAllText(Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName), finalJson);
 
                 return true;
