@@ -1,6 +1,7 @@
 ﻿using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using Microsoft.Extensions.Logging;
+using Plugin.Maui.Audio;
 //using Blazorise;
 //using Blazorise.Bootstrap;
 
@@ -19,6 +20,7 @@ namespace CustomPomodoro
                 });
 
             builder.Services.AddMauiBlazorWebView();
+            builder.AddAudio();
             //        builder.Services
             //.AddBlazorise(options =>
             //{
