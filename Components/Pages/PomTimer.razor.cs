@@ -6,6 +6,7 @@ using CustomPomodoro.Models.Helpers.BusinessLogic.PomTimer;
 using CustomPomodoro.Models.UserSettings.Abstract;
 using CustomPomodoro.Models.UserSettings.Concrete;
 using Microsoft.AspNetCore.Components;
+using Plugin.Maui.Audio;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -36,6 +37,7 @@ namespace CustomPomodoro.Components.Pages
 
         [Inject]
         protected IMasterUserSettings? UserSettings { get; set; }
+        private IAudioPlayer primaryAudioPlayer;
 
         private List<string> CurActivityBarColors { get; set; } = new () {"hsl(0 0% 0%)", "hsl(0 0% 0%)" };
         private string BgColor = HslColorSelection.GetNoActivityBgColor();
@@ -361,6 +363,22 @@ namespace CustomPomodoro.Components.Pages
             return formattedInput;
         }
 
+        private async Task PlayTimerExpirationAudio()
+        {
+            try
+            {
+                string soundFile = "timerexpirationsound";
+
+                primaryAudioPlayer = AudioManager.Current.CreatePlayer(await FileSystem.OpenAppPackageFileAsync($"{soundFile}.m4a"));
+                primaryAudioPlayer.Play();
+            }
+            catch (Exception audioException)
+            {
+                Debug.WriteLine($"ERROR INFO:\n {audioException}\n");
+            }
+        }
+
+
         public void CountDownTimer(Object source, System.Timers.ElapsedEventArgs e)
         {
             if (MainTimerState == TimerState.Started)
@@ -382,6 +400,8 @@ namespace CustomPomodoro.Components.Pages
                     ActualCountdownTimer.Elapsed -= CountDownTimer;
                     BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
                     ActualCountdownTimer.Enabled = false;
+
+                    PlayTimerExpirationAudio();
 
                     if (CompletedWorkSessionCount + 1 > UserSettings.GetCurPomodoroSet().RepsBeforeLongBreak)
                         CompletedWorkSessionCount = 0;
