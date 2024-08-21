@@ -6,9 +6,9 @@ A MAUI Blazor hybrid app with a customizable pomodoro timer. Developed with Wind
 
 <br>
 
-![Timer page](app_demo_imgs/Timer.png)
-![Timer Settings page](app_demo_imgs/Change_Timer.png)
-![Color Settings page](app_demo_imgs/Color_Settings.png)
+![Timer page](https://github.com/mlarios7512/Custom-Pomodoro/blob/beta/app_demo_imgs/Timer.png)
+![Timer Settings page](https://github.com/mlarios7512/Custom-Pomodoro/blob/beta/app_demo_imgs/Change_Timer.png)
+![Color Settings page](https://github.com/mlarios7512/Custom-Pomodoro/blob/beta/app_demo_imgs/Color_Settings.png)
 
 
 ## Features
