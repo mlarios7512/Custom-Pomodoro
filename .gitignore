@@ -81,4 +81,5 @@ _[Ss]cripts
 *.manifest
 *.testlog
 *.wsuo
+!..\Properties\launchSettings.json
 *.json
