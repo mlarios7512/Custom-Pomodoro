@@ -4,7 +4,7 @@ A MAUI Blazor hybrid app with a customizable pomodoro timer. Developed with Wind
 
 *Disclaimer: A stable Android release is currently unavailable. A glitch currently causes the "release" version to break on Android devices. (This is a bug on the framework's behalf. Also potentially responsible for crashing Android emulators on "release" mode.) Development will be kept with Android in mind should the issue be resolved.
 
-**For cloning the project:** A `Properties` directory which contains `launchSettings.json` is currently missing from the online repo (but is essential for functionality). After cloning, create a`Properties` directory within the project. From a template MAUI-Blazor hybrid project, any default `launchSettings.json` can be copied into the recently created `Properties` directory to make this project functional.
+**For cloning the project:** A `Properties` directory containing `launchSettings.json` is missing from the online repo (but essential for functionality). After cloning, create a`Properties` directory within the project. From a template MAUI-Blazor hybrid project, any default `launchSettings.json` can be copied into the recently created `Properties` directory to make this project functional.
 
 
 <br>
@@ -25,11 +25,17 @@ A MAUI Blazor hybrid app with a customizable pomodoro timer. Developed with Wind
 
 <br>
 
-Ideally, these features would be implemented in the future:
-* Quick selection of previously used timers (for each type of timer).
-* Choice of black, gray, or white text for the timer page.
+
+## Future features
+* Likely
+    * Choice of black, gray, or white text for the timer page.
+    * Quick selection of previously used timers (for each type of timer).
+* Considered
+    * Selection of local audio file (for use as sound on timer expiration).
+    * Auto-start timer sessions (after pressing "start" button once).
+    * Color options for navigation bar.
 
 <br>
 
 ## Contributions
-Public contributions are not currently accepeted (as I've yet to come up with a clear workflow that would allow for that). This may change in the future.
+Public contributions are not currently accepted (as I've yet to come up with a clear workflow that would allow for that). This may change in the future.
