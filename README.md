@@ -4,6 +4,9 @@ A MAUI Blazor hybrid app with a customizable pomodoro timer. Developed with Wind
 
 *Disclaimer: A stable Android release is currently unavailable. A glitch currently causes the "release" version to break on Android devices. (This is a bug on the framework's behalf. Also potentially responsible for crashing Android emulators on "release" mode.) Development will be kept with Android in mind should the issue be resolved.
 
+**Note:** If cloning this project, `localSettings.json` is currently missing from the project repo. Any default `localSettings.json` file from a default MAUI-Blazor hybrid template project can be copied into the project directory to make this project functional. (Will try to address this issue later.)
+
+
 <br>
 
 ![Timer page](app_demo_imgs/Timer.PNG)
