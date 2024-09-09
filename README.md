@@ -7,12 +7,6 @@ The same bug may also cause single device instances on Android emulators to beco
 
 Development will be kept with Android in mind should the issue be resolved. 
 
-<br>
-<br>
-
-
-**For cloning the project:** A `Properties` directory containing `launchSettings.json` is missing from the online repo (but essential for functionality). After cloning, create a`Properties` directory within the project. From a template MAUI-Blazor hybrid project, any default `launchSettings.json` can be copied into the recently created `Properties` directory to make this project functional.
-
 
 <br>
 
@@ -42,8 +36,3 @@ Development will be kept with Android in mind should the issue be resolved.
     * Option to select local audio file (for use as sound on timer expiration).
     * Option to auto-start timer subsequent sessions.
     * Color options for navigation bar.
-
-<br>
-
-### Contributions
-Public contributions are not currently accepted. This may change in the future.
