@@ -13,6 +13,15 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
     {
         private const string _saveFileName = "PomodoroSets.json";
 
+        public static Task LoadCurrentPomodoroSetFromPreferences(ref PomodoroTimerSettings pomSet) 
+        {
+                pomSet.StoredPomSet.WorkTime = Preferences.Default.Get("work_time", "25:00");
+                pomSet.StoredPomSet.ShortBreak = Preferences.Default.Get("short_break", "5:00");
+                pomSet.StoredPomSet.LongBreak = Preferences.Default.Get("long_break", "15:00");
+                pomSet.StoredPomSet.RepsBeforeLongBreak = Preferences.Default.Get("reps_till_long_break", 3);
+                return Task.FromResult(pomSet);
+        }
+
         public static Task LoadCurrentPomodoroSetFromFile(ref PomodoroTimerSettings pomSet)
         {
             string JsonSavePath = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);

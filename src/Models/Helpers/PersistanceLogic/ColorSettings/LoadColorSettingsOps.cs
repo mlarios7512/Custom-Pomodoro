@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CustomPomodoro.Models.UserSettings.Concrete;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
         private const string _saveFileName = "ColorSettings.json";
         public LoadColorSettingsOps() { }
 
-        public static BackgroundColorOptions LoadBackgroundColorsSettings()
+        public static BackgroundColorOptions LoadBackgroundColorsSettings(MainColorSettings curColorSettings)
         {
             string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
 
@@ -29,7 +30,10 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                 }
                 else
                 {
-                    return new BackgroundColorOptions();
+                    if (curColorSettings.BackgroundColorSettings == null)
+                        return new BackgroundColorOptions();
+                    else
+                        return curColorSettings.BackgroundColorSettings;
                 }
             }
             catch (System.NullReferenceException ex)
@@ -44,7 +48,7 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
             }
         }
 
-        public static ActivityBarOptions LoadActivityBarSettings()
+        public static ActivityBarOptions LoadActivityBarSettings(MainColorSettings curColorSettings)
         {
             string saveFile = Path.Combine(FileSystem.Current.AppDataDirectory, _saveFileName);
 
@@ -85,7 +89,10 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.ColorSettings
                 }
                 else
                 {
-                    return new ActivityBarOptions();
+                    if (curColorSettings.ActivityColorSettings == null)
+                        return new ActivityBarOptions();
+                    else
+                        return curColorSettings.ActivityColorSettings;
                 }
             }
             catch (System.NullReferenceException ex)

@@ -21,6 +21,22 @@ namespace CustomPomodoro.Models.Helpers.PersistanceLogic.TimerSettings
         //    File.WriteAllText(Path.Combine(AppContext.BaseDirectory, "PomodoroSets.json"), convertedJson);
         //}
 
+        public static bool CreateSaveAsPreferences(PomodoroTimerSettings newPomSettings) 
+        {
+            try 
+            {
+                Preferences.Default.Set("work_time", newPomSettings.StoredPomSet.WorkTime);
+                Preferences.Default.Set("short_break", newPomSettings.StoredPomSet.ShortBreak);
+                Preferences.Default.Set("long_break", newPomSettings.StoredPomSet.LongBreak);
+                Preferences.Default.Set("reps_till_long_break", newPomSettings.StoredPomSet.RepsBeforeLongBreak);
+                return true;
+            }
+            catch(Exception e) 
+            {
+                return false;
+            }
+        }
+
 
         /// <summary>
         /// 
