@@ -41,49 +41,18 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
         public async Task SaveUserPomodoroSet(PomodoroTimerSettings settingsToSave) 
         {
-            //await Permissions.RequestAsync<Permissions.StorageWrite>();
-            //PermissionStatus status = PermissionStatus.Unknown;
-            //status = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
+            //These lines assume the parameter itself is 100% validated by this point.
+            PomSetSaveFileOps.CreateSaveAsPreferences(settingsToSave);
 
-            //if (status == PermissionStatus.Granted)
-            //{
-            //    bool SaveSucessful = PomSetSaveFileOps.CreateNewSaveFile(settingsToSave);
-            //    if (SaveSucessful)
-            //        await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
-            //    else
-            //        await Application.Current.MainPage.DisplayAlert("Alert", "An error occured when saving changes.", "OK");
-            //}
-            //else 
-            //{
-            //These lines assumes the parameter itself is 100% validated by this point.
-                PomSetSaveFileOps.CreateSaveAsPreferences(settingsToSave);
+            _curPomodoroSetSettings = settingsToSave;
+            await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved.", "OK");
 
-                _curPomodoroSetSettings = settingsToSave;
-                await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved.", "OK");
-            //await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
-            //}
         }
 
         public async Task SaveUserColorSettings(MainColorSettings settingsToSave) 
         {
-            //await Permissions.RequestAsync<Permissions.StorageWrite>();
-            //PermissionStatus writePermission = PermissionStatus.Unknown;
-            //writePermission = await Permissions.CheckStatusAsync<Permissions.StorageWrite>();
-
-
-            //if (writePermission == PermissionStatus.Granted) 
-            //{
-            //    bool saveSucess = await SaveColorSettingsOps.SaveAllColorSettings(settingsToSave);
-            //    if (saveSucess) 
-            //        await Application.Current.MainPage.DisplayAlert("Alert", "Changes have been saved.", "OK");
-            //    else 
-            //        await Application.Current.MainPage.DisplayAlert("Error", "An error occured when saving changes.", "OK");
-            //}
-            //else 
-            //{
-                _mainColorSettings = settingsToSave;
-                await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
-            //}
+            _mainColorSettings = settingsToSave;
+            await Application.Current.MainPage.DisplayAlert("Alert", "Changes saved for this session only.", "OK");
         }
 
 
@@ -104,7 +73,6 @@ namespace CustomPomodoro.Models.UserSettings.Concrete
 
             if(status == PermissionStatus.Granted) 
             {
-                //PomSetLoadFileOps.LoadCurrentPomodoroSetFromFile(ref _curPomodoroSetSettings);
                 PomSetLoadFileOps.LoadCurrentPomodoroSetFromPreferences(ref _curPomodoroSetSettings);
             }
             else 
