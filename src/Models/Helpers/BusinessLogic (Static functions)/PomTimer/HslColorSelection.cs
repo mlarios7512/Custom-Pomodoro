@@ -42,6 +42,16 @@ namespace CustomPomodoro.Models.Helpers.BusinessLogic.PomTimer
 
             return FormatHSLToCSS(color);
         }
+        public static string GetCurrentActivityTextColor(HSLColor? color = null) 
+        {
+            if(color == null) 
+            {
+                HSLColor DefaultTextColor = GetDefaultTextColor();
+                return FormatHSLToCSS(DefaultTextColor);
+            }
+                
+            return FormatHSLToCSS(color);
+        }
 
         public static HSLColor GetDefaultNoActivityBgColor()
         {
@@ -55,6 +65,11 @@ namespace CustomPomodoro.Models.Helpers.BusinessLogic.PomTimer
         public static HSLColor GetDefaultPausedActivityBgColor()
         {
             return new HSLColor(207, 100, 26);
+        }
+
+        public static HSLColor GetDefaultTextColor()
+        {
+            return new HSLColor(70, 80, 100);
         }
     }
 
