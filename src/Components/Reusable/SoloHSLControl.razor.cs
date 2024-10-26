@@ -12,9 +12,12 @@ namespace CustomPomodoro.Components.Reusable
     public partial class SoloHSLControl
     {
         [Parameter]
-        public HSLColor Color { get; set; }
+        public string Header { get; set; } = string.Empty;
 
         [Parameter]
-        public string Header { get; set; } = string.Empty;
+        public HSLColor BgColor { get; set; }
+
+        [Parameter]
+        public HSLColor TextColor { get; set; }
     }
 }
