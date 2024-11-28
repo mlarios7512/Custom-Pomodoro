@@ -41,6 +41,7 @@ namespace CustomPomodoro.Components.Pages
 
         private List<string> CurActivityBarColors { get; set; } = new () {"hsl(0 0% 0%)", "hsl(0 0% 0%)" };
         private string BgColor = HslColorSelection.GetNoActivityBgColor();
+        private string BgTextColor = HslColorSelection.GetCurrentActivityTextColor();
         private string[] AltWorkStateDisplay { get; set; } = { "Next session: ", "Work" };
         private string CountdownTimerDisplay { get; set; } = "00:00";
         private int TimerInSeconds { get; set; } = 0;
@@ -59,6 +60,11 @@ namespace CustomPomodoro.Components.Pages
             await UserSettings.LoadAllColorSettings();
 
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
+
+            //UNTESTED
+            BgTextColor = HslColorSelection.GetCurrentActivityTextColor(UserSettings.GetBackgroundColorSettings().NoActivityTextColor);
+            
+
             CurActivityBarColors = ActivityBarColorHelpers.TransformHSLListToCSSCompatibleStringList(UserSettings.GetActivityBarSettings().WorkColors);
 
             CountdownTimerDisplay = GetCountdownTimerDisplay(UserSettings.GetCurPomodoroSet().WorkTime);
@@ -231,6 +237,7 @@ namespace CustomPomodoro.Components.Pages
         public async Task PauseTimer()
         {
             BgColor = HslColorSelection.GetPausedActivityBgColor(UserSettings.GetBackgroundColorSettings().PausedActivityColor);
+            BgTextColor = HslColorSelection.GetCurrentActivityTextColor(UserSettings.GetBackgroundColorSettings().PausedActivityTextColor);
             AltWorkStateDisplay[0] = "Paused session: ";
             MainTimerState = TimerState.Paused;
             ActualCountdownTimer.Enabled = false;
@@ -238,6 +245,7 @@ namespace CustomPomodoro.Components.Pages
         public async Task ContinueTimer()
         {
             BgColor = HslColorSelection.GetActivityInProgressBgColor(UserSettings.GetBackgroundColorSettings().ActivityInProgressColor);
+            BgTextColor = HslColorSelection.GetCurrentActivityTextColor(UserSettings.GetBackgroundColorSettings().ActivityInProgressTextColor);
             AltWorkStateDisplay[0] = "Current session: ";
             MainTimerState = TimerState.Started;
             ActualCountdownTimer.Enabled = true;
@@ -267,6 +275,7 @@ namespace CustomPomodoro.Components.Pages
         {
             ActualCountdownTimer.Elapsed -= CountDownTimer;
             BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
+            BgTextColor = HslColorSelection.GetCurrentActivityTextColor(UserSettings.GetBackgroundColorSettings().NoActivityTextColor);
             MainTimerState = TimerState.NotStarted;
             ActualCountdownTimer.Enabled = false;
 
@@ -341,6 +350,7 @@ namespace CustomPomodoro.Components.Pages
             }
 
             BgColor = HslColorSelection.GetActivityInProgressBgColor(UserSettings.GetBackgroundColorSettings().ActivityInProgressColor);
+            BgTextColor = HslColorSelection.GetCurrentActivityTextColor(UserSettings.GetBackgroundColorSettings().ActivityInProgressTextColor);
             HideNavBar();
             ActualCountdownTimer = new System.Timers.Timer(1000);
             ActualCountdownTimer.Enabled = true;
@@ -399,6 +409,7 @@ namespace CustomPomodoro.Components.Pages
 
                     ActualCountdownTimer.Elapsed -= CountDownTimer;
                     BgColor = HslColorSelection.GetNoActivityBgColor(UserSettings.GetBackgroundColorSettings().NoActivityBgColor);
+                    BgTextColor = HslColorSelection.GetCurrentActivityTextColor(UserSettings.GetBackgroundColorSettings().NoActivityTextColor);
                     ActualCountdownTimer.Enabled = false;
 
                     PlayTimerExpirationAudio();

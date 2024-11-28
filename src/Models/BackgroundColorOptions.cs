@@ -12,8 +12,14 @@ namespace CustomPomodoro.Models
     public class BackgroundColorOptions
     {
         public HSLColor NoActivityBgColor { get; set; } = HslColorSelection.GetDefaultNoActivityBgColor();
+        public HSLColor NoActivityTextColor { get; set; } = HslColorSelection.GetDefaultTextColor();
+
         public HSLColor ActivityInProgressColor { get; set; } = HslColorSelection.GetDefaultActivityInProgressBgColor();
+        public HSLColor ActivityInProgressTextColor { get; set; } = HslColorSelection.GetDefaultTextColor();
+
         public HSLColor PausedActivityColor { get; set; } = HslColorSelection.GetDefaultPausedActivityBgColor();
+        public HSLColor PausedActivityTextColor { get; set; } = HslColorSelection.GetDefaultTextColor();
+
         public BackgroundColorOptions() { }
 
         public void SetDefaultColorsValues()
@@ -21,6 +27,10 @@ namespace CustomPomodoro.Models
             NoActivityBgColor = HslColorSelection.GetDefaultNoActivityBgColor();
             ActivityInProgressColor = HslColorSelection.GetDefaultActivityInProgressBgColor();
             PausedActivityColor = HslColorSelection.GetDefaultPausedActivityBgColor();
+
+            NoActivityTextColor = HslColorSelection.GetDefaultTextColor();
+            ActivityInProgressTextColor = HslColorSelection.GetDefaultTextColor();
+            PausedActivityTextColor = HslColorSelection.GetDefaultTextColor();
         }
 
     }

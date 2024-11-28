@@ -7,20 +7,26 @@ label{
     color:white;
 }
 
-input[type='range'] {
-    accent-color: #0ea5e9;
-}
-
 .color-preview {
     border-radius: 10px;
     border-style: solid;
     border-color: #CDCDCD;
 }
 
-.hue-num-display {
+.hsl-num-display {
     color: darkgray;
     margin-left: 6px;
 }
+
+.hsl-bg-input{
+    accent-color: #0ea5e9;
+}
+
+.hsl-text-input {
+    accent-color: #C0C0C0;
+}
+
+
 
 @media (max-width: 767.98px) {
     .prime-content {

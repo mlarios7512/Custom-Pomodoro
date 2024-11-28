@@ -11,17 +11,20 @@
         <SoloHSLControl
             @ref="BgColorControls[0]"
             Header="Timer not started"
-            Color="LocalColorInputs.BackgroundColorSettings.NoActivityBgColor"></SoloHSLControl>
+            BgColor="LocalColorInputs.BackgroundColorSettings.NoActivityBgColor"
+            TextColor="LocalColorInputs.BackgroundColorSettings.NoActivityTextColor"></SoloHSLControl>
             
         <SoloHSLControl 
                 @ref="BgColorControls[1]"
                 Header="Timer running"
-                        Color="LocalColorInputs.BackgroundColorSettings.ActivityInProgressColor"></SoloHSLControl>
+                BgColor="LocalColorInputs.BackgroundColorSettings.ActivityInProgressColor"
+                TextColor="LocalColorInputs.BackgroundColorSettings.ActivityInProgressTextColor"></SoloHSLControl>
   
         <SoloHSLControl 
                 @ref="BgColorControls[2]"
                 Header="Timer paused"
-                Color="LocalColorInputs.BackgroundColorSettings.PausedActivityColor"></SoloHSLControl>
+                BgColor="LocalColorInputs.BackgroundColorSettings.PausedActivityColor"
+                TextColor="LocalColorInputs.BackgroundColorSettings.PausedActivityTextColor"></SoloHSLControl>
         <button type="button" class="btn default-values-btn" @onclick="GetDefaultBgColorValues">Default colors</button>
     </section>
 
