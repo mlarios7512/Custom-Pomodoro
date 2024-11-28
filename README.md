@@ -22,7 +22,7 @@ Development will be kept with Android in mind should the issue be resolved.
     * Option to change duration of each timer sessions & reps until long break.
     * Timer expiration sound.
 * Color options
-    * Customizable background colors for "not started", "running", & "paused" timer states.
+    * Customizable background & text colors for "not started", "running", & "paused" timer states.
     * Customizable (optional) colors for "work", "short break", & "long break" timers.
 
 <br>
@@ -30,7 +30,6 @@ Development will be kept with Android in mind should the issue be resolved.
 
 ### Future features
 * Likely
-    * Choice of black, gray, or white text (paired with each of the 3 timer state colors) for the timer page.
     * Quick selection of previously used times (for each type of timer).
 * Considered
     * Option to select local audio file (for use as sound on timer expiration).
