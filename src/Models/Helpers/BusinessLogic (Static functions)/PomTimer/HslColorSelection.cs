@@ -69,7 +69,7 @@ namespace CustomPomodoro.Models.Helpers.BusinessLogic.PomTimer
 
         public static HSLColor GetDefaultTextColor()
         {
-            return new HSLColor(70, 80, 100);
+            return new HSLColor(0, 0, 100);
         }
     }
 
